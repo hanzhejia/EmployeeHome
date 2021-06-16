@@ -7,7 +7,8 @@
 - 创建一个workspace文件夹，点击进入
 - 打开git，执行`git clone https://gitee.com/causehhc/employee-home.git`
 - `cd e*`
-## 2、新建xxx功能分支
+## 2、同步并新建xxx功能分支
+- 同步远程develop仓库`git pull origin develop`
 - 新建分支`git checkout -b feature/xxx origin/develop`
 ## 3、开发
 - TODO
