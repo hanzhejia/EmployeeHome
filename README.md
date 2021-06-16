@@ -9,7 +9,6 @@
 - `cd e*`
 ## 2、新建xxx功能分支
 - 新建分支`git checkout -b feature/xxx origin/develop`
-- 先拉取develop中的代码，因为有可能别人已经往上提交过代码了`git pull origin develop`
 ## 3、开发
 - TODO
 ## 4、add&commit
