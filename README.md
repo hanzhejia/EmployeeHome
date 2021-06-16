@@ -8,7 +8,7 @@ sb
 - `git push -u origin develop`
 ## 1、开始
 - 创建一个workspace文件夹，点击进入
-- 打开git，执行`git clone https://github.com/causehhc/EmployeeHome.git`
+- 打开git，执行`git clone https://gitee.com/causehhc/employee-home.git`
 - `cd E*`
 ## 2、新建xxx功能分支
 - 新建分支`git checkout -b feature/xxx origin/develop`
