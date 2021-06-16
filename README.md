@@ -23,9 +23,10 @@
 - 删除本地的分支`git branch -d feature/xxx`
 ## 5、发布到master
 - 建立发布准备分支`git checkout -b release/tag0.1 origin/develop`
-- 切到main分支`git checkout master`
-- 将release分支合到main上`git merge release/tag0.1`
-- 将合完的代码提交到远程main`git push`
+- 先拉取master中的代码`git pull origin master`
+- 切到master分支`git checkout master`
+- 将release分支合到master上`git merge release/tag0.1`
+- 将合完的代码提交到远程master`git push`
 - 切到develop分支`git checkout develop`
 - 将release分支上的代码合到develop分支上`git merge release/tag0.1`
 - 合完的代码推送到远程的develop分支`git push`
