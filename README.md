@@ -25,7 +25,7 @@ sb
 - 提交到develop远程分支上`git push`
 - 删除本地的分支`git branch -d feature/xxx`
 ## 5、发布到master
-- 建立发布准备分支`git checkout -b realse/tag0.1 origin/develop`
+- 建立发布准备分支`git checkout -b release/tag0.1 origin/develop`
 - 切到main分支`git checkout master`
 - 将release分支合到main上`git merge release/tag0.1`
 - 将合完的代码提交到远程main`git push`
