@@ -3,7 +3,7 @@
 #### 介绍
 sb
 
-## 0、管理者
+## 0、管理者?
 - `git branch develop`
 - `git push -u origin develop`
 ## 1、开始
