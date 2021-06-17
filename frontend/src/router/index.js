@@ -82,19 +82,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/dept_manage/func1',
     name: 'Dept_manage',
-    meta: { title: 'Dept_manage', icon: 'el-icon-s-help' },
+    meta: { title: '部门管理', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/dept_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '查询部门', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/dept_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '添加部门', icon: 'table' }
       }
     ]
   },
