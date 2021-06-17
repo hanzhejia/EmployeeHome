@@ -31,6 +31,17 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
+  // {
+  //   path: '/redirect',
+  //   component: Layout,
+  //   hidden: true,
+  //   children: [
+  //     {
+  //       path: '/redirect/:path(.*)',
+  //       component: () => import('@/views/redirect/index')
+  //     }
+  //   ]
+  // },
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -84,28 +95,6 @@ export const constantRoutes = [
         name: 'Func2',
         component: () => import('@/views/dept_manage/func2/index'),
         meta: { title: 'Table', icon: 'table' }
-      }
-    ]
-  },
-
-  {
-    path: '/download_manage',
-    component: Layout,
-    redirect: '/download_manage/func1',
-    name: 'Download_manage',
-    meta: { title: '下载中心', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/download_manage/func1/index'),
-        meta: { title: '文档查询', icon: 'table' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/download_manage/func2/index'),
-        meta: { title: '上传文档', icon: 'table' }
       }
     ]
   },
@@ -231,8 +220,50 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/download_manage',
+    component: Layout,
+    redirect: '/download_manage/func1',
+    // alwaysShow: true, // will always show the root menu
+    name: 'Download_manage',
+    meta: {
+      title: '下载中心',
+      icon: 'el-icon-s-help',
+      // roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/download_manage/func1/index'),
+        meta: {
+          title: '文档查询',
+          icon: 'table'
+        }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/download_manage/func2/index'),
+        meta: {
+          title: '上传文档',
+          icon: 'table',
+          // roles: ['admin']
+        }
+      }
+    ]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
+
 ]
 
 const createRouter = () => new Router({
