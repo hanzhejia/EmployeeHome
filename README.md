@@ -10,6 +10,10 @@ hahaha
 ## 2、同步并新建xxx功能分支
 - 同步远程develop仓库`git pull origin develop`
 - 新建分支`git checkout -b feature/xxx origin/develop`
+## 2-1、已有xxx分支，对该分支进行更新
+- git pull origin develop
+- git checkout feature/xxx
+- git merge develop
 ## 3、开发
 - TODO
 ## 4、add&commit
