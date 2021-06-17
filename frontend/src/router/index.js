@@ -56,95 +56,133 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/dept_manage',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: '/dept_manage/func1',
+    name: 'Dept_manage',
+    meta: { title: 'Dept_manage', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/dept_manage/func1/index'),
         meta: { title: 'Table', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
       }
     ]
   },
 
   {
-    path: '/form',
+    path: '/download_manage',
     component: Layout,
+    redirect: '/download_manage/func1',
+    name: 'Download_manage',
+    meta: { title: 'Download_manage', icon: 'el-icon-s-help' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/download_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/employee_manage',
+    component: Layout,
+    redirect: '/employee_manage/func1',
+    name: 'Employee_manage',
+    meta: { title: 'Employee_manage', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/employee_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/job_manage',
+    component: Layout,
+    redirect: '/job_manage/func1',
+    name: 'Job_manage',
+    meta: { title: 'Job_manage', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/job_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/notice_manage',
+    component: Layout,
+    redirect: '/notice_manage/func1',
+    name: 'Notice_manage',
+    meta: { title: 'Notice_manage', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/notice_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/user_manage',
+    component: Layout,
+    redirect: '/user_manage/func1',
+    name: 'User_manage',
+    meta: { title: 'User_manage', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/user_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
       }
     ]
   },
