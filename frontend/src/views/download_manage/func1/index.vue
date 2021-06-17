@@ -1,5 +1,6 @@
 <template>
   <div class="func1-container">
+    <switch-roles @change="handleRolesChange" />
     <el-table
       :data="tableData.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
@@ -25,7 +26,7 @@
         prop="desc"
       />
       <el-table-column align="right">
-        <template slot="header" slot-scope="scope">
+        <template slot="header">
           <el-input
             v-model="search"
             size="mini"
@@ -34,8 +35,8 @@
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="handleDownload(scope.$index, scope.row)">下载</el-button>
-          <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -43,9 +44,14 @@
 </template>
 
 <script>
+import permission from '@/directive/permission/index.js' // 权限判断指令
+import checkPermission from '@/utils/permission' // 权限判断函数
+import SwitchRoles from '../components/SwitchRoles'
 
 export default {
   name: 'Func1',
+  components: { SwitchRoles },
+  directives: { permission },
   data() {
     return {
       tableData: [
@@ -84,6 +90,10 @@ export default {
     }
   },
   methods: {
+    checkPermission,
+    handleRolesChange() {
+      this.key++
+    },
     handleDownload(index, row) {
       console.log(index, row)
     },
