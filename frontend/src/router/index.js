@@ -82,19 +82,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/download_manage/func1',
     name: 'Download_manage',
-    meta: { title: 'Download_manage', icon: 'el-icon-s-help' },
+    meta: { title: '下载中心', icon: 'el-icon-s-help' },
     children: [
       {
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/download_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '文档查询', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
-        component: () => import('@/views/dept_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
+        component: () => import('@/views/download_manage/func2/index'),
+        meta: { title: '上传文档', icon: 'table' }
       }
     ]
   },
@@ -115,7 +115,7 @@ export const constantRoutes = [
       {
         path: 'func2',
         name: 'Func2',
-        component: () => import('@/views/dept_manage/func2/index'),
+        component: () => import('@/views/employee_manage/func2/index'),
         meta: { title: 'Table', icon: 'table' }
       }
     ]
@@ -137,7 +137,7 @@ export const constantRoutes = [
       {
         path: 'func2',
         name: 'Func2',
-        component: () => import('@/views/dept_manage/func2/index'),
+        component: () => import('@/views/job_manage/func2/index'),
         meta: { title: 'Table', icon: 'table' }
       }
     ]
@@ -159,7 +159,7 @@ export const constantRoutes = [
       {
         path: 'func2',
         name: 'Func2',
-        component: () => import('@/views/dept_manage/func2/index'),
+        component: () => import('@/views/notice_manage/func2/index'),
         meta: { title: 'Table', icon: 'table' }
       }
     ]
@@ -181,7 +181,7 @@ export const constantRoutes = [
       {
         path: 'func2',
         name: 'Func2',
-        component: () => import('@/views/dept_manage/func2/index'),
+        component: () => import('@/views/user_manage/func2/index'),
         meta: { title: 'Table', icon: 'table' }
       }
     ]

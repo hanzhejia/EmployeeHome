@@ -43,13 +43,17 @@ export default {
   },
   methods: {
     func_post_something(data) {
-      setTimeout(() => {
-        post_something({
-          count: this.count
-        }).then(response => {
-          console.log('func_post_sth')
-        })
-      }, 10)
+      this.list = [
+        { info1: '1223', info2: '456' },
+        { info1: '789', info2: '111' }
+      ]
+      // setTimeout(() => {
+      //   post_something({
+      //     count: this.count
+      //   }).then(response => {
+      //     console.log('func_post_sth')
+      //   })
+      // }, 10)
     },
     func_get_something(token) {
       setTimeout(() => {
