@@ -188,6 +188,28 @@ export const constantRoutes = [
   },
 
   {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/func1',
+    name: 'Test',
+    meta: { title: 'Test', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/test/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/test/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
     path: 'external-link',
     component: Layout,
     children: [
