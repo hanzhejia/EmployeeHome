@@ -1,30 +1,38 @@
 <template>
   <div class="func2-container">
-    <div class="func2-text">1-2name: {{ name }}</div>
+    <div style="margin: 50px;"></div>
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="部门名称">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+      <el-form-item label="详细描述">
+        <el-input
+          type="textarea"
+          v-model="form.desc"
+          :autosize="{ minRows: 4, maxRows: 8}"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">修改</el-button>
+        <el-button>取消</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-  name: 'Func2',
-  computed: {
-    ...mapGetters([
-      'name'
-    ])
+  data() {
+    return {
+      form: {
+        name: '',
+        desc: ''
+      }
+    }
+  },
+  methods: {
+    onSubmit() {
+      console.log('submit!')
+    }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.func2 {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
-</style>
