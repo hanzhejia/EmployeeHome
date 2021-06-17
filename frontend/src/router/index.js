@@ -54,7 +54,18 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
-
+  {
+    path: '/face_manage',
+    component: Layout,
+    redirect: '/face_manage/func1',
+    meta: { title: 'Face_manage', icon: 'el-icon-s-help' },
+    children: [{
+      path: 'func1',
+      name: 'Func1',
+      component: () => import('@/views/face_mamage/func1/index'),
+      meta: { title: 'Face_manage', icon: 'face_manage' }
+    }]
+  },
   {
     path: '/dept_manage',
     component: Layout,
