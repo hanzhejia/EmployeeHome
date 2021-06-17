@@ -1,6 +1,5 @@
 <template>
   <div class="func2-container">
-    <switch-roles @change="handleRolesChange" />
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="文档标题">
         <el-input
@@ -38,11 +37,9 @@
 </template>
 
 <script>
-import SwitchRoles from '../components/SwitchRoles'
 
 export default {
   name: 'Func2',
-  components: { SwitchRoles },
   data() {
     return {
       form: {
@@ -52,9 +49,6 @@ export default {
     }
   },
   methods: {
-    handleRolesChange() {
-      this.key++
-    },
     onSubmit() {
       console.log('submit!')
     },

@@ -31,17 +31,18 @@ import Layout from '@/layout'
  * all roles can be accessed
  */
 export const constantRoutes = [
-  // {
-  //   path: '/redirect',
-  //   component: Layout,
-  //   hidden: true,
-  //   children: [
-  //     {
-  //       path: '/redirect/:path(.*)',
-  //       component: () => import('@/views/redirect/index')
-  //     }
-  //   ]
-  // },
+  {
+    path: '/redirect',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index')
+      }
+    ]
+  },
+
   {
     path: '/login',
     component: () => import('@/views/login/index'),
@@ -65,112 +66,65 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+
+  {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/func1',
+    name: 'Test',
+    meta: { title: 'Test', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/test/func1/index'),
+        meta: { title: 'func1', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/test/func2/index'),
+        meta: { title: 'func2', icon: 'table' }
+      }
+    ]
+  }
+]
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ */
+export const asyncRoutes = [
   {
     path: '/face_manage',
     component: Layout,
     redirect: '/face_manage/func1',
-    meta: { title: 'Face_manage', icon: 'el-icon-s-help' },
+    alwaysShow: true, // will always show the root menu
+    name: 'User_manage',
+    meta: {
+      title: 'Face_manage',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
     children: [{
       path: 'func1',
       name: 'Func1',
       component: () => import('@/views/face_mamage/func1/index'),
-      meta: { title: 'Face_manage', icon: 'face_manage' }
+      meta: { title: 'Table', icon: 'table' }
     }]
-  },
-  {
-    path: '/dept_manage',
-    component: Layout,
-    redirect: '/dept_manage/func1',
-    name: 'Dept_manage',
-    meta: { title: '部门管理', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/dept_manage/func1/index'),
-        meta: { title: '查询部门', icon: 'table' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/dept_manage/func2/index'),
-        meta: { title: '添加部门', icon: 'table' }
-      }
-    ]
-  },
-
-  {
-    path: '/employee_manage',
-    component: Layout,
-    redirect: '/employee_manage/func1',
-    name: 'Employee_manage',
-    meta: { title: 'Employee_manage', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/employee_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/employee_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
-      }
-    ]
-  },
-
-  {
-    path: '/job_manage',
-    component: Layout,
-    redirect: '/job_manage/func1',
-    name: 'Job_manage',
-    meta: { title: 'Job_manage', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/job_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/job_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
-      }
-    ]
-  },
-
-  {
-    path: '/notice_manage',
-    component: Layout,
-    redirect: '/notice_manage/func1',
-    name: 'Notice_manage',
-    meta: { title: 'Notice_manage', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/notice_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/notice_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
-      }
-    ]
   },
 
   {
     path: '/user_manage',
     component: Layout,
     redirect: '/user_manage/func1',
+    alwaysShow: true, // will always show the root menu
     name: 'User_manage',
-    meta: { title: 'User_manage', icon: 'el-icon-s-help' },
+    meta: {
+      title: 'User_manage',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
     children: [
       {
         path: 'func1',
@@ -188,34 +142,109 @@ export const constantRoutes = [
   },
 
   {
-    path: '/test',
+    path: '/dept_manage',
     component: Layout,
-    redirect: '/test/func1',
-    name: 'Test',
-    meta: { title: 'Test', icon: 'el-icon-s-help' },
+    redirect: '/dept_manage/func1',
+    alwaysShow: true, // will always show the root menu
+    name: 'Dept_manage',
+    meta: {
+      title: '部门管理',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
     children: [
       {
         path: 'func1',
         name: 'Func1',
-        component: () => import('@/views/test/func1/index'),
+        component: () => import('@/views/dept_manage/func1/index'),
+        meta: { title: '查询部门', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: '添加部门', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/job_manage',
+    component: Layout,
+    redirect: '/job_manage/func1',
+    alwaysShow: true, // will always show the root menu
+    name: 'Job_manage',
+    meta: {
+      title: 'Job_manage',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/job_manage/func1/index'),
         meta: { title: 'Table', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
-        component: () => import('@/views/test/func2/index'),
+        component: () => import('@/views/job_manage/func2/index'),
         meta: { title: 'Table', icon: 'table' }
       }
     ]
   },
 
   {
-    path: 'external-link',
+    path: '/employee_manage',
     component: Layout,
+    redirect: '/employee_manage/func1',
+    alwaysShow: true, // will always show the root menu
+    name: 'Employee_manage',
+    meta: {
+      title: 'Employee_manage',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/employee_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/employee_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/notice_manage',
+    component: Layout,
+    redirect: '/notice_manage/func1',
+    alwaysShow: true, // will always show the root menu
+    name: 'Notice_manage',
+    meta: {
+      title: 'Notice_manage',
+      icon: 'el-icon-s-help',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/notice_manage/func1/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/notice_manage/func2/index'),
+        meta: { title: 'Table', icon: 'table' }
       }
     ]
   },
@@ -224,12 +253,12 @@ export const constantRoutes = [
     path: '/download_manage',
     component: Layout,
     redirect: '/download_manage/func1',
-    // alwaysShow: true, // will always show the root menu
+    alwaysShow: true, // will always show the root menu
     name: 'Download_manage',
     meta: {
       title: '下载中心',
       icon: 'el-icon-s-help',
-      // roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
       {
@@ -248,7 +277,7 @@ export const constantRoutes = [
         meta: {
           title: '上传文档',
           icon: 'table',
-          // roles: ['admin']
+          roles: ['admin']
         }
       }
     ]
@@ -256,14 +285,6 @@ export const constantRoutes = [
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
-]
-
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = [
-
 ]
 
 const createRouter = () => new Router({
