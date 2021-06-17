@@ -23,7 +23,7 @@
       </el-input>
     </div>
     <div id="sbs" style="position: relative;top: 10px">
-      <el-button  type="primary" @click="edit('scope.row')">提交</el-button>
+      <el-button  type="primary" @click="edit('scope.row')">修改</el-button>
       <el-button type="success" @click="kong('sb')">重置</el-button>
     </div>
   </div>
