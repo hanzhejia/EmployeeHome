@@ -48,7 +48,7 @@
           width="200">
         </el-table-column>
         <el-table-column
-          prop="city"
+          prop="address"
           label="公告人"
           align="center"
           width="150">
@@ -86,7 +86,7 @@ export default {
   methods: {
     handleClick(row) {
       console.log(row.date)
-      this.$alert(row.date, row.name, {
+      this.$alert(row.province, row.name, {
         confirmButtonText: '确定',
         callback: action => {
           this.$message({
@@ -116,31 +116,31 @@ export default {
       input2: '',
       tableData: [{
         date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
+        name: '吃饭',
+        province: '内容1',
+        city: '2016-05-02',
+        address: '小花',
         zip: 200333
       }, {
         date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1517 弄',
+        name: '会议2',
+        province: '内容2',
+        city: '2016-05-02',
+        address: '姐',
         zip: 200333
       }, {
         date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1519 弄',
+        name: '会议3',
+        province: '内容3',
+        city: '2016-05-02',
+        address: '龙',
         zip: 200333
       }, {
         date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1516 弄',
+        name: '会议4',
+        province: '内容4',
+        city: '2016-05-02',
+        address: '兔子',
         zip: 200333
       }]
     }
