@@ -70,21 +70,37 @@ export const constantRoutes = [
   {
     path: '/test',
     component: Layout,
+<<<<<<< HEAD
     redirect: '/test/func1',
     name: 'Test',
     meta: { title: 'Test', icon: 'el-icon-s-help' },
+=======
+    redirect: '/dept_manage/func1',
+    name: 'Dept_manage',
+    meta: { title: '部门管理', icon: 'el-icon-s-help' },
+>>>>>>> ce888ecba21a28a4920eb37df78e535905f01703
     children: [
       {
         path: 'func1',
         name: 'Func1',
+<<<<<<< HEAD
         component: () => import('@/views/test/func1/index'),
         meta: { title: 'Table', icon: 'table' }
+=======
+        component: () => import('@/views/dept_manage/func1/index'),
+        meta: { title: '查询部门', icon: 'table' }
+>>>>>>> ce888ecba21a28a4920eb37df78e535905f01703
       },
       {
         path: 'func2',
         name: 'Func2',
+<<<<<<< HEAD
         component: () => import('@/views/test/func2/index'),
         meta: { title: 'Table', icon: 'table' }
+=======
+        component: () => import('@/views/dept_manage/func2/index'),
+        meta: { title: '添加部门', icon: 'table' }
+>>>>>>> ce888ecba21a28a4920eb37df78e535905f01703
       }
     ]
   }
