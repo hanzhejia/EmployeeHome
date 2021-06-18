@@ -15,14 +15,9 @@
               首页
             </el-dropdown-item>
           </router-link>
-          <router-link to="/">
+          <router-link to="/login/func2">
             <el-dropdown-item>
               修改密码
-            </el-dropdown-item>
-          </router-link>
-          <router-link to="/">
-            <el-dropdown-item>
-              人脸注册
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">
@@ -42,7 +37,7 @@ import Hamburger from '@/components/Hamburger'
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
   },
   computed: {
     ...mapGetters([

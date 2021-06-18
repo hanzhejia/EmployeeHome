@@ -98,15 +98,14 @@ export const constantRoutes = [
   {
     path: '/login',
     component: Layout,
-    redirect: '/login/func2',
-    name: 'Login',
-    meta: { title: 'Login', icon: 'el-icon-s-help' },
+    hidden: true,
     children: [
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/login/func2/index'),
-        meta: { title: 'func2', icon: 'table' }
+        meta: { title: 'func2', icon: 'table' },
+        hidden: true
       }
     ]
   }
@@ -122,18 +121,26 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/face_manage/func1',
     alwaysShow: true, // will always show the root menu
-    name: 'User_manage',
+    name: 'Face_manage',
     meta: {
-      title: 'Face_manage',
+      title: '人脸管理',
       icon: 'el-icon-s-help',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
-    children: [{
-      path: 'func1',
-      name: 'Func1',
-      component: () => import('@/views/face_mamage/func1/index'),
-      meta: { title: 'Table', icon: 'table' }
-    }]
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/face_mamage/func1/index'),
+        meta: { title: '信息管理', icon: 'table' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/face_mamage/func2/index'),
+        meta: { title: '人脸注册', icon: 'table' }
+      }
+    ]
   },
 
   {
