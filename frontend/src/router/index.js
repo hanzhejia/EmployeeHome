@@ -93,6 +93,22 @@ export const constantRoutes = [
         meta: { title: 'func3', icon: 'table' }
       }
     ]
+  },
+
+  {
+    path: '/login',
+    component: Layout,
+    redirect: '/login/func2',
+    name: 'Login',
+    meta: { title: 'Login', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/login/func2/index'),
+        meta: { title: 'func2', icon: 'table' }
+      }
+    ]
   }
 ]
 
