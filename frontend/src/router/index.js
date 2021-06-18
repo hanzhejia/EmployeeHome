@@ -63,36 +63,8 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: '' }
+      meta: { title: '首页', icon: 'el-icon-s-grid' }
     }]
-  },
-
-  {
-    path: '/test',
-    component: Layout,
-    redirect: '/test/func1',
-    name: 'Test',
-    meta: { title: 'Test', icon: '' },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/test/func1/index'),
-        meta: { title: 'func1', icon: '' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/test/func2/index'),
-        meta: { title: 'func2', icon: '' }
-      },
-      {
-        path: 'func3',
-        name: 'Func3',
-        component: () => import('@/views/test/func3/index'),
-        meta: { title: 'func3', icon: '' }
-      }
-    ]
   },
 
   {
@@ -314,6 +286,34 @@ export const asyncRoutes = [
           icon: 'el-icon-plus',
           roles: ['admin']
         }
+      }
+    ]
+  },
+
+  {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/func1',
+    name: 'Test',
+    meta: { title: 'Test', icon: '' },
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/test/func1/index'),
+        meta: { title: 'func1', icon: '' }
+      },
+      {
+        path: 'func2',
+        name: 'Func2',
+        component: () => import('@/views/test/func2/index'),
+        meta: { title: 'func2', icon: '' }
+      },
+      {
+        path: 'func3',
+        name: 'Func3',
+        component: () => import('@/views/test/func3/index'),
+        meta: { title: 'func3', icon: '' }
       }
     ]
   },
