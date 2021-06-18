@@ -1,24 +1,33 @@
 import request from '@/utils/request'
 
-export function post_something(data) {
+export function fetchList(query) {
   return request({
-    url: '/vue-admin-template/test/post_something',
+    url: '/vue-admin-template/test/list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchListItem(id) {
+  return request({
+    url: '/vue-admin-template/test/detail',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function createListItem(data) {
+  return request({
+    url: '/vue-admin-template/test/create',
     method: 'post',
     data
   })
 }
 
-export function get_something(token) {
+export function updateListItem(data) {
   return request({
-    url: '/vue-admin-template/test/get_something',
-    method: 'get',
-    params: { token }
-  })
-}
-
-export function do_something() {
-  return request({
-    url: '/vue-admin-template/test/do_something',
-    method: 'post'
+    url: '/vue-admin-template/test/update',
+    method: 'post',
+    data
   })
 }
