@@ -85,6 +85,12 @@ export const constantRoutes = [
         name: 'Func2',
         component: () => import('@/views/test/func2/index'),
         meta: { title: 'func2', icon: 'table' }
+      },
+      {
+        path: 'func3',
+        name: 'Func3',
+        component: () => import('@/views/test/func3/index'),
+        meta: { title: 'func3', icon: 'table' }
       }
     ]
   }
@@ -121,7 +127,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'User_manage',
     meta: {
-      title: 'User_manage',
+      title: '用户管理',
       icon: 'el-icon-s-help',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -130,13 +136,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/user_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '用户查询', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/user_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '添加用户', icon: 'table' }
       }
     ]
   },
@@ -175,7 +181,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Job_manage',
     meta: {
-      title: 'Job_manage',
+      title: '职位管理',
       icon: 'el-icon-s-help',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -184,13 +190,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/job_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '职位查询', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/job_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '添加职位', icon: 'table' }
       }
     ]
   },
@@ -202,7 +208,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Employee_manage',
     meta: {
-      title: 'Employee_manage',
+      title: '员工管理',
       icon: 'el-icon-s-help',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -211,13 +217,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/employee_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '员工查询', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/employee_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '添加员工', icon: 'table' }
       }
     ]
   },
@@ -229,7 +235,7 @@ export const asyncRoutes = [
     alwaysShow: true, // will always show the root menu
     name: 'Notice_manage',
     meta: {
-      title: 'Notice_manage',
+      title: '公告管理',
       icon: 'el-icon-s-help',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
@@ -238,13 +244,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/notice_manage/func1/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '公告查询', icon: 'table' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/notice_manage/func2/index'),
-        meta: { title: 'Table', icon: 'table' }
+        meta: { title: '添加公告', icon: 'table' }
       }
     ]
   },

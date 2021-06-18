@@ -1,6 +1,6 @@
 <template>
   <div class="func1-container">
-    <div class="func1-text">3-1name: {{ name }}</div>
+    <div class="func1-text">4-1name: {{ name }}</div>
   </div>
 </template>
 
