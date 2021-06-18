@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="func2-container">
     <el-form :ref="ruleForm" :model="ruleForm" label-width="100px" class="demo-ruleForm">
 
       <el-row>

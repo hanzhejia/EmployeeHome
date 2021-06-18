@@ -1,21 +1,22 @@
 <template>
   <div class="func1-container">
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-      <el-form-item label="用户名：">
-          <el-input v-model="formInline.user" placeholder="请输入用户名"></el-input>
-      </el-form-item>
-      <el-form-item label="用户状态：">
-        <el-select  v-model="formInline.region" placeholder="全部">
-            <el-option label="全部" value="全部"></el-option>
-            <el-option label="管理员" value="1"></el-option>
-          <el-option label="普通用户" value="2"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="finds('s')">搜索</el-button>
-        <el-button type="primary" @click="back('d')">删除</el-button>
-      </el-form-item>
-    </el-form>
+    <div>
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="用户名：">
+          <el-input v-model="formInline.user" placeholder="请输入用户名" />
+        </el-form-item>
+        <el-form-item label="用户状态：">
+          <el-select v-model="formInline.region" placeholder="全部">
+            <el-option label="全部" value="全部" />
+            <el-option label="管理员" value="1" />
+            <el-option label="普通用户" value="2" />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="finds('s')">搜索</el-button>
+          <el-button type="primary" @click="back('d')">删除</el-button>
+        </el-form-item>
+      </el-form>
     </div>
     <div>
       <el-table
@@ -23,53 +24,51 @@
         :data="tableData"
         tooltip-effect="dark"
         style="width: 100%"
-        @selection-change="handleSelectionChange">
+        @selection-change="handleSelectionChange"
+      >
         <el-table-column
           type="selection"
-          width="55">
-        </el-table-column>
+          width="55"
+        />
         <el-table-column
           label="登录名"
           prop="Loginname"
-        >
-        </el-table-column>
+        />
         <el-table-column
           label="密码"
           prop="Password"
-        >
-        </el-table-column>
+        />
         <el-table-column
           label="用户名"
           prop="Username"
-        >
-        </el-table-column>
+        />
         <el-table-column
           label="状态"
           prop="Status"
-        >
-        </el-table-column>
+        />
         <el-table-column
           label="创建时间"
           prop="Createdate"
-        >
-        </el-table-column>
+        />
         <el-table-column label="操作">
           <template slot-scope="scope">
-          <!--跳转至用户修改页面-->
+            <!--跳转至用户修改页面-->
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEdit(scope.$index, scope.row)"
+            >编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
     </div>
     <div>
-<!--分页-->
+      <!--分页-->
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="100">
-      </el-pagination>
+        :total="100"
+      />
+    </div>
   </div>
 </template>
 
