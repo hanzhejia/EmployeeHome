@@ -1,6 +1,7 @@
 const Mock = require('mockjs')
 const { param2Obj } = require('./utils')
 
+const department = require('./department')
 const user = require('./user')
 const role = require('./role')
 const article = require('./download')
@@ -14,7 +15,8 @@ const mocks = [
   ...article,
   ...employee,
   ...test,
-  ...search
+  ...search,
+  ...department
 ]
 
 // for front mock
