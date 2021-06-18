@@ -13,7 +13,7 @@
       label="操作"
       width="100">
       <template >
-        <el-button type="text" size="small">编辑</el-button>
+        <el-button type="text" size="small">人脸注册</el-button>
       </template>
     </el-table-column>
     <el-table-column
