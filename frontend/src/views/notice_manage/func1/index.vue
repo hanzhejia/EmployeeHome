@@ -1,7 +1,7 @@
 
 <template>
-  <div style="width: 1000px">
-    <el-row >
+  <div style="width: 100%">
+    <el-row style="width: 100%" >
       <p style="top: 10px ;font-size: 18px ;color:#303133;position: absolute">公告标题</p>
       <el-input v-model="input1" size="small"
                 :autosize="{ minRows: 1, maxRows: 1}"
@@ -48,7 +48,7 @@
           width="200">
         </el-table-column>
         <el-table-column
-          prop="city"
+          prop="address"
           label="公告人"
           align="center"
           width="150">
@@ -58,18 +58,35 @@
           label="操作"
           width="100">
           <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+            <el-button @click="sb(scope.row)" type="text" size="small">查看</el-button>
+            <el-dialog
+              :title="sbs"
+              :visible.sync="centerDialogVisible"
+              width="40%"
+              center>
+              <span >{{scope.row.province}}</span>
+              <span slot="footer" class="dialog-footer">
+    <el-button @click="centerDialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
+  </span>
+            </el-dialog>
+
             <el-button type="text" size="small">编辑</el-button>
+            
           </template>
         </el-table-column>
       </el-table>
+      <div style="top: 20px;position: relative">
       <el-pagination
         background
         layout="prev, pager, next"
         :total="100">
       </el-pagination>
+        <span style="top: 20px;position: relative" >共有5条记录，当前显示5条记录</span>
+      </div>
+
     </div>
-    <Nav>
+    <Nav style="top: 20px;position: relative" >
     </Nav>
   </div>
 </template>
@@ -86,15 +103,6 @@ export default {
   methods: {
     handleClick(row) {
       console.log(row.date)
-      this.$alert(row.date, row.name, {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${ action }`
-          });
-        }
-      });
     },
     search(sb){
       console.log(sb);
@@ -108,39 +116,45 @@ export default {
         .catch(function (a){
           console.log("dsd");
         })
+    },
+    sb(po){
+      this.centerDialogVisible = true
+      this.sbs=`${po.name}`
+      console.log(po.name)
     }
   },
   data() {
     return {
+      centerDialogVisible: false,
       input1: '',
       input2: '',
       tableData: [{
         date: '2016-05-02',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1518 弄',
+        name: '吃饭',
+        province: '内容1',
+        city: '2016-05-02',
+        address: '小花',
         zip: 200333
       }, {
         date: '2016-05-04',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1517 弄',
+        name: '会议2',
+        province: '内容2',
+        city: '2016-05-02',
+        address: '姐',
         zip: 200333
       }, {
         date: '2016-05-01',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1519 弄',
+        name: '会议3',
+        province: '内容3',
+        city: '2016-05-02',
+        address: '龙',
         zip: 200333
       }, {
         date: '2016-05-03',
-        name: '王小虎',
-        province: '上海',
-        city: '普陀区',
-        address: '上海市普陀区金沙江路 1516 弄',
+        name: '会议4',
+        province: '内容4',
+        city: '2016-05-02',
+        address: '兔子',
         zip: 200333
       }]
     }

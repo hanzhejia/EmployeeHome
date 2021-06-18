@@ -1,107 +1,189 @@
 <template>
   <div class="func1-container">
-    <switch-roles @change="handleRolesChange" />
     <el-table
-      :data="tableData.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
+      v-loading="listLoading"
+      :data="list.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
+      highlight-current-row
     >
-      <el-table-column
-        type="selection"
-        width="55"
-      />
-      <el-table-column
-        label="标题"
-        prop="title"
-      />
-      <el-table-column
-        label="创建时间"
-        prop="time"
-      />
-      <el-table-column
-        label="创建人"
-        prop="master"
-      />
-      <el-table-column
-        label="描述"
-        prop="desc"
-      />
+      <el-table-column type="selection" width="55" />
+
+      <el-table-column label="标题" prop="title" />
+      <el-table-column label="创建时间">
+        <template slot-scope="{row}">
+          <span>{{ row.time | formatDate }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="创建人" prop="master" />
+      <el-table-column label="描述" prop="desc" />
+
       <el-table-column align="right">
         <template slot="header">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入关键字搜索"
-          />
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="handleDownload(scope.$index, scope.row)">下载</el-button>
-          <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+
+          <template v-if="checkPermission(['admin'])">
+            <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          </template>
+
+          <template v-if="checkPermission(['admin'])">
+            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
         </template>
       </el-table-column>
     </el-table>
+
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
+    <el-dialog title="编辑" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="temp.title" />
+        </el-form-item>
+        <el-form-item label="创建时间" prop="time">
+          <el-date-picker v-model="temp.time" type="datetime" placeholder="Please pick a date" />
+        </el-form-item>
+        <el-form-item label="创建人" prop="master">
+          <el-input v-model="temp.master" />
+        </el-form-item>
+        <el-form-item label="描述" prop="desc">
+          <el-input v-model="temp.desc" />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="handleUpdate()">提交</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
 <script>
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
-import SwitchRoles from '../components/SwitchRoles'
+
+import { fetchList, fetchPv, createListItem, updateListItem } from '@/api/download_manage'
+import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
   name: 'Func1',
-  components: { SwitchRoles },
+  components: { Pagination },
   directives: { permission },
-  data() {
-    return {
-      tableData: [
-        {
-          title: '标题1',
-          time: '2021-06-17',
-          master: '创建人1',
-          desc: '描述1'
-        },
-        {
-          title: '标题2',
-          time: '2021-06-18',
-          master: '创建人2',
-          desc: '描述2'
-        },
-        {
-          title: '标题3',
-          time: '2021-06-19',
-          master: '创建人3',
-          desc: '描述3'
-        },
-        {
-          title: '标题4',
-          time: '2021-06-20',
-          master: '创建人4',
-          desc: '描述4'
-        },
-        {
-          title: '标题5',
-          time: '2021-06-21',
-          master: '创建人5',
-          desc: '描述5'
-        }
-      ],
-      search: ''
+  filters: {
+    formatDate: function(value) {
+      const date = new Date(value)
+      const y = date.getFullYear()
+      let MM = date.getMonth() + 1
+      MM = MM < 10 ? '0' + MM : MM
+      let d = date.getDate()
+      d = d < 10 ? '0' + d : d
+      let h = date.getHours()
+      h = h < 10 ? '0' + h : h
+      let m = date.getMinutes()
+      m = m < 10 ? '0' + m : m
+      let s = date.getSeconds()
+      s = s < 10 ? '0' + s : s
+      const time1 = y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s
+      const time2 = y + '-' + MM + '-' + d
+      return time2
     }
   },
+  data() {
+    return {
+      search: '',
+      list: null,
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 10
+      },
+
+      temp: {
+        id: undefined,
+        title: '',
+        time: '',
+        master: '',
+        desc: ''
+      },
+      dialogFormVisible: false,
+      dialogPvVisible: false,
+      downloadLoading: false
+    }
+  },
+  created() {
+    this.getList()
+  },
   methods: {
-    checkPermission,
-    handleRolesChange() {
-      this.key++
+    getList() {
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
     },
+    checkPermission,
     handleDownload(index, row) {
       console.log(index, row)
+      // this.downloadLoading = true
+      // import('@/vendor/Export2Excel').then(excel => {
+      //   const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+      //   const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+      //   const data = this.formatJson(filterVal)
+      //   excel.export_json_to_excel({
+      //     header: tHeader,
+      //     data,
+      //     filename: 'table-list'
+      //   })
+      //   this.downloadLoading = false
+      // })
     },
     handleEdit(index, row) {
       console.log(index, row)
+      this.temp = Object.assign({}, row)
+      this.temp.time = new Date(this.temp.time)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs['dataForm'].clearValidate()
+      })
     },
     handleDelete(index, row) {
       console.log(index, row)
+      this.$notify({
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
+        duration: 2000
+      })
+      this.list.splice(index, 1)
+    },
+    handleUpdate() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.temp)
+          tempData.time = +new Date(tempData.time)
+          updateListItem(tempData).then(() => {
+            const index = this.list.findIndex(v => v.id === this.temp.id)
+            this.list.splice(index, 1, this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Update Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
     }
   }
 }

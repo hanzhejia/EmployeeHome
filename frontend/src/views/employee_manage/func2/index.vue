@@ -142,7 +142,6 @@
         <el-button @click="resetForm('ruleForm')">取消</el-button>
       </el-form-item>
     </el-form>
-
   </div>
 </template>
 <script>
