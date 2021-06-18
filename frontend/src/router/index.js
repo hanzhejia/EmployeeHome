@@ -63,7 +63,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: 'Dashboard', icon: '' }
     }]
   },
 
@@ -72,25 +72,25 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/test/func1',
     name: 'Test',
-    meta: { title: 'Test', icon: 'el-icon-s-help' },
+    meta: { title: 'Test', icon: '' },
     children: [
       {
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/test/func1/index'),
-        meta: { title: 'func1', icon: 'table' }
+        meta: { title: 'func1', icon: '' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/test/func2/index'),
-        meta: { title: 'func2', icon: 'table' }
+        meta: { title: 'func2', icon: '' }
       },
       {
         path: 'func3',
         name: 'Func3',
         component: () => import('@/views/test/func3/index'),
-        meta: { title: 'func3', icon: 'table' }
+        meta: { title: 'func3', icon: '' }
       }
     ]
   },
@@ -124,7 +124,7 @@ export const asyncRoutes = [
     name: 'Face_manage',
     meta: {
       title: '人脸管理',
-      icon: 'el-icon-s-help',
+      icon: 'el-icon-s-tools',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -132,13 +132,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/face_mamage/func1/index'),
-        meta: { title: '信息管理', icon: 'table' }
+        meta: { title: '信息管理', icon: 'el-icon-tickets' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/face_mamage/func2/index'),
-        meta: { title: '人脸注册', icon: 'table' }
+        meta: { title: '人脸注册', icon: 'el-icon-camera' }
       }
     ]
   },
@@ -151,7 +151,7 @@ export const asyncRoutes = [
     name: 'User_manage',
     meta: {
       title: '用户管理',
-      icon: 'el-icon-s-help',
+      icon: 'el-icon-s-custom',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -159,19 +159,19 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/user_manage/func1/index'),
-        meta: { title: '用户查询', icon: 'table' }
+        meta: { title: '用户查询', icon: 'el-icon-tickets' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/user_manage/func2/index'),
-        meta: { title: '添加用户', icon: 'table' }
+        meta: { title: '添加用户', icon: 'el-icon-plus' }
       },
       {
         path: 'func3',
         name: 'Func3',
         component: () => import('@/views/user_manage/func3/index'),
-        meta: { title: '修改用户', icon: 'table' }
+        meta: { title: '修改用户', icon: 'el-icon-setting' }
       }
     ]
   },
@@ -192,13 +192,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/dept_manage/func1/index'),
-        meta: { title: '查询部门', icon: 'table' }
+        meta: { title: '查询部门', icon: 'el-icon-tickets' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/dept_manage/func2/index'),
-        meta: { title: '添加部门', icon: 'table' }
+        meta: { title: '添加部门', icon: 'el-icon-plus' }
       }
     ]
   },
@@ -211,7 +211,7 @@ export const asyncRoutes = [
     name: 'Job_manage',
     meta: {
       title: '职位管理',
-      icon: 'el-icon-s-help',
+      icon: 'el-icon-s-management',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -219,13 +219,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/job_manage/func1/index'),
-        meta: { title: '职位查询', icon: 'table' }
+        meta: { title: '职位查询', icon: 'el-icon-tickets' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/job_manage/func2/index'),
-        meta: { title: '添加职位', icon: 'table' }
+        meta: { title: '添加职位', icon: 'el-icon-plus' }
       }
     ]
   },
@@ -238,7 +238,7 @@ export const asyncRoutes = [
     name: 'Employee_manage',
     meta: {
       title: '员工管理',
-      icon: 'el-icon-s-help',
+      icon: 'el-icon-s-cooperation',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -246,13 +246,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/employee_manage/func1/index'),
-        meta: { title: '员工查询', icon: 'table' }
+        meta: { title: '员工查询', icon: 'el-icon-tickets' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/employee_manage/func2/index'),
-        meta: { title: '添加员工', icon: 'table' }
+        meta: { title: '添加员工', icon: 'el-icon-plus' }
       }
     ]
   },
@@ -265,7 +265,7 @@ export const asyncRoutes = [
     name: 'Notice_manage',
     meta: {
       title: '公告管理',
-      icon: 'el-icon-s-help',
+      icon: 'el-icon-s-order',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -273,13 +273,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/notice_manage/func1/index'),
-        meta: { title: '公告查询', icon: 'table' }
+        meta: { title: '公告查询', icon: 'el-icon-tickets' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/notice_manage/func2/index'),
-        meta: { title: '添加公告', icon: 'table' }
+        meta: { title: '添加公告', icon: 'el-icon-plus' }
       }
     ]
   },
@@ -292,7 +292,7 @@ export const asyncRoutes = [
     name: 'Download_manage',
     meta: {
       title: '下载中心',
-      icon: 'el-icon-s-help',
+      icon: 'el-icon-s-promotion',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [
@@ -302,7 +302,7 @@ export const asyncRoutes = [
         component: () => import('@/views/download_manage/func1/index'),
         meta: {
           title: '文档查询',
-          icon: 'table'
+          icon: 'el-icon-tickets'
         }
       },
       {
@@ -311,7 +311,7 @@ export const asyncRoutes = [
         component: () => import('@/views/download_manage/func2/index'),
         meta: {
           title: '上传文档',
-          icon: 'table',
+          icon: 'el-icon-plus',
           roles: ['admin']
         }
       }

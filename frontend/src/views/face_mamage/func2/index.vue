@@ -1,6 +1,5 @@
-
 <template>
-  <div>
+  <div class="func1-container">
     <article>
       <template>
         <div>
@@ -97,3 +96,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.func1 {
+  &-container {
+    margin: 30px;
+  }
+  &-text {
+    font-size: 30px;
+    line-height: 46px;
+  }
+}
+</style>

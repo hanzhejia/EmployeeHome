@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import logo from '@/assets/logo_images/logo.png'
+
 export default {
   name: 'SidebarLogo',
   props: {
@@ -25,7 +27,8 @@ export default {
   data() {
     return {
       title: '社畜の家',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      // logo: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png'
+      logo: logo
     }
   }
 }
