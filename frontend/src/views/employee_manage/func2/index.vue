@@ -147,6 +147,9 @@
 <script>
 // import { mapGetters } from 'vuex'
 
+import { fetchList, fetchPv, createListItem, updateListItem } from '@/api/employee_manage'
+
+
 export default {
   name: 'Func2',
   // computed: {
@@ -182,7 +185,18 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          const tempData = Object.assign({}, this.temp)
+          createListItem(tempData).then(() => {
+            const index = this.list.findIndex(v => v.id === this.temp.id)
+            this.list.splice(index, 1, this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Update Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
         } else {
           console.log('error submit!!')
           return false
