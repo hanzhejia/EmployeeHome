@@ -64,15 +64,22 @@
               :visible.sync="centerDialogVisible"
               width="40%"
               center>
-              <span >{{scope.row.province}}</span>
+              <span >{{info}}</span>
               <span slot="footer" class="dialog-footer">
     <el-button @click="centerDialogVisible = false">取 消</el-button>
     <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
   </span>
             </el-dialog>
 
-            <el-button type="text" size="small">编辑</el-button>
-            
+            <el-button type="text" size="small"  @click="edit('sd')">编辑</el-button>
+            <el-dialog
+              :title="neww"
+              :visible.sync="dialogVisible"
+              width="50%"
+              center>
+              <Nav>
+              </Nav>
+            </el-dialog>
           </template>
         </el-table-column>
       </el-table>
@@ -84,10 +91,7 @@
       </el-pagination>
         <span style="top: 20px;position: relative" >共有5条记录，当前显示5条记录</span>
       </div>
-
     </div>
-    <Nav style="top: 20px;position: relative" >
-    </Nav>
   </div>
 </template>
 
@@ -121,10 +125,16 @@ export default {
       this.centerDialogVisible = true
       this.sbs=`${po.name}`
       console.log(po.name)
+      this.info = po.province
+    },
+    edit(po) {
+      this.dialogVisible = true
     }
   },
   data() {
     return {
+      info: '',
+      dialogVisible: false,
       centerDialogVisible: false,
       input1: '',
       input2: '',
