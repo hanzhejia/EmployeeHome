@@ -1,7 +1,7 @@
 <template>
   <div class="func1-container">
     <el-table
-      :data="list.filter(data => !search || data.jobName.toLowerCase().includes(search.toLowerCase()))"
+      :data="list.filter(data => !search || data.job.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
     >
       <el-table-column
@@ -36,6 +36,7 @@
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="职位名称" prop="job">
@@ -57,7 +58,7 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission'
 import Pagination from '@/components/Pagination'
-import { fetchList, updateListItem } from '@/api/employee_manage' // 权限判断函数
+import { fetchList, updateListItem } from '@/api/job_manage' // 权限判断函数
 
 export default {
   name: 'Func1',
@@ -103,7 +104,6 @@ export default {
     handleEdit(index, row) {
       console.log(index, row)
       this.temp = Object.assign({}, row)
-      this.temp.time = new Date(this.temp.time)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
