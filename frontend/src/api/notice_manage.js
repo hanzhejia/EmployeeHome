@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export function fetchList(query) {
+  console.log('sb')
   return request({
     url: '/vue-admin-template/noti/list',
     method: 'get',

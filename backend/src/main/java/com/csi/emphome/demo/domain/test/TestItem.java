@@ -12,7 +12,6 @@ public class TestItem {
     private int id;
     private String info;
     private Date time;
-
     public TestItem() {
     }
 
