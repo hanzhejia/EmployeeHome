@@ -5,22 +5,14 @@ const count = 100
 
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
-    name: '甄珍器',
-    sex: '男',
-    phone: '12345678900',
-    email: '1004517408@qq.com',
-    job: '蒙古海军司令',
-    education: '大专人',
-    card: '123456789456123046',
-    dept: '宣传部',
-    address: '翻斗花园',
-    createdate: '2018-11-11'
+    job: '111',
+    remark: '@increment'
   }))
 }
 
 module.exports = [
   {
-    url: '/vue-admin-template/employee/list',
+    url: '/vue-admin-template/job/list',
     type: 'get',
     response: config => {
       const { page = 1, limit = 20 } = config.query
@@ -40,7 +32,7 @@ module.exports = [
   },
 
   {
-    url: '/vue-admin-template/employee/detail',
+    url: '/vue-admin-template/job/detail',
     type: 'get',
     response: config => {
       const { id } = config.query
@@ -56,7 +48,7 @@ module.exports = [
   },
 
   {
-    url: '/vue-admin-template/employee/pv',
+    url: '/vue-admin-template/job/pv',
     type: 'get',
     response: _ => {
       return {
@@ -74,7 +66,7 @@ module.exports = [
   },
 
   {
-    url: '/vue-admin-template/employee/create',
+    url: '/vue-admin-template/job/create',
     type: 'post',
     response: _ => {
       return {
@@ -85,31 +77,12 @@ module.exports = [
   },
 
   {
-    url: '/vue-admin-template/employee/update',
+    url: '/vue-admin-template/job/update',
     type: 'post',
     response: _ => {
       return {
         code: 20000,
         data: 'success'
-      }
-    }
-  },
-
-  {
-    url: '/vue-admin-template/employee/searchdate',
-    type: 'post',
-    response: config => {
-      const mockList = List
-
-      const pageList = mockList.filter((data => !data.name || data.name.includes(config.name)) && (data => !data.job || data.job.includes(config.job)) && (data => !data.card || data.card.includes(config.card)) &&
-      (data => !data.sex || data.sex.includes(config.sex)) && (data => !data.phone || data.phone.includes(config.phone)) && (data => !data.dept || data.dept.includes(config.dept)))
-
-      return {
-        code: 20000,
-        data: {
-          total: mockList.length,
-          items: pageList
-        }
       }
     }
   }

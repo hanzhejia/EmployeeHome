@@ -1,8 +1,70 @@
 <template>
   <div class="func1-container">
     <switch-roles @change="handleRolesChange" />
+    <el-form ref="ruleForm" :model="searcheForm" label-width="100px" class="demo-ruleForm">
+      <el-row>
+        <el-col :span="4">
+          <el-form-item label="职位" prop="job">
+            <el-select v-model="searcheForm.job" >
+              <el-option label="蒙古海军司令" value="蒙古海军司令"></el-option>
+              <el-option label="梵蒂冈空军最高指挥官" value="梵蒂冈空军最高指挥官"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6" :offset="2">
+            <el-form-item label="姓名" prop="name">
+              <el-input
+                v-model="searcheForm.name"
+                size="mini"
+                placeholder="输入姓名搜索"
+              />
+            </el-form-item>
+        </el-col>
+        <el-col :span="6" :offset="2">
+          <el-form-item label="身份证号码" prop="job">
+              <el-input
+                v-model="searcheForm.card"
+                size="mini"
+                placeholder="输入身份证号搜索"
+              />
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="4">
+          <el-form-item label="性别" prop="sex">
+            <el-select v-model="searcheForm.sex" >
+              <el-option label="男" value="男"></el-option>
+              <el-option label="女" value="女"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6" :offset="2">
+          <el-form-item label="手机号" prop="phone">
+            <el-input
+              v-model="searcheForm.phone"
+              size="mini"
+              placeholder="输入手机号搜索"
+            />
+          </el-form-item>
+        </el-col>
+        <el-col :span="6" :offset="2">
+          <el-form-item label="所属部门" prop="dept">
+            <el-select v-model="searcheForm.dept" >
+              <el-option label="人事部" value="人事部"></el-option>
+              <el-option label="采购部" value="采购部"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-form-item>
+          <el-button type="primary" @click="search()">搜索</el-button>
+          <el-button @click="resetForm('searcheForm')">取消</el-button>
+        </el-form-item>
+      </el-row>
+    </el-form>
+
     <el-table
-      :data="list.filter(data => !search || data.name.includes(search))"
+      :data="list"
       style="width: 100%"
     >
       <el-table-column
@@ -57,15 +119,7 @@
           <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="operation(scope.$index, scope.row)">编辑</el-button>
         </template>
       </el-table-column>
-      <el-table-column align="right">
-        <template slot="header">
-          <el-input
-            v-model="search"
-            size="mini"
-            placeholder="输入姓名搜索"
-          />
-        </template>
-      </el-table-column>
+
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
@@ -115,7 +169,7 @@
 <script>
 // import { mapGetters } from 'vuex'
 import checkPermission from '@/utils/permission'
-import { fetchList, fetchPv, createListItem, updateListItem } from '@/api/employee_manage'
+import { fetchList, searchdateListItem, updateListItem } from '@/api/employee_manage'
 import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission' // secondary package based on el-pagination
 
@@ -143,7 +197,7 @@ export default {
         address: '',
         createdate: ''
       },
-      search: '',
+
       dialogFormVisible: false,
       list: null,
       total: 0,
@@ -151,6 +205,14 @@ export default {
       listQuery: {
         page: 1,
         limit: 10
+      },
+      searcheForm: {
+        job: '',
+        name: '',
+        card: '',
+        sex: '',
+        phone: '',
+        dept: ''
       }
     }
   },
@@ -173,10 +235,11 @@ export default {
     },
     getList() {
       this.listLoading = true
+      console.log(this.listQuery.page)
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
-
+        console.log(response.data.total)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -209,6 +272,18 @@ export default {
             })
           })
         }
+      })
+    },
+
+    search() {
+      const tempData = Object.assign({}, this.searcheForm)
+      searchdateListItem(tempData).then(response => {
+        this.list = response.data.items
+        console.log(this.list)
+        this.total = response.data.total
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
       })
     }
   }
