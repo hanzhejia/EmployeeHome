@@ -31,7 +31,7 @@ public class notiController {
         responseData.put("total",listItems.size());
         responseData.put("items",listItems);
         response.put("data",responseData);
-        System.out.println("sd");
+        System.out.println("sd1");
         System.out.println(listItems);
         return response;
 
