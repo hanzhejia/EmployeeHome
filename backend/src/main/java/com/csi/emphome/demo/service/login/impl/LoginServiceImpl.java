@@ -1,6 +1,6 @@
 package com.csi.emphome.demo.service.login.impl;
 
-import com.csi.emphome.demo.domain.test.test;
+import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.repository.test.TestRepository;
 import com.csi.emphome.demo.service.login.LoginService;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public List<test> list() {
+    public List<TestItem> list() {
         return testRepository.findAll();
     }
 }
