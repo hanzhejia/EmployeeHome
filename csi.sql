@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 20/06/2021 09:50:22
+ Date: 20/06/2021 14:29:27
 */
 
 SET NAMES utf8mb4;
@@ -131,6 +131,9 @@ CREATE TABLE `notice_inf`  (
   `CONTENT` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CREATE_DATE` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP(0),
   `USER_ID` int NULL DEFAULT NULL,
+  `caredate` date NULL DEFAULT NULL,
+  `tiitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `userid` int NOT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `USER_ID`(`USER_ID`) USING BTREE,
   CONSTRAINT `USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `user_inf` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
