@@ -7,16 +7,16 @@ import java.sql.Date;
 
 @Entity
 @Table(name="test_inf")
-public class test {
+public class TestItem {
     @Id
     private int id;
     private String info;
     private Date time;
 
-    public test() {
+    public TestItem() {
     }
 
-    public test(int id, String info, Date time) {
+    public TestItem(int id, String info, Date time) {
         this.id = id;
         this.info = info;
         this.time = time;
