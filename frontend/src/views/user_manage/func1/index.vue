@@ -79,6 +79,15 @@
                     auto-complete="off"
                   />
                 </el-form-item>
+                <el-form-item
+                  :label-width="formLabeWidth"
+                  label="密码:"
+                >
+                  <el-input
+                    v-model="temp.Password"
+                    auto-complete="off"
+                  />
+                </el-form-item>
                 <el-form-item label="状    态：">
                   <el-select v-model="temp.Status" placeholder="请选择状态">
                     <el-option label="管理员" value="1" />
@@ -122,6 +131,7 @@ export default {
       form: {
         Username: '',
         Loginname: '',
+        Password: '',
         Status: '管理员'
       },
       formLabelWidth: '50px',

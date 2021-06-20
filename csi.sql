@@ -10,7 +10,11 @@ Target Server Type    : MYSQL
 Target Server Version : 80022
 File Encoding         : 65001
 
+<<<<<<< HEAD
 Date: 2021-06-20 15:04:07
+=======
+ Date: 20/06/2021 14:29:27
+>>>>>>> ad4e2100dc22b9acfa4b5e1e6c9c067c0b373139
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -127,10 +131,17 @@ CREATE TABLE `notice_inf` (
   `ID` int NOT NULL,
   `TITLE` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CONTENT` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+<<<<<<< HEAD
   `CREATE_DATE` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `USER_ID` int DEFAULT NULL,
   `caredate` date DEFAULT NULL,
   `tiitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+=======
+  `CREATE_DATE` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP(0),
+  `USER_ID` int NULL DEFAULT NULL,
+  `caredate` date NULL DEFAULT NULL,
+  `tiitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+>>>>>>> ad4e2100dc22b9acfa4b5e1e6c9c067c0b373139
   `userid` int NOT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
   KEY `USER_ID` (`USER_ID`) USING BTREE,
