@@ -2,12 +2,13 @@
   <div class="func1-container">
     <el-table
       v-loading="listLoading"
-      :data="list.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
+      :data="list.filter(data => !search || data.info.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       highlight-current-row
     >
       <el-table-column type="selection" width="55" />
 
+      <el-table-column label="id" prop="id" />
       <el-table-column label="信息" prop="info" />
       <el-table-column label="创建时间">
         <template slot-scope="{row}">
@@ -41,6 +42,9 @@
 
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="id" prop="id">
+          <el-input v-model="temp.id" />
+        </el-form-item>
         <el-form-item label="信息" prop="info">
           <el-input v-model="temp.info" />
         </el-form-item>
@@ -100,10 +104,8 @@ export default {
 
       temp: {
         id: undefined,
-        title: '',
-        time: '',
-        master: '',
-        desc: ''
+        info: '',
+        time: ''
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -128,6 +130,7 @@ export default {
     },
     resetTemp() {
       this.temp = {
+        id: '',
         info: '',
         timestamp: new Date()
       }
@@ -201,7 +204,6 @@ export default {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.temp.author = 'vue-element-admin'
           createListItem(this.temp).then(() => {
             this.list.unshift(this.temp)
             this.dialogFormVisible = false
@@ -214,7 +216,7 @@ export default {
           })
         }
       })
-    },
+    }
   }
 }
 </script>

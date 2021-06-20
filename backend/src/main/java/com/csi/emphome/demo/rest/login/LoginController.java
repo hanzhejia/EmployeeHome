@@ -1,17 +1,16 @@
-package com.csi.emphome.demo.controller;
+package com.csi.emphome.demo.rest.login;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
+@RequestMapping(value = "/vue-admin-template/user")
 public class LoginController {
     @CrossOrigin
-    @PostMapping(value = "/vue-admin-template/user/login")
+    @PostMapping(value = "/login")
     @ResponseBody
     public HashMap<String, Object> login() {
         HashMap<String, Object> response = new HashMap<>();
@@ -24,12 +23,14 @@ public class LoginController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/vue-admin-template/user/info")
+    @GetMapping(value = "/info")
     @ResponseBody
     public HashMap<String, Object> info() {
         HashMap<String, Object> responseInfo = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
-        responseData.put("roles","admin");
+        ArrayList<String> roles = new ArrayList<>();
+        roles.add("admin");
+        responseData.put("roles",roles);
         responseData.put("name","Super admin");
         responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         responseInfo.put("code",20000);
@@ -39,7 +40,7 @@ public class LoginController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/vue-admin-template/user/logout")
+    @PostMapping(value = "/logout")
     @ResponseBody
     public HashMap<String, Object> logout() {
         HashMap<String, Object> response = new HashMap<>();
