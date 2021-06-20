@@ -7,6 +7,7 @@ const role = require('./role')
 const article = require('./download')
 const employee = require('./employee')
 const job = require('./job')
+const userm = require('./userm')
 const test = require('./test')
 const search = require('./remote-search')
 
@@ -16,6 +17,7 @@ const mocks = [
   ...article,
   ...employee,
   ...job,
+  ...userm,
   ...test,
   ...search,
   ...department
