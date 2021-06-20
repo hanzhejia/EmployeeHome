@@ -4,6 +4,7 @@ import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.repository.test.TestRepository;
 import com.csi.emphome.demo.service.test.TestService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,7 +35,29 @@ public class TestServiceImpl implements TestService {
         System.out.println(data);
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
-        response.put("data","sb");
+        response.put("data","success");
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> updateListItemFunc(TestItem data) {
+        //        testRepository.save(data);
+        System.out.println(data);
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","success");
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> deleteListItemFunc(TestItem data) {
+        //        testRepository.save(data);
+        System.out.println(data);
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","success");
         return response;
     }
 }

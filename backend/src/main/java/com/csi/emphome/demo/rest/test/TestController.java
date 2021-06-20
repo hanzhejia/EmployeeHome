@@ -29,4 +29,18 @@ public class TestController {
     public HashMap<String, Object> createListItem(@RequestBody TestItem data) {
         return testService.createListItemFunc(data);
     }
+
+    @CrossOrigin
+    @PostMapping(value = "/update")
+    @ResponseBody
+    public HashMap<String, Object> updateListItem(@RequestBody TestItem data) {
+        return testService.updateListItemFunc(data);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/delete")
+    @ResponseBody
+    public HashMap<String, Object> deleteListItem(@RequestBody TestItem data) {
+        return testService.deleteListItemFunc(data);
+    }
 }

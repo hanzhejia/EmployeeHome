@@ -8,4 +8,6 @@ import java.util.HashMap;
 public interface TestService {
     HashMap<String, Object> fetchListFunc();
     HashMap<String, Object> createListItemFunc(TestItem data);
+    HashMap<String, Object> updateListItemFunc(TestItem data);
+    HashMap<String, Object> deleteListItemFunc(TestItem data);
 }

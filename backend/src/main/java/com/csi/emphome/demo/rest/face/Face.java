@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 @Controller
 @RequestMapping(value = "/vue-admin-template/face")
-public class face {
+public class Face {
     private final FaceService faceService;
 
-    public face(FaceService faceService) {
+    public Face(FaceService faceService) {
         this.faceService = faceService;
     }
 

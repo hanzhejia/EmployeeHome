@@ -1,25 +1,24 @@
-package com.csi.emphome.demo.service.face.impl;
-
-import com.csi.emphome.demo.repository.face.FaceRepository;
-import com.csi.emphome.demo.service.face.FaceService;
+package com.csi.emphome.demo.service.employee.impl;
+import com.csi.emphome.demo.repository.employee.EmployeeRepository;
+import com.csi.emphome.demo.service.employee.EmployeeService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class FaceServiceImpl implements FaceService {
-    private final FaceRepository faceRepository;
+public class EmployeeServiceImpl implements EmployeeService {
+    private final EmployeeRepository employeeRepository;
 
-    public FaceServiceImpl(FaceRepository faceRepository) {
-        this.faceRepository = faceRepository;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
     public HashMap<String, Object> fetchListFunc() {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
-        List listItems = faceRepository.findAll();
+        List listItems = employeeRepository.findAll();
         responseData.put("total",listItems.size());
         responseData.put("items",listItems);
         response.put("code",20000);

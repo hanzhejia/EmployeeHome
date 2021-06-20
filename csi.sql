@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 20/06/2021 14:29:27
+ Date: 20/06/2021 17:11:41
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `dept_inf`  (
   `NAME` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `REMARK` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of dept_inf
@@ -41,12 +41,12 @@ CREATE TABLE `document_inf`  (
   `TITLE` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Filename` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `REMARK` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `CREATE_DATE` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP(0),
+  `CREATE_DATE` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `USER_ID` int NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `USER_ID_1`(`USER_ID`) USING BTREE,
   CONSTRAINT `USER_ID_1` FOREIGN KEY (`USER_ID`) REFERENCES `user_inf` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of document_inf
@@ -76,14 +76,14 @@ CREATE TABLE `employee_inf`  (
   `SPECIALITY` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `HOBBY` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `REMARK` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `CREATE_DATE` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP(0),
+  `CREATE_DATE` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `DEPT_ID`(`DEPT_ID`) USING BTREE,
   INDEX `JOB_ID`(`JOB_ID`) USING BTREE,
   CONSTRAINT `DEPT_ID_FK` FOREIGN KEY (`DEPT_ID`) REFERENCES `dept_inf` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `JOB_ID_FK` FOREIGN KEY (`JOB_ID`) REFERENCES `job_inf` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `USER_ID_FK` FOREIGN KEY (`ID`) REFERENCES `user_inf` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of employee_inf
@@ -100,7 +100,7 @@ CREATE TABLE `facekey_inf`  (
   `secretKey` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `threshold` int NOT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of facekey_inf
@@ -115,7 +115,7 @@ CREATE TABLE `job_inf`  (
   `NAME` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `REMARK` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_inf
@@ -129,7 +129,7 @@ CREATE TABLE `notice_inf`  (
   `ID` int NOT NULL,
   `TITLE` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `CONTENT` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `CREATE_DATE` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP(0),
+  `CREATE_DATE` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `USER_ID` int NULL DEFAULT NULL,
   `caredate` date NULL DEFAULT NULL,
   `tiitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE `notice_inf`  (
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `USER_ID`(`USER_ID`) USING BTREE,
   CONSTRAINT `USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `user_inf` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of notice_inf
@@ -152,7 +152,7 @@ CREATE TABLE `test_inf`  (
   `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `time` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of test_inf
@@ -169,12 +169,12 @@ CREATE TABLE `user_inf`  (
   `Loginname` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `PASSWORD` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `STATUS` int NOT NULL,
-  `Createdate` timestamp(0) NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP(0),
+  `Createdate` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `Username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Faceurl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Facepath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`ID`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_inf

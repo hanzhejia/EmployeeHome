@@ -28,28 +28,22 @@
       >
         <el-table-column
           type="selection"
-          width="55"
-        />
+          width="55"/>
         <el-table-column
           label="登录名"
-          prop="Loginname"
-        />
+          prop="Loginname"/>
         <el-table-column
           label="密码"
-          prop="Password"
-        />
+          prop="Password"/>
         <el-table-column
           label="用户名"
-          prop="Username"
-        />
+          prop="Username"/>
         <el-table-column
           label="状态"
-          prop="Status"
-        />
+          prop="Status"/>
         <el-table-column
           label="创建时间"
-          prop="Createdate"
-        />
+          prop="Createdate"/>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!--跳转至用户修改页面-->
@@ -58,26 +52,21 @@
               :visible.sync="dialogFormVisible"
               title="修改用户"
               top="20px"
-              width="300px"
-            >
+              width="300px">
               <el-form :model="temp">
                 <el-form-item
                   :label-width="formLabeWidth"
-                  label="用户名:"
-                >
+                  label="用户名:">
                   <el-input
                     v-model="temp.Username"
-                    auto-complete="off"
-                  />
+                    auto-complete="off"/>
                 </el-form-item>
                 <el-form-item
                   :label-width="formLabeWidth"
-                  label="登录名:"
-                >
+                  label="登录名:">
                   <el-input
                     v-model="temp.Loginname"
-                    auto-complete="off"
-                  />
+                    auto-complete="off"/>
                 </el-form-item>
                 <el-form-item
                   :label-width="formLabeWidth"
@@ -108,7 +97,7 @@
       </el-table>
     </div>
     <div>
-      //分页
+<!--分页     -->
       <pagination v-show="total>0" :limit.sync="listQuery.limit" :page.sync="listQuery.page" :total="total" @pagination="getList" />
 
     </div>
@@ -206,20 +195,22 @@ export default {
       handleSet(index, row)
       {
         this.dialogFormVisible = false
-        // eslint-disable-next-line no-unused-vars
         var params = {
           name: this.form.name,
           loginname: this.form.loginname
         }
       },
+      /*搜索用户*/
       finds(s)
       {
         console.log('search!')
       },
+      /*删除用户*/
       back(d)
       {
         console.log('delete!')
       },
+      /*选择用户*/
       toggleSelection(rows)
       {
         if (rows) {
