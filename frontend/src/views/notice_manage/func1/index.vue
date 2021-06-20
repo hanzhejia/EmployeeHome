@@ -34,30 +34,30 @@
       >
         <el-table-column
           fixed
-          prop="date"
+          prop="caredate"
           label="日期"
           width="150"
         />
         <el-table-column
-          prop="name"
+          prop="tittle"
           label="公告名称"
           align="center"
           width="200"
         />
         <el-table-column
-          prop="province"
+          prop="content"
           label="公告内容"
           align="center"
           width="200"
         />
         <el-table-column
-          prop="city"
+          prop="caredate"
           label="创建时间"
           align="center"
           width="200"
         />
         <el-table-column
-          prop="address"
+          prop="userid"
           label="公告人"
           align="center"
           width="150"
@@ -131,42 +131,25 @@ export default {
         limit: 10
       },
       tableData: [{
-        date: '2016-05-02',
-        name: '吃饭',
-        province: '内容1',
-        city: '2016-05-02',
-        address: '小花',
-        zip: 200333
-      }, {
-        date: '2016-05-04',
-        name: '会议2',
-        province: '内容2',
-        city: '2016-05-02',
-        address: '姐',
-        zip: 200333
-      }, {
-        date: '2016-05-01',
-        name: '会议3',
-        province: '内容3',
-        city: '2016-05-02',
-        address: '龙',
-        zip: 200333
-      }, {
-        date: '2016-05-03',
-        name: '会议4',
-        province: '内容4',
-        city: '2016-05-02',
-        address: '兔子',
-        zip: 200333
-      }]
+        careTime: '2021-06-19',
+        content: '吃饭',
+        id: '0',
+        tiitle: 'opo',
+        userid: '2' }]
     }
+  },
+  created() {
+    this.getList()
   },
   methods: {
     getList() {
+      console.log('sb')
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
+        console.log('sb')
         this.list = response.data.items
         this.total = response.data.total
+        this.tableData = this.list
         console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -192,9 +175,9 @@ export default {
     },
     sb(po) {
       this.centerDialogVisible = true
-      this.sbs = `${po.name}`
-      console.log(po.name)
-      this.info = po.province
+      this.sbs = `${po.tiitle}`
+      console.log(po.tiitle)
+      this.info = po.content
     },
     edit(po) {
       this.dialogVisible = true

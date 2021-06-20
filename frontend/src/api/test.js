@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export function fetchList(query) {
+  console.log('sbssssssssssssss')
   return request({
     url: '/vue-admin-template/test/list',
     method: 'get',

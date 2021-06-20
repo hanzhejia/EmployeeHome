@@ -1,11 +1,10 @@
 package com.csi.emphome.demo.service.noti;
 
-import com.csi.emphome.demo.domain.notice.noti;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import java.util.HashMap;
 
 @Service
 public interface notiService {
-    List<noti> list();
+//    List<noti> list();
+HashMap<String, Object> fetchListFunc();
 }
