@@ -30,16 +30,49 @@
 </template>
 <script>
 import axios from "axios";
+import { fetchList, createListItem } from '@/api/notice_manage'
 export default {
   data() {
     return {
       textarea1: '',
-      textarea2: ''
-    };
+      textarea2: '',
+      temp: {
+        careTime: '',
+        content: '',
+        id: '',
+        tiitle: '',
+        userid: 1
+      }
+    }
+  },
+  created() {
+    this.getList()
   },
   methods: {
+    getList() {
+      console.log('sb')
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        console.log('sb')
+        this.list = response.data.items
+        this.total = response.data.total
+        this.tableData = this.list
+        console.log(this.list)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
+    },
     edit(detailInfo) {
-      console.log(this.textarea1);
+      const tempData = Object.assign({}, this.temp)
+      this.temp.careTime = +new Date(tempData.time)
+      this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+      this.temp.content = this.textarea2
+      this.temp.tiitle = this.textarea1
+      console.log(this.temp)
+      createListItem(this.temp).then(() => {
+      })
     },
     kong(sb){
       this.textarea1=''

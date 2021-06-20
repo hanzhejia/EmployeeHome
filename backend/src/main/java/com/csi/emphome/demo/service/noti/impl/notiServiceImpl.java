@@ -27,4 +27,13 @@ public class notiServiceImpl implements notiService {
         response.put("data",responseData);
         return response;
     }
+    @Override
+    public HashMap<String, Object> createListItemFunc(noti data) {
+        System.out.println(data);
+        System.out.println("sdddddd");
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","sb");
+        return response;
+    }
 }

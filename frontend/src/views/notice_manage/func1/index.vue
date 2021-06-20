@@ -34,12 +34,12 @@
       >
         <el-table-column
           fixed
-          prop="caredate"
+          prop="careTime"
           label="日期"
           width="150"
         />
         <el-table-column
-          prop="tittle"
+          prop="tiitle"
           label="公告名称"
           align="center"
           width="200"
@@ -51,7 +51,7 @@
           width="200"
         />
         <el-table-column
-          prop="caredate"
+          prop="careTime"
           label="创建时间"
           align="center"
           width="200"
@@ -81,15 +81,14 @@
                 <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
               </span>
             </el-dialog>
-
-            <el-button type="text" size="small" @click="edit('sd')">编辑</el-button>
+            <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-dialog
               :title="neww"
               :visible.sync="dialogVisible"
               width="50%"
               center
             >
-              <Nav />
+              <Nav :text="''+infos" :tittle="''+info" />
             </el-dialog>
           </template>
         </el-table-column>
@@ -121,6 +120,7 @@ export default {
       list: null,
       listLoading: true,
       info: '',
+      infos: '',
       dialogVisible: false,
       centerDialogVisible: false,
       input1: '',
@@ -180,6 +180,11 @@ export default {
       this.info = po.content
     },
     edit(po) {
+      console.log(po)
+      console.log('sp')
+      this.info = po.content
+      this.infos = po.tiitle
+      console.log(po.tiitle)
       this.dialogVisible = true
     }
   }
