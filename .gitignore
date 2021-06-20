@@ -4,3 +4,4 @@
 /frontend/.idea
 /backend/node_modules
 /package-lock.json
+/employee-home/backend/src/main/resources/application.properties
