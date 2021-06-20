@@ -60,13 +60,13 @@
               top="20px"
               width="300px"
             >
-              <el-form :model="temp1">
+              <el-form :model="temp">
                 <el-form-item
                   :label-width="formLabeWidth"
                   label="用户名:"
                 >
                   <el-input
-                    v-model="temp1.Username"
+                    v-model="temp.Username"
                     auto-complete="off"
                   />
                 </el-form-item>
@@ -75,12 +75,12 @@
                   label="登录名:"
                 >
                   <el-input
-                    v-model="temp1.Loginname"
+                    v-model="temp.Loginname"
                     auto-complete="off"
                   />
                 </el-form-item>
                 <el-form-item label="状    态：">
-                  <el-select v-model="temp1.Status" placeholder="请选择状态">
+                  <el-select v-model="temp.Status" placeholder="请选择状态">
                     <el-option label="管理员" value="1" />
                     <el-option label="普通用户" value="2" />
                   </el-select>
@@ -119,7 +119,7 @@ export default {
     return {
       dialogFormVisible: false, // 弹窗默认关闭
       // 弹出层的表单
-      temp1: {
+      form: {
         Username: '',
         Loginname: '',
         Status: '管理员'
