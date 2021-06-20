@@ -1,0 +1,33 @@
+import request from '@/utils/request'
+
+export function fetchList(query) {
+  return request({
+    url: '/vue-admin-template/noti/list',
+    method: 'get',
+    params: query
+  })
+}
+
+export function fetchListItem(id) {
+  return request({
+    url: '/vue-admin-template/test/detail',
+    method: 'get',
+    params: { id }
+  })
+}
+
+export function createListItem(data) {
+  return request({
+    url: '/vue-admin-template/test/create',
+    method: 'post',
+    data
+  })
+}
+
+export function updateListItem(data) {
+  return request({
+    url: '/vue-admin-template/test/update',
+    method: 'post',
+    data
+  })
+}

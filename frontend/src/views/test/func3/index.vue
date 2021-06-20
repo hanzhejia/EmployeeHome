@@ -119,6 +119,7 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
+
         this.list = response.data.items
         this.total = response.data.total
 
@@ -146,18 +147,6 @@ export default {
     },
     handleDownload(index, row) {
       console.log(index, row)
-      // this.downloadLoading = true
-      // import('@/vendor/Export2Excel').then(excel => {
-      //   const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-      //   const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-      //   const data = this.formatJson(filterVal)
-      //   excel.export_json_to_excel({
-      //     header: tHeader,
-      //     data,
-      //     filename: 'table-list'
-      //   })
-      //   this.downloadLoading = false
-      // })
     },
     handleEdit(index, row) {
       console.log(index, row)
