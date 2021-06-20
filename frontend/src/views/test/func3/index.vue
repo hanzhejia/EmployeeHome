@@ -65,7 +65,7 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 
-import { fetchList, createListItem, updateListItem } from '@/api/test'
+import { fetchList, createListItem, updateListItem, deleteListItem } from '@/api/test'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -128,6 +128,7 @@ export default {
         }, 100)
       })
     },
+
     resetTemp() {
       this.temp = {
         id: '',
@@ -135,7 +136,13 @@ export default {
         timestamp: new Date()
       }
     },
+
     checkPermission,
+
+    handleDownload(index, row) {
+      console.log(index, row)
+    },
+
     handleCreate() {
       this.resetTemp()
       this.dialogStatus = 'create'
@@ -144,11 +151,8 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
-    handleDownload(index, row) {
-      console.log(index, row)
-    },
+
     handleEdit(index, row) {
-      console.log(index, row)
       this.temp = Object.assign({}, row)
       this.temp.time = new Date(this.temp.time)
       this.dialogStatus = 'update'
@@ -157,15 +161,35 @@ export default {
         this.$refs['dataForm'].clearValidate()
       })
     },
+
     handleDelete(index, row) {
-      console.log(index, row)
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+      deleteListItem(row).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: 'Delete Successfully',
+          type: 'success',
+          duration: 2000
+        })
+        this.list.splice(index, 1)
       })
-      this.list.splice(index, 1)
+    },
+
+    createData() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          createListItem(this.temp).then(() => {
+            this.list.unshift(this.temp)
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: 'Created Successfully',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
     },
 
     updateData() {
@@ -180,24 +204,6 @@ export default {
             this.$notify({
               title: 'Success',
               message: 'Update Successfully',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
-    },
-
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          createListItem(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
               type: 'success',
               duration: 2000
             })

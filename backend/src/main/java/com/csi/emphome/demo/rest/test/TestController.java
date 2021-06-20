@@ -1,6 +1,7 @@
 package com.csi.emphome.demo.rest.test;
 
 
+import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.service.test.TestService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -20,5 +21,26 @@ public class TestController {
     @ResponseBody
     public HashMap<String, Object> fetchList() {
         return testService.fetchListFunc();
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/create")
+    @ResponseBody
+    public HashMap<String, Object> createListItem(@RequestBody TestItem data) {
+        return testService.createListItemFunc(data);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/update")
+    @ResponseBody
+    public HashMap<String, Object> updateListItem(@RequestBody TestItem data) {
+        return testService.updateListItemFunc(data);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/delete")
+    @ResponseBody
+    public HashMap<String, Object> deleteListItem(@RequestBody TestItem data) {
+        return testService.deleteListItemFunc(data);
     }
 }

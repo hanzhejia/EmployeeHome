@@ -67,6 +67,17 @@ module.exports = [
         data: 'success'
       }
     }
+  },
+
+  {
+    url: '/vue-admin-template/test/delete',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
   }
 ]
 

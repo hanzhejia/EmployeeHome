@@ -31,3 +31,11 @@ export function updateListItem(data) {
     data
   })
 }
+
+export function deleteListItem(data) {
+  return request({
+    url: `/vue-admin-template/test/delete`,
+    method: 'post',
+    data
+  })
+}
