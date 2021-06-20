@@ -1,6 +1,6 @@
 package com.csi.emphome.demo.service.face.impl;
 
-import com.csi.emphome.demo.repository.test.TestRepository;
+import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import java.util.List;
 
 @Service
 public class FaceServiceImpl implements FaceService {
-    private final TestRepository faceRepository;
+    private final FaceRepository faceRepository;
 
-    public FaceServiceImpl(TestRepository faceRepository) {
+    public FaceServiceImpl(FaceRepository faceRepository) {
         this.faceRepository = faceRepository;
     }
 
