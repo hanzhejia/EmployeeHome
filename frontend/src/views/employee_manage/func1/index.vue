@@ -249,7 +249,6 @@ export default {
     operation(index, row) {
       console.log(index, row)
       this.temp = Object.assign({}, row)
-      this.temp.time = new Date(this.temp.time)
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
