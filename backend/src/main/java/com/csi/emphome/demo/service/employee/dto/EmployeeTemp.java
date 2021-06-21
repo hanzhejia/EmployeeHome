@@ -1,27 +1,21 @@
-package com.csi.emphome.demo.domain.test;
+package com.csi.emphome.demo.service.employee.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
 import java.sql.Date;
 
-@Entity
-@Table(name="test_inf")
-public class TestItem {
-    @Id
+public class EmployeeTemp implements Serializable {
     private int id;
     private String info;
     private Date time;
-    public TestItem() {
+
+    public EmployeeTemp() {
     }
 
-    public TestItem(int id, String info, Date time) {
+    public EmployeeTemp(int id, String info, Date time) {
         this.id = id;
         this.info = info;
         this.time = time;
     }
-
-
 
     public int getId() {
         return id;
@@ -49,7 +43,7 @@ public class TestItem {
 
     @Override
     public String toString() {
-        return "ListItem{" +
+        return "TestTemp{" +
                 "id=" + id +
                 ", info='" + info + '\'' +
                 ", time=" + time +

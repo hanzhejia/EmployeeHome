@@ -29,17 +29,18 @@
 </template>
 <script>
 import axios from "axios";
-import { fetchList, createListItem ,updateListItem} from '@/api/notice_manage'
+import { fetchList, createListItem ,updateListItem,deleteListItem} from '@/api/notice_manage'
 export default {
   props: {
     text: String,
     tittle:String,
-    tempid: String
+    tempid: Number
   },
   data() {
     return {
       textarea1: this.text,
       textarea2: this.tittle,
+      ts:this.tempid,
       temp:{
         careTime: '',
         content: '',
@@ -56,11 +57,13 @@ export default {
       }
     },
     text: function(to, from) {
-      // console.log('1');
-      // console.log(to);
-      // console.log(from);
       if (to) {
         this.textarea1 = to
+      }
+    },
+    tempid :function (to,from){
+      if (to) {
+        this.ts = to
       }
     }
   },
@@ -72,15 +75,25 @@ export default {
       this.temp.content=this.textarea2
       const tempData = Object.assign({}, this.temp)
       this.temp.careTime = +new Date(tempData.time)
-      this.temp.id = this.tempid
+      this.temp.id = this.ts
       console.log(this.temp)
       updateListItem(this.temp).then(() => {
       })
     },
     kong(sb) {
-      this.textarea1 = ''
-      this.textarea2 = ''
-      console.log('sdsd')
+      // console.log(this.tempid)
+      // console.log(this.ts)
+      // this.textarea1 = ''
+      // this.textarea2 = ''
+      // console.log('sdsd')
+      this.temp.tiitle=this.textarea1
+      this.temp.content=this.textarea2
+      const tempData = Object.assign({}, this.temp)
+      this.temp.careTime = +new Date(tempData.time)
+      this.temp.id = this.ts
+      console.log(this.temp)
+      deleteListItem(this.temp).then(() => {
+      })
     }
   },
 };

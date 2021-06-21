@@ -88,7 +88,7 @@
               width="50%"
               center
             >
-              <Nav :text="''+infos" :tittle="''+info" :id="''+tempid" />
+              <Nav :text="''+infos" :tittle="''+info" :tempid="''+tempid" />
             </el-dialog>
           </template>
         </el-table-column>
@@ -145,8 +145,6 @@ export default {
   created() {
     this.getList()
   },
-
-
   methods: {
     getList() {
       console.log('sb')
@@ -191,7 +189,7 @@ export default {
       this.info = po.content
       this.infos = po.tiitle
       this.tempid = po.id
-      console.log(po.tiitle)
+      console.log( this.tempid)
       this.dialogVisible = true
     }
   }

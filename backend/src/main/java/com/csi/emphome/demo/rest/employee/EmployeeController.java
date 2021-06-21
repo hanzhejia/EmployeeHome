@@ -1,12 +1,10 @@
 package com.csi.emphome.demo.rest.employee;
 
 
+import com.csi.emphome.demo.domain.employee.EmployeeItem;
 import com.csi.emphome.demo.service.employee.EmployeeService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 
@@ -24,5 +22,13 @@ public class EmployeeController {
     @ResponseBody
     public HashMap<String, Object> fetchList() {
         return employeeService.fetchListFunc();
+    }
+
+
+    @CrossOrigin
+    @PostMapping(value = "/create")
+    @ResponseBody
+    public HashMap<String, Object> createListItem(@RequestBody EmployeeItem data) {
+        return employeeService.createListItemFunc(data);
     }
 }
