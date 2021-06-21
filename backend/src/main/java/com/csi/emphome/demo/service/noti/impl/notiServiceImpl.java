@@ -1,6 +1,7 @@
 package com.csi.emphome.demo.service.noti.impl;
 
 import com.csi.emphome.demo.domain.notice.noti;
+import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.repository.noti.notiRepository;
 import com.csi.emphome.demo.service.noti.notiService;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,16 @@ public class notiServiceImpl implements notiService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data","sb");
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> updateListItemFunc(noti data) {
+        //        testRepository.save(data);
+        System.out.println(data);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","success");
         return response;
     }
 }

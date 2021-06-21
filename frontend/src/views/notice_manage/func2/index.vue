@@ -65,11 +65,19 @@ export default {
       })
     },
     edit(detailInfo) {
-      const tempData = Object.assign({}, this.temp)
-      this.temp.careTime = +new Date(tempData.time)
+
+      var nowDate = new Date();
+      let date = {
+        year: nowDate.getFullYear(),
+        month: nowDate.getMonth() + 1,
+        date: nowDate.getDate(),
+      }
+      let systemDate = date.year + '-' + 0 + date.month + '-' + 0 + date.date;
+      console.log(systemDate);
       this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
       this.temp.content = this.textarea2
       this.temp.tiitle = this.textarea1
+      this.temp.careTime = systemDate
       console.log(this.temp)
       createListItem(this.temp).then(() => {
       })

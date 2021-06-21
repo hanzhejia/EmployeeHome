@@ -75,5 +75,6 @@ public class noti {
                 ", userid=" + userid +'\'' +
                 '}';
     }
+
 }
 

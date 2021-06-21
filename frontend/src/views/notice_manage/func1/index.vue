@@ -88,18 +88,21 @@
               width="50%"
               center
             >
-              <Nav :text="''+infos" :tittle="''+info" />
+              <Nav :text="''+infos" :tittle="''+info" :id="''+tempid" />
             </el-dialog>
           </template>
         </el-table-column>
       </el-table>
-      <div style="top: 20px;position: relative">
+      <div class="block">
         <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="100"
-        />
-        <span style="top: 20px;position: relative">共有5条记录，当前显示5条记录</span>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400">
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -119,6 +122,7 @@ export default {
     return {
       list: null,
       listLoading: true,
+      tempid:'',
       info: '',
       infos: '',
       dialogVisible: false,
@@ -141,6 +145,8 @@ export default {
   created() {
     this.getList()
   },
+
+
   methods: {
     getList() {
       console.log('sb')
@@ -184,6 +190,7 @@ export default {
       console.log('sp')
       this.info = po.content
       this.infos = po.tiitle
+      this.tempid = po.id
       console.log(po.tiitle)
       this.dialogVisible = true
     }

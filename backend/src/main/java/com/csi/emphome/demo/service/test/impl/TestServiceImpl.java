@@ -54,7 +54,6 @@ public class TestServiceImpl implements TestService {
     public HashMap<String, Object> deleteListItemFunc(TestItem data) {
         //        testRepository.save(data);
         System.out.println(data);
-
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data","success");

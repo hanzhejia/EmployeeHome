@@ -10,4 +10,5 @@ public interface notiService {
 //    List<noti> list();
 HashMap<String, Object> fetchListFunc();
     HashMap<String, Object> createListItemFunc(noti data);
+    HashMap<String, Object> updateListItemFunc(noti data);
 }
