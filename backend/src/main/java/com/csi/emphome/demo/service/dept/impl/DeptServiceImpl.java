@@ -2,10 +2,12 @@ package com.csi.emphome.demo.service.dept.impl;
 
 import com.csi.emphome.demo.repository.dept.DeptRepository;
 import com.csi.emphome.demo.service.dept.DeptService;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Service
 public class DeptServiceImpl implements DeptService {
     private final DeptRepository deptRepository;
 

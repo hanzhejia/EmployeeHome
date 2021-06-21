@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 
 @Controller
-@RequestMapping(value = "/vue-admin-template/test")
+@RequestMapping(value = "/vue-admin-template/dept")
 public class DeptController {
     private final DeptService deptService;
 
