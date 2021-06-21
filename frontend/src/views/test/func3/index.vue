@@ -67,7 +67,7 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 
-import { fetchList, createListItem, updateListItem, deleteListItem } from '@/api/test'
+import { fetchList, fetchListItem, createListItem, updateListItem, deleteListItem } from '@/api/test'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
 export default {
@@ -123,7 +123,6 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
-        console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -141,12 +140,26 @@ export default {
 
     checkPermission,
 
-    handleSearch(index, row) {
-      console.log(index, row)
+    handleSearch() {
+      this.listLoading = true
+      this.searchData = {
+        search: this.search,
+        listQuery: this.listQuery
+      }
+      fetchListItem(this.searchData).then(response => {
+        this.list = response.data.items
+        this.total = response.data.total
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
     },
 
     handleDownload(index, row) {
       console.log(index, row)
+      this.listLoading = true
+      this.listLoading = false
     },
 
     handleCreate() {
