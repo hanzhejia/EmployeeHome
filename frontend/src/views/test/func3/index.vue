@@ -18,7 +18,9 @@
 
       <el-table-column align="right">
         <template slot="header">
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" />
+          <el-input v-model="search" size="mini" placeholder="输入关键字搜索" >
+            <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
+          </el-input>
         </template>
         <template slot-scope="scope">
           <el-button size="mini" @click="handleDownload(scope.$index, scope.row)">下载</el-button>
@@ -122,7 +124,6 @@ export default {
         this.list = response.data.items
         this.total = response.data.total
         console.log(this.list)
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -139,6 +140,10 @@ export default {
     },
 
     checkPermission,
+
+    handleSearch(index, row) {
+      console.log(index, row)
+    },
 
     handleDownload(index, row) {
       console.log(index, row)

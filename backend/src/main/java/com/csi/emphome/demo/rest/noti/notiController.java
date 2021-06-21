@@ -1,6 +1,8 @@
 package com.csi.emphome.demo.rest.noti;
 
 
+import com.csi.emphome.demo.domain.notice.noti;
+
 import com.csi.emphome.demo.service.noti.notiService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +21,11 @@ public class notiController {
     @ResponseBody
     public HashMap<String, Object> fetchList() {
         return notiService.fetchListFunc();
+    }
+    @CrossOrigin
+    @PostMapping(value = "/create")
+    @ResponseBody
+    public HashMap<String, Object> createListItem(@RequestBody noti data) {
+        return notiService.createListItemFunc(data);
     }
 }
