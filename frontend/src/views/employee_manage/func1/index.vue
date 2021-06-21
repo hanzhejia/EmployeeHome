@@ -34,8 +34,8 @@
         <el-col :span="4">
           <el-form-item label="性别" prop="sex">
             <el-select v-model="searcheForm.sex" >
-              <el-option label="男" value="男"></el-option>
-              <el-option label="女" value="女"></el-option>
+              <el-option label="男" value=1></el-option>
+              <el-option label="女" value=2></el-option>
             </el-select>
           </el-form-item>
         </el-col>

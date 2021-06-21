@@ -1,19 +1,18 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
-  console.log('sbssssssssssssss')
+export function fetchList(data) {
   return request({
     url: '/vue-admin-template/test/list',
-    method: 'get',
-    params: query
+    method: 'post',
+    data
   })
 }
 
-export function fetchListItem(id) {
+export function fetchListItem(data) {
   return request({
-    url: '/vue-admin-template/test/detail',
-    method: 'get',
-    params: { id }
+    url: '/vue-admin-template/test/listItem',
+    method: 'post',
+    data
   })
 }
 

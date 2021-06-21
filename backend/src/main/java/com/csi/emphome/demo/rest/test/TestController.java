@@ -1,8 +1,10 @@
 package com.csi.emphome.demo.rest.test;
 
-
-import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.service.test.TestService;
+import com.csi.emphome.demo.service.test.dto.TestListQuery;
+import com.csi.emphome.demo.service.test.dto.TestSearchData;
+import com.csi.emphome.demo.service.test.dto.TestTemp;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
@@ -17,30 +19,35 @@ public class TestController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/list")
+    @PostMapping(value = "/list")
     @ResponseBody
-    public HashMap<String, Object> fetchList() {
-        return testService.fetchListFunc();
+    public HashMap<String, Object> fetchList(@RequestBody TestListQuery data) {
+        return testService.fetchListFunc(data);
+    }
+    @CrossOrigin
+    @PostMapping(value = "/listItem")
+    @ResponseBody
+    public HashMap<String, Object> fetchList(@RequestBody TestSearchData data) {
+        return testService.fetchListItemFunc(data);
     }
 
     @CrossOrigin
     @PostMapping(value = "/create")
     @ResponseBody
-    public HashMap<String, Object> createListItem(@RequestBody TestItem data) {
+    public HashMap<String, Object> createListItem(@RequestBody TestTemp data) {
         return testService.createListItemFunc(data);
     }
-
     @CrossOrigin
     @PostMapping(value = "/update")
     @ResponseBody
-    public HashMap<String, Object> updateListItem(@RequestBody TestItem data) {
+    public HashMap<String, Object> updateListItem(@RequestBody TestTemp data) {
         return testService.updateListItemFunc(data);
     }
 
     @CrossOrigin
     @PostMapping(value = "/delete")
     @ResponseBody
-    public HashMap<String, Object> deleteListItem(@RequestBody TestItem data) {
+    public HashMap<String, Object> deleteListItem(@RequestBody TestTemp data) {
         return testService.deleteListItemFunc(data);
     }
 }

@@ -34,12 +34,12 @@
       >
         <el-table-column
           fixed
-          prop="caredate"
+          prop="careTime"
           label="日期"
           width="150"
         />
         <el-table-column
-          prop="tittle"
+          prop="tiitle"
           label="公告名称"
           align="center"
           width="200"
@@ -51,7 +51,7 @@
           width="200"
         />
         <el-table-column
-          prop="caredate"
+          prop="careTime"
           label="创建时间"
           align="center"
           width="200"
@@ -81,26 +81,28 @@
                 <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
               </span>
             </el-dialog>
-
-            <el-button type="text" size="small" @click="edit('sd')">编辑</el-button>
+            <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-dialog
               :title="neww"
               :visible.sync="dialogVisible"
               width="50%"
               center
             >
-              <Nav />
+              <Nav :text="''+infos" :tittle="''+info" :tempid="''+tempid" />
             </el-dialog>
           </template>
         </el-table-column>
       </el-table>
-      <div style="top: 20px;position: relative">
+      <div class="block">
         <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="100"
-        />
-        <span style="top: 20px;position: relative">共有5条记录，当前显示5条记录</span>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400">
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -120,7 +122,9 @@ export default {
     return {
       list: null,
       listLoading: true,
+      tempid:'',
       info: '',
+      infos: '',
       dialogVisible: false,
       centerDialogVisible: false,
       input1: '',
@@ -180,6 +184,12 @@ export default {
       this.info = po.content
     },
     edit(po) {
+      console.log(po)
+      console.log('sp')
+      this.info = po.content
+      this.infos = po.tiitle
+      this.tempid = po.id
+      console.log( this.tempid)
       this.dialogVisible = true
     }
   }

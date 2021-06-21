@@ -11,24 +11,34 @@ export function fetchList(query) {
 
 export function fetchListItem(id) {
   return request({
-    url: '/vue-admin-template/test/detail',
+    url: '/vue-admin-template/noti/detail',
     method: 'get',
     params: { id }
   })
 }
 
 export function createListItem(data) {
+
   return request({
-    url: '/vue-admin-template/test/create',
+    url: '/vue-admin-template/noti/create',
     method: 'post',
     data
   })
 }
-
 export function updateListItem(data) {
+
+  console.log(data)
   return request({
-    url: '/vue-admin-template/test/update',
+    url: '/vue-admin-template/noti/update',
     method: 'post',
     data
   })
+}
+  export function deleteListItem(data) {
+    console.log('sbssssssssssssssssssss')
+    return request({
+      url: `/vue-admin-template/noti/delete`,
+      method: 'post',
+      data
+    })
 }

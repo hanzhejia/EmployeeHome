@@ -9,19 +9,18 @@ import java.sql.Date;
 public class noti {
     @Id
     private int id;
-    private String tiitle;
+    private String title;
     private String content;
     private Date caredate;
     private int userid;
 
     public noti() {
     }
-
-    public noti(int id, String tiitle, Date caredate,String content,int userid) {
+    public noti(int id, String tiitle,String content, Date caredate,int userid) {
         this.id = id;
         this.caredate=caredate;
         this.userid=userid;
-        this.tiitle=tiitle;
+        this.title=tiitle;
         this.content=content;
     }
 
@@ -34,11 +33,11 @@ public class noti {
     }
 
     public String getTiitle() {
-        return tiitle;
+        return title;
     }
 
     public void setTiitle(String tiitle) {
-        this.tiitle = tiitle;
+        this.title = tiitle;
     }
 
     public String getContent() {
@@ -69,11 +68,12 @@ public class noti {
     public String toString() {
         return "ListItem{" +
                 "id=" + id +
-                ", tittle='" + tiitle + '\'' +
+                ", tittle='" + title + '\'' +
                 ", content=" + content +'\'' +
                 ", caredate=" + caredate +'\'' +
                 ", userid=" + userid +'\'' +
                 '}';
     }
+
 }
 
