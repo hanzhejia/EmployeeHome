@@ -3,33 +3,40 @@
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="文档标题">
         <el-input
-          v-model="form.title"
+          v-model="form.name"
           maxlength="10"
           show-word-limit
-        ></el-input>
+        />
       </el-form-item>
       <el-form-item label="文档描述">
         <el-input
-          v-model="form.desc"
+          v-model="form.detail"
           maxlength="30"
           show-word-limit
           type="textarea"
           :autosize="{ minRows: 6, maxRows: 9}"
-        ></el-input>
+        />
       </el-form-item>
       <el-form-item label="文档选择">
         <el-upload
-          class="upload-demo"
+          ref="upload"
           drag
-          action="https://jsonplaceholder.typicode.com/posts/"
-          multiple>
-          <i class="el-icon-upload"></i>
+          :limit="1"
+          :auto-upload="false"
+          :action="uploadUrl"
+          :data="form"
+          :before-upload="beforeUpload"
+          :on-success="handleSuccess"
+          :on-error="handleError"
+          :file-list="fileList"
+        >
+          <i class="el-icon-upload" />
           <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">只能上传xxx文件，且不超过500kb</div>
+          <div slot="tip" class="el-upload__tip">可上传任意格式文件，且不超过1M</div>
         </el-upload>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">提交</el-button>
+        <el-button type="primary" :loading="loading" @click="onSubmit">提交</el-button>
         <el-button @click="onReset">重置</el-button>
       </el-form-item>
     </el-form>
@@ -38,22 +45,66 @@
 
 <script>
 
+import { uploadFile } from '@/api/download_manage'
+import { httphost } from '@/utils/global'
+
 export default {
   name: 'Func2',
   data() {
     return {
+      uploadUrl: httphost,
+      loading: false,
+      fileList: [],
       form: {
-        title: '',
-        desc: ''
+        storageId: undefined,
+        realName: '',
+        name: '',
+        createBy: '',
+        createTime: '',
+        detail: ''
       }
     }
   },
   methods: {
+    beforeUpload(file) {
+      let isLt2M = true
+      isLt2M = file.size / 1024 / 1024 < 1
+      if (!isLt2M) {
+        this.$message.error('上传文件大小不能超过 1MB!')
+      }
+      return isLt2M
+    },
+    handleSuccess(response, file, fileList) {
+      this.fileList = []
+      this.$notify({
+        title: 'Success',
+        message: 'Created Successfully',
+        type: 'success',
+        duration: 2000
+      })
+    },
+    handleError(e, file, fileList) {
+      this.fileList = []
+      this.$notify({
+        title: 'Failed',
+        message: 'Created Failed',
+        type: 'error',
+        duration: 2000
+      })
+    },
     onSubmit() {
-      console.log('submit!')
+      this.form.storageId = parseInt(Math.random() * 100) + 1024
+      this.form.createBy = this.$store.getters.name
+      this.form.createTime = new Date()
+      this.form.createTime = +new Date(this.form.createTime)
+      console.log(this.form)
+      this.$refs.upload.submit()
     },
     onReset() {
-      console.log('reset!')
+      this.fileList = []
+      this.form.title = ''
+      this.form.desc = ''
+      this.form.file = null
     }
   }
 }
