@@ -92,13 +92,22 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    public int getMaxId(){
+        DeptItem tag_item = deptRepository.findTopByOrderByIdDesc();
+        int max_id = tag_item.getId();
+        return max_id;
+    }
     @Override
     public HashMap<String, Object> createListItemFunc(DeptTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        DeptItem tag_item = deptRepository.findById(data.getId());
-        if (tag_item == null){
-            DeptItem temp_item = new DeptItem(data.getId(), data.getName(), data.getRemark());
+        int new_id = 1;
+        int count = deptRepository.findAll().size();
+        if (count != 0){
+            new_id = getMaxId() + 1;
+        }
+        if (data != null){
+            DeptItem temp_item = new DeptItem(new_id, data.getName(), data.getRemark());
             deptRepository.save(temp_item);
             resCode = 20000;
             resData = "success";

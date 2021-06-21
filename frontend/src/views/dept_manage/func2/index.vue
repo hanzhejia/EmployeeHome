@@ -35,7 +35,7 @@ export default {
     onSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          this.form.id = parseInt(Math.random() * 100) + 1024
+          // this.form.id = parseInt(Math.random() * 100) + 1024
           console.log(this.form)
           createListItem(this.form).then(() => {
             this.$notify({

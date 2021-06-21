@@ -147,24 +147,23 @@ export default {
         this.list.splice(index, 1)
       })
     },
-
-    createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          createListItem(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
-              type: 'success',
-              duration: 2000
-            })
-          })
-        }
-      })
-    },
+    // createData() {
+    //   this.$refs['dataForm'].validate((valid) => {
+    //     if (valid) {
+    //       // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
+    //       createListItem(this.temp).then(() => {
+    //         this.list.unshift(this.temp)
+    //         this.dialogFormVisible = false
+    //         this.$notify({
+    //           title: 'Success',
+    //           message: 'Created Successfully',
+    //           type: 'success',
+    //           duration: 2000
+    //         })
+    //       })
+    //     }
+    //   })
+    // },
 
     updateData() {
       this.$refs['dataForm'].validate((valid) => {

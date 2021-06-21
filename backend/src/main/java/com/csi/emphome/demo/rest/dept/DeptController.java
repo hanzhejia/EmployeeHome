@@ -38,6 +38,7 @@ public class DeptController {
     @PostMapping(value = "/create")
     @ResponseBody
     public HashMap<String, Object> createListItem(@RequestBody DeptTemp data) {
+        System.out.println(data);
         return deptService.createListItemFunc(data);
     }
 
