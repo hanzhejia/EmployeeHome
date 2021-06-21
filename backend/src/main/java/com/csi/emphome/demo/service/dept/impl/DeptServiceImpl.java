@@ -1,12 +1,12 @@
-package com.csi.emphome.demo.service.test.impl;
+package com.csi.emphome.demo.service.dept.impl;
 
+import com.csi.emphome.demo.domain.dept.DeptItem;
 import com.csi.emphome.demo.domain.test.TestItem;
-import com.csi.emphome.demo.repository.test.TestRepository;
-import com.csi.emphome.demo.service.test.TestService;
-import com.csi.emphome.demo.service.test.dto.TestListQuery;
-import com.csi.emphome.demo.service.test.dto.TestSearchData;
-import com.csi.emphome.demo.service.test.dto.TestTemp;
-
+import com.csi.emphome.demo.repository.dept.DeptRepository;
+import com.csi.emphome.demo.service.dept.DeptService;
+import com.csi.emphome.demo.service.dept.dto.DeptListQuery;
+import com.csi.emphome.demo.service.dept.dto.DeptSearchData;
+import com.csi.emphome.demo.service.dept.dto.DeptTemp;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +14,18 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class TestServiceImpl implements TestService {
-    private final TestRepository testRepository;
+public class DeptServiceImpl implements DeptService {
+    private final DeptRepository deptRepository;
 
-    public TestServiceImpl(TestRepository testRepository) {
-        this.testRepository = testRepository;
+    public DeptServiceImpl(DeptRepository deptRepository) {
+        this.deptRepository = deptRepository;
     }
 
     @Override
-    public HashMap<String, Object> fetchListFunc(TestListQuery data) {
+    public HashMap<String, Object> fetchListFunc(DeptListQuery data) {
         HashMap<String, Object> responseData = new HashMap<>();
-        List<TestItem> list = testRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
-        responseData.put("total",testRepository.count());
+        List<DeptItem> list = deptRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
+        responseData.put("total",deptRepository.count());
         responseData.put("items",list);
 
         HashMap<String, Object> response = new HashMap<>();
@@ -34,7 +34,7 @@ public class TestServiceImpl implements TestService {
         return response;
     }
 
-    public static List<TestItem> splicePage(List<TestItem> list, Integer pageNum, Integer pageSize) {
+    public static List<DeptItem> splicePage(List<DeptItem> list, Integer pageNum, Integer pageSize) {
         if(list == null){
             return null;
         }
@@ -68,15 +68,15 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public HashMap<String, Object> fetchListItemFunc(TestSearchData data) {
+    public HashMap<String, Object> fetchListItemFunc(DeptSearchData data) {
         HashMap<String, Object> responseData = new HashMap<>();
 
         if(data.getSearch().equals("")){
             return fetchListFunc(data.getListQuery());
         }
 
-        List<TestItem> listAll = testRepository.findAllByInfo(data.getSearch());
-        List<TestItem> list;
+        List<DeptItem> listAll = deptRepository.findAllByName(data.getSearch());
+        List<DeptItem> list;
         if(listAll.size()>0){
             list = splicePage(listAll, data.getListQuery().getPage(), data.getListQuery().getLimit());
         }else {
@@ -92,15 +92,23 @@ public class TestServiceImpl implements TestService {
         return response;
     }
 
+    public int getMaxId(){
+        DeptItem tag_item = deptRepository.findTopByOrderByIdDesc();
+        int max_id = tag_item.getId();
+        return max_id;
+    }
     @Override
-    public HashMap<String, Object> createListItemFunc(TestTemp data) {
+    public HashMap<String, Object> createListItemFunc(DeptTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        TestItem tag_item = testRepository.findById(data.getId());
-        if (tag_item == null){
-            System.out.println("sdsd");
-            TestItem temp_item = new TestItem(data.getId(), data.getInfo(), data.getTime());
-            testRepository.save(temp_item);
+        int new_id = 1;
+        int count = deptRepository.findAll().size();
+        if (count != 0){
+            new_id = getMaxId() + 1;
+        }
+        if (data != null){
+            DeptItem temp_item = new DeptItem(new_id, data.getName(), data.getRemark());
+            deptRepository.save(temp_item);
             resCode = 20000;
             resData = "success";
         }
@@ -111,31 +119,32 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public HashMap<String, Object> updateListItemFunc(TestTemp data) {
+    public HashMap<String, Object> deleteListItemFunc(DeptTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        TestItem tag_item = testRepository.findById(data.getId());
+        DeptItem tag_item = deptRepository.findById(data.getId());
+
+        if (tag_item != null){
+            deptRepository.delete(tag_item);
+            resCode = 20000;
+            resData = "success";
+        }
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",resCode);
+        response.put("data",resData);
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> updateListItemFunc(DeptTemp data) {
+        int resCode = 20001;
+        String resData = "failed";
+        DeptItem tag_item = deptRepository.findById(data.getId());
         if (tag_item != null){
             tag_item.setId(data.getId());
-            tag_item.setInfo(data.getInfo());
-            tag_item.setTime(data.getTime());
-            testRepository.save(tag_item);
-            resCode = 20000;
-            resData = "success";
-        }
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("code",resCode);
-        response.put("data",resData);
-        return response;
-    }
-
-    public HashMap<String, Object> deleteListItemFunc(TestTemp data) {
-        int resCode = 20001;
-        String resData = "failed";
-        TestItem tag_item = testRepository.findById(data.getId());
-
-        if (tag_item != null){
-            testRepository.delete(tag_item);
+            tag_item.setName(data.getName());
+            tag_item.setRemark(data.getRemark());
+            deptRepository.save(tag_item);
             resCode = 20000;
             resData = "success";
         }

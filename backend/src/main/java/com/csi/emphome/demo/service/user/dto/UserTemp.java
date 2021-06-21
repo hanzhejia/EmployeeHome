@@ -1,38 +1,21 @@
-package com.csi.emphome.demo.domain.user;
+package com.csi.emphome.demo.service.user.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.sql.Date;
 
-@Entity
-@Table(name = "user_inf")
-public class User{
-    @Id
-    @Column(name = "ID")
+public class UserTemp implements Serializable {
     private int id;
-    @Column(name = "Loginname")
-    private  String loginname;
-    @Column(name = "PASSWORD")
+    private String loginname;
     private String password;
-    @Column(name = "STATUS")
     private int status;
-    @Column(name = "Createdate")
-    private Timestamp createdate;
-    @Column(name = "Username")
+    private Date createdate;
     private String username;
-    @Column(name = "Faceurl")
     private String faceurl;
-    @Column(name = "Facepath")
     private String facepath;
-
-
-
-    public User() {
+    public UserTemp() {
 
     }
-    public User(int id,String loginname,String password,int status,Timestamp createdate,String username,String faceurl,String facepath){
+    public UserTemp(int id, String loginname, String password, int status, Date createdate, String username, String faceurl, String facepath){
         this.id = id;
         this.loginname = loginname;
         this.password = password;
@@ -66,11 +49,11 @@ public class User{
         this.status = status;
     }
 
-    public Timestamp getCreatedate() {
+    public Date getCreatedate() {
         return createdate;
     }
 
-    public void setCreatedate(Timestamp createdate) {
+    public void setCreatedate(Date createdate) {
         this.createdate = createdate;
     }
 
@@ -104,5 +87,12 @@ public class User{
     public void setId(int id){
         this.id = id;
     }
-
+    @Override
+    public String toString() {
+        return "UserTemp{" +
+                "id=" + id +
+                ",username='" + username + '\'' +
+                ",loginname=" + loginname +
+                '}';
+    }
 }

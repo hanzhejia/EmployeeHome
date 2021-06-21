@@ -1,32 +1,16 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchList(data) {
   return request({
-    url: '/vue-admin-template/userm/list',
-    method: 'get',
-    params: query
-  })
-}
-
-export function fetchListItem(id) {
-  return request({
-    url: '/vue-admin-template/userm/detail',
-    method: 'get',
-    params: { id }
-  })
-}
-
-export function fetchPv(pv) {
-  return request({
-    url: '/vue-admin-template/userm/pv',
-    method: 'get',
-    params: { pv }
+    url: '/vue-admin-template/user/list',
+    method: 'post',
+    data
   })
 }
 
 export function createListItem(data) {
   return request({
-    url: '/vue-admin-template/userm/create',
+    url: '/vue-admin-template/user/create',
     method: 'post',
     data
   })
@@ -34,8 +18,15 @@ export function createListItem(data) {
 
 export function updateListItem(data) {
   return request({
-    url: '/vue-admin-template/userm/update',
+    url: '/vue-admin-template/user/update',
     method: 'post',
     data
+  })
+}
+export function searchdateListItem(data) {
+  return request({
+    url: '/vue-admin-template/user/searchdate',
+    method: 'post',
+    params: data
   })
 }

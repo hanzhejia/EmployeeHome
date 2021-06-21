@@ -3,9 +3,9 @@ package com.csi.emphome.demo.service.test;
 import com.csi.emphome.demo.service.test.dto.TestListQuery;
 import com.csi.emphome.demo.service.test.dto.TestSearchData;
 import com.csi.emphome.demo.service.test.dto.TestTemp;
+
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
-
 @Service
 public interface TestService {
     /**

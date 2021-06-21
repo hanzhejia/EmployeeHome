@@ -4,6 +4,7 @@ import com.csi.emphome.demo.service.test.TestService;
 import com.csi.emphome.demo.service.test.dto.TestListQuery;
 import com.csi.emphome.demo.service.test.dto.TestSearchData;
 import com.csi.emphome.demo.service.test.dto.TestTemp;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
@@ -23,7 +24,6 @@ public class TestController {
     public HashMap<String, Object> fetchList(@RequestBody TestListQuery data) {
         return testService.fetchListFunc(data);
     }
-
     @CrossOrigin
     @PostMapping(value = "/listItem")
     @ResponseBody
@@ -37,7 +37,6 @@ public class TestController {
     public HashMap<String, Object> createListItem(@RequestBody TestTemp data) {
         return testService.createListItemFunc(data);
     }
-
     @CrossOrigin
     @PostMapping(value = "/update")
     @ResponseBody
