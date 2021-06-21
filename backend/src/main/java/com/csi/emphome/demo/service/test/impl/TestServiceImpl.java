@@ -4,6 +4,7 @@ import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.repository.test.TestRepository;
 import com.csi.emphome.demo.service.test.TestService;
 import com.csi.emphome.demo.service.test.dto.TestListQuery;
+import com.csi.emphome.demo.service.test.dto.TestSearchData;
 import com.csi.emphome.demo.service.test.dto.TestTemp;
 
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TestServiceImpl implements TestService {
@@ -26,6 +26,64 @@ public class TestServiceImpl implements TestService {
         HashMap<String, Object> responseData = new HashMap<>();
         List<TestItem> list = testRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
         responseData.put("total",testRepository.count());
+        responseData.put("items",list);
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data",responseData);
+        return response;
+    }
+
+    public static List<TestItem> splicePage(List<TestItem> list, Integer pageNum, Integer pageSize) {
+        if(list == null){
+            return null;
+        }
+        if(list.size() == 0){
+            return null;
+        }
+
+        Integer count = list.size(); //记录总数
+        Integer pageCount = 0; //页数
+        if (count % pageSize == 0) {
+            pageCount = count / pageSize;
+        } else {
+            pageCount = count / pageSize + 1;
+        }
+
+        int fromIndex = 0; //开始索引
+        int toIndex = 0; //结束索引
+
+        if(pageNum > pageCount){
+            pageNum = pageCount;
+        }
+        if (!pageNum.equals(pageCount)) {
+            fromIndex = (pageNum - 1) * pageSize;
+            toIndex = fromIndex + pageSize;
+        } else {
+            fromIndex = (pageNum - 1) * pageSize;
+            toIndex = count;
+        }
+
+        return list.subList(fromIndex, toIndex);
+    }
+
+    @Override
+    public HashMap<String, Object> fetchListItemFunc(TestSearchData data) {
+        HashMap<String, Object> responseData = new HashMap<>();
+
+        if(data.getSearch().equals("")){
+            return fetchListFunc(data.getListQuery());
+        }
+
+        List<TestItem> listAll = testRepository.findAllByInfo(data.getSearch());
+        List<TestItem> list;
+        if(listAll.size()>0){
+            list = splicePage(listAll, data.getListQuery().getPage(), data.getListQuery().getLimit());
+        }else {
+            list = listAll;
+        }
+
+        responseData.put("total",listAll.size());
         responseData.put("items",list);
 
         HashMap<String, Object> response = new HashMap<>();
