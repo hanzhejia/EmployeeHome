@@ -44,8 +44,6 @@
 </template>
 
 <script>
-
-import { uploadFile } from '@/api/download_manage'
 import { httphost } from '@/utils/global'
 
 export default {
