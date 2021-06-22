@@ -81,6 +81,15 @@ export default {
       console.log(this.temp)
       createListItem(this.temp).then(() => {
       })
+      this.$alert('公告发布成功', '标题', {
+        confirmButtonText: '确定',
+        callback: action => {
+          this.$message({
+            type: 'info',
+            message: `action: ${action}`
+          })
+        }
+      })
     },
     kong(sb){
       this.textarea1=''

@@ -78,6 +78,7 @@ public class notiController {
     @GetMapping(value = "/list")
     @ResponseBody
     public HashMap<String, Object> fetchList(TestListQuery data) {
+        System.out.println("噢噢噢噢噢噢噢噢");
         System.out.println(data);
         return notiService.fetchListFunc(data);
     }
@@ -87,6 +88,7 @@ public class notiController {
     public HashMap<String, Object> createListItem(@RequestBody noti data) {
         LocalDate date = LocalDate.now();
         data.setCaredate(Date.valueOf(date));
+//        System.out.println(data);
         return notiService.createListItemFunc(data);
     }
 

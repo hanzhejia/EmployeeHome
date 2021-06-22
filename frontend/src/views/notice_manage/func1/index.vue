@@ -5,6 +5,7 @@
       <p style="top: 10px ;font-size: 18px ;color:#303133;position: absolute">公告标题</p>
       <el-input
         v-model="input1"
+        @input="valuechange"
         size="small"
         :autosize="{ minRows: 1, maxRows: 1}"
         placeholder="请输入内容"
@@ -154,6 +155,8 @@ export default {
         page: 5,
         limit: 10
       },
+      tableDatasize:0,
+      midData:[],
       curData:[],
       tableData: [{
         careTime: '2021-06-19',
@@ -172,17 +175,15 @@ export default {
       this.listLoading = true
       console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
-        // console.log('sds')
-        // console.log('sds')
-        // console.log('sds')
-        // console.log('sds')
-        // console.log('sds')
-        // console.log('sds')
         this.list = response.data.items
         this.total = response.data.total
+        console.log('sssssssssssssssssssssssssssssssssssssssssda1111111111111111111111')
+        console.log(this.total)
+        this.tableDatasize = this.total
         this.tableData = this.list
+        this.midData = this.tableData
         console.log(this.tableData)
-        this.curData = this.tableData.slice(0,9)
+        this.curData = this.midData.slice(0,10)
         console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -197,22 +198,24 @@ export default {
       // console.log(this.input1)
       for(var i=0;i<this.tableData.length;i++) {
         if(this.tableData[i].content.indexOf(this.input1)!=-1){
-          console.log('555555555555555555555')
-          // this.curData=this.curData[i]
-          // console.log( this.curData)
-          // this.data = this.tableData.slice((2-1)*10,(2-1)*10+9)
-          // this.curData = this.tableData.slice((2-1)*10,(2-1)*10+9)
           if(this.time==0){
-           this.curData=[]}
+           this.midData=[]}
          this.time=1
-          this.curData.push(this.tableData[i])
-          console.log(this.curData)
-          console.log('555555555555555555555')
+          this.midData.push(this.tableData[i])
         }
-        console.log(this.tableData[i].content)
-        // console.log(this.curData[i].content)
       }
+      this.total = this.midData.length
+      console.log(this.total)
+      this.curData = this.midData.slice(0,10)
       this.time=0
+    },
+    valuechange(){
+
+      if(this.input1==''){
+        this.midData = this.tableData
+        this.curData = this.midData.slice(0,10)
+        this.total = this.tableDatasize
+}
     },
     sb(po) {
       this.centerDialogVisible = true
@@ -230,7 +233,7 @@ export default {
       this.dialogVisible = true
     },
     changePage(page){
-      this.curData = this.tableData.slice((page-1)*10,(page-1)*10+9)
+      this.curData = this.midData.slice((page-1)*10,(page-1)*10+9)
     }
   }
 }
