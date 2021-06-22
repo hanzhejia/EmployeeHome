@@ -2,6 +2,7 @@ package com.csi.emphome.demo.rest.login;
 
 import com.csi.emphome.demo.service.login.LoginService;
 import com.csi.emphome.demo.service.login.dto.LoginTemp;
+import com.csi.emphome.demo.service.login.dto.PwdTemp;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,6 +30,7 @@ public class LoginController {
 @PostMapping(value = "/login")
 @ResponseBody
 public HashMap<String, Object> login(@RequestBody LoginTemp data) {
+    System.out.println("LoginController:"+data);
   //  HashMap<String, Object> response = new HashMap<>();
   //  HashMap<String, Object> responseData = new HashMap<>();
   //  responseData.put("token",1);
@@ -37,22 +39,34 @@ public HashMap<String, Object> login(@RequestBody LoginTemp data) {
   //  response.put("data",responseData);
     return loginService.createLoginItemFunc(data);
 }
+@CrossOrigin
+@PostMapping(value = "/updatePwd")
+@ResponseBody
+public  HashMap<String, Object> updatePwd(@RequestBody PwdTemp data){
+    System.out.println("pwddata:"+data);
+    return loginService.updateLoginPwdFunc(data);
+}
+
+
+
 
     @CrossOrigin
     @GetMapping(value = "/info")
     @ResponseBody
     public HashMap<String, Object> info() {
-        HashMap<String, Object> responseInfo = new HashMap<>();
-        HashMap<String, Object> responseData = new HashMap<>();
-        ArrayList<String> roles = new ArrayList<>();
-        roles.add("admin");
-        responseData.put("roles",roles);
-        responseData.put("name","Super admin");
-        responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        responseInfo.put("code",20000);
-        responseInfo.put("msg","登录成功");
-        responseInfo.put("data",responseData);
-        return responseInfo;
+        System.out.println("infoLoginController");
+//        HashMap<String, Object> responseInfo = new HashMap<>();
+//        HashMap<String, Object> responseData = new HashMap<>();
+//        ArrayList<String> roles = new ArrayList<>();
+//        roles.add("admin");
+//        responseData.put("roles",roles);
+//        responseData.put("name","Super admin");
+//        responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+//        responseInfo.put("code",20000);
+//        responseInfo.put("msg","登录成功");
+//        responseInfo.put("data",responseData);
+       // return responseInfo;
+        return loginService.getLoginInfoFunc();
     }
 
     @CrossOrigin
