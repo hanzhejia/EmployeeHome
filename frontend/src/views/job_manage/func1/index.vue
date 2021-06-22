@@ -10,7 +10,7 @@
       />
       <el-table-column
         label="职位名称"
-        prop="job"
+        prop="jobid"
       />
       <el-table-column
         label="详细信息"
@@ -39,7 +39,7 @@
 
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="职位名称" prop="job">
+        <el-form-item label="职位名称" prop="jobid">
           <el-input v-model="temp.job" />
         </el-form-item>
         <el-form-item label="备注" prop="remark">

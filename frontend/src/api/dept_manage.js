@@ -8,6 +8,14 @@ export function fetchList(data) {
   })
 }
 
+export function fetchListItem(data) {
+  return request({
+    url: '/vue-admin-template/department/listItem',
+    method: 'post',
+    data
+  })
+}
+
 export function createListItem(data) {
   return request({
     url: '/vue-admin-template/department/create',
