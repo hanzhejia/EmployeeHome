@@ -16,11 +16,12 @@ export function updatePwd(data) {
   })
 }
 
-export function getInfo(data) {
+export function getInfo(token) {
+  console.log('api/user/getInfo', token)
   return request({
     url: '/vue-admin-template/user/info',
     method: 'get',
-    data
+    params: { token }
   })
 }
 

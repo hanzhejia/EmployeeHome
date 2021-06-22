@@ -53,6 +53,7 @@ module.exports = [
     type: 'get',
     response: config => {
       const { token } = config.query
+      console.log('mock/user.js', token)
       const info = users[token]
 
       // mock error
