@@ -28,6 +28,13 @@ public class DeptController {
     }
 
     @CrossOrigin
+    @PostMapping(value = "/deptlist")
+    @ResponseBody
+    public HashMap<String, Object> fetchDeptList() {
+        return deptService.fetchDeptList();
+    }
+
+    @CrossOrigin
     @PostMapping(value = "/listItem")
     @ResponseBody
     public HashMap<String, Object> fetchList(@RequestBody DeptSearchData data) {
