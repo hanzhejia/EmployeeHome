@@ -23,12 +23,13 @@
       />
     </el-row>
     <el-row style="position: relative;left: 850px;top: -13px">
-      <el-button size="small" type="primary" @click="search('sb')">搜索</el-button>
+      <el-button size="small" type="primary" @click="searchs('sb')" >搜索</el-button>
       <el-button size="small" type="success">删除</el-button>
     </el-row>
     <div>
       <el-table
-        :data="tableData"
+        :data="curData.filter(
+          data=>!input1 || data.content.toLowerCase().includes(input1.toLowerCase()))"
         border
         style="top: 0px"
       >
@@ -67,9 +68,11 @@
           label="操作"
           width="100"
         >
+
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="sb(scope.row)">查看</el-button>
             <el-dialog
+              :modal-append-to-body="false"
               :title="sbs"
               :visible.sync="centerDialogVisible"
               width="40%"
@@ -84,6 +87,7 @@
             <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-dialog
               :title="neww"
+              :modal-append-to-body="false"
               :visible.sync="dialogVisible"
               width="50%"
               center
@@ -95,21 +99,36 @@
       </el-table>
       <div class="block">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400">
+          v-show="total>0"
+          :total="total"
+          :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" @current-change="changePage">
         </el-pagination>
+<!--        <div class="block">-->
+<!--          <span class="demonstration">完整功能</span>-->
+<!--          <el-pagination-->
+<!--            @pagination="getList"-->
+<!--            @size-change="handleSizeChange"-->
+<!--            @current-change="changePage"-->
+<!--            :current-page="currentPage4"-->
+<!--            :page-sizes="[100, 200, 300, 400]"-->
+<!--            :page-size="100"-->
+<!--            layout="total, sizes, prev, pager, next, jumper"-->
+<!--            :total="400">-->
+<!--          </el-pagination>-->
+        </div>
+<!--        <el-pagination-->
+<!--          @size-change="handleSizeChange"-->
+<!--          @current-change="handleCurrentChange"-->
+<!--          :current-page="currentPage4"-->
+<!--          :page-sizes="[100, 200, 300, 400]"-->
+<!--          :page-size="100"-->
+<!--          layout="total, sizes, prev, pager, next, jumper"-->
+<!--          :total="400">-->
+<!--        </el-pagination>-->
       </div>
     </div>
-  </div>
 </template>
-
 <script>
-
 import axios from 'axios'
 import Nav from './sb.vue'
 import { fetchList } from '@/api/notice_manage'
@@ -125,15 +144,17 @@ export default {
       tempid:'',
       info: '',
       infos: '',
+      time:0,
       dialogVisible: false,
       centerDialogVisible: false,
       input1: '',
       input2: '',
       total: 0,
       listQuery: {
-        page: 1,
+        page: 5,
         limit: 10
       },
+      curData:[],
       tableData: [{
         careTime: '2021-06-19',
         content: '吃饭',
@@ -147,13 +168,21 @@ export default {
   },
   methods: {
     getList() {
-      console.log('sb')
+      console.log('sbsssssssssssssddd')
       this.listLoading = true
+      console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
-        console.log('sb')
+        // console.log('sds')
+        // console.log('sds')
+        // console.log('sds')
+        // console.log('sds')
+        // console.log('sds')
+        // console.log('sds')
         this.list = response.data.items
         this.total = response.data.total
         this.tableData = this.list
+        console.log(this.tableData)
+        this.curData = this.tableData.slice(0,9)
         console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -164,18 +193,26 @@ export default {
     handleClick(row) {
       console.log(row.date)
     },
-    search(sb) {
-      console.log(sb)
-      axios.get('', {
-        params: {
+    searchs(sb) {
+      // console.log(this.input1)
+      for(var i=0;i<this.tableData.length;i++) {
+        if(this.tableData[i].content.indexOf(this.input1)!=-1){
+          console.log('555555555555555555555')
+          // this.curData=this.curData[i]
+          // console.log( this.curData)
+          // this.data = this.tableData.slice((2-1)*10,(2-1)*10+9)
+          // this.curData = this.tableData.slice((2-1)*10,(2-1)*10+9)
+          if(this.time==0){
+           this.curData=[]}
+         this.time=1
+          this.curData.push(this.tableData[i])
+          console.log(this.curData)
+          console.log('555555555555555555555')
         }
-      })
-        .then(function(a) {
-          console.log('d')
-        })
-        .catch(function(a) {
-          console.log('dsd')
-        })
+        console.log(this.tableData[i].content)
+        // console.log(this.curData[i].content)
+      }
+      this.time=0
     },
     sb(po) {
       this.centerDialogVisible = true
@@ -191,6 +228,9 @@ export default {
       this.tempid = po.id
       console.log( this.tempid)
       this.dialogVisible = true
+    },
+    changePage(page){
+      this.curData = this.tableData.slice((page-1)*10,(page-1)*10+9)
     }
   }
 }

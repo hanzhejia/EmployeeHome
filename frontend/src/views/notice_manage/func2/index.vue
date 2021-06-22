@@ -50,10 +50,10 @@ export default {
   },
   methods: {
     getList() {
-      console.log('sb')
+      console.log('sb11111111111')
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        console.log('sb')
+        console.log('sbppppp')
         this.list = response.data.items
         this.total = response.data.total
         this.tableData = this.list

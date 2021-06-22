@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 
 export function fetchList(data) {
+  console.log('sds')
   return request({
     url: '/vue-admin-template/test/list',
     method: 'post',

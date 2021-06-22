@@ -22,6 +22,7 @@ public class TestController {
     @PostMapping(value = "/list")
     @ResponseBody
     public HashMap<String, Object> fetchList(@RequestBody TestListQuery data) {
+//        System.out.println(data);
         return testService.fetchListFunc(data);
     }
     @CrossOrigin

@@ -1,19 +1,17 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
-  console.log('sb')
+export function fetchList(data) {
+  console.log('sds')
+  console.log('sds')
+  console.log('sds')
+  console.log('sds')
+  console.log('sds')
+  console.log('sds')
+  console.log(data)
   return request({
     url: '/vue-admin-template/noti/list',
     method: 'get',
-    params: query
-  })
-}
-
-export function fetchListItem(id) {
-  return request({
-    url: '/vue-admin-template/noti/detail',
-    method: 'get',
-    params: { id }
+    params:{data}
   })
 }
 
@@ -41,4 +39,11 @@ export function updateListItem(data) {
       method: 'post',
       data
     })
+}
+export function fetchListItem(date) {
+  return request({
+    url: '/vue-admin-template/noti/detail',
+    method: 'get',
+    params: { id }
+  })
 }
