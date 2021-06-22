@@ -1,26 +1,18 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchList(data) {
   return request({
     url: '/vue-admin-template/download/list',
-    method: 'get',
-    params: query
+    method: 'post',
+    data
   })
 }
 
-export function fetchListItem(id) {
+export function fetchListItem(data) {
   return request({
-    url: '/vue-admin-template/download/detail',
-    method: 'get',
-    params: { id }
-  })
-}
-
-export function fetchPv(pv) {
-  return request({
-    url: '/vue-admin-template/download/pv',
-    method: 'get',
-    params: { pv }
+    url: '/vue-admin-template/download/listItem',
+    method: 'post',
+    data
   })
 }
 
@@ -35,6 +27,14 @@ export function createListItem(data) {
 export function updateListItem(data) {
   return request({
     url: '/vue-admin-template/download/update',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteListItem(data) {
+  return request({
+    url: `/vue-admin-template/download/delete`,
     method: 'post',
     data
   })

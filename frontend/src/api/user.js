@@ -7,12 +7,20 @@ export function login(data) {
     data
   })
 }
+export function updatePwd(data) {
+  console.log('updata', data)
+  return request({
+    url: '/vue-admin-template/user/updatePwd',
+    method: 'post',
+    data
+  })
+}
 
-export function getInfo(token) {
+export function getInfo(data) {
   return request({
     url: '/vue-admin-template/user/info',
     method: 'get',
-    params: { token }
+    data
   })
 }
 

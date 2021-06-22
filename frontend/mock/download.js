@@ -16,7 +16,7 @@ for (let i = 0; i < count; i++) {
 module.exports = [
   {
     url: '/vue-admin-template/download/list',
-    type: 'get',
+    type: 'post',
     response: config => {
       const { page = 1, limit = 20 } = config.query
 
@@ -35,35 +35,12 @@ module.exports = [
   },
 
   {
-    url: '/vue-admin-template/download/detail',
-    type: 'get',
-    response: config => {
-      const { id } = config.query
-      for (const article of List) {
-        if (article.id === +id) {
-          return {
-            code: 20000,
-            data: article
-          }
-        }
-      }
-    }
-  },
-
-  {
-    url: '/vue-admin-template/download/pv',
-    type: 'get',
+    url: '/vue-admin-template/download/listItem',
+    type: 'post',
     response: _ => {
       return {
         code: 20000,
-        data: {
-          pvData: [
-            { key: 'PC', pv: 1024 },
-            { key: 'mobile', pv: 1024 },
-            { key: 'ios', pv: 1024 },
-            { key: 'android', pv: 1024 }
-          ]
-        }
+        data: 'success'
       }
     }
   },
@@ -81,6 +58,28 @@ module.exports = [
 
   {
     url: '/vue-admin-template/download/update',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
+  },
+
+  {
+    url: '/vue-admin-template/download/delete',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
+  },
+
+  {
+    url: '/vue-admin-template/download/upload',
     type: 'post',
     response: _ => {
       return {

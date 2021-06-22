@@ -16,15 +16,14 @@ export function fetchList(data) {
 }
 
 export function createListItem(data) {
-
   return request({
     url: '/vue-admin-template/noti/create',
     method: 'post',
     data
   })
 }
-export function updateListItem(data) {
 
+export function updateListItem(data) {
   console.log(data)
   return request({
     url: '/vue-admin-template/noti/update',
@@ -32,13 +31,14 @@ export function updateListItem(data) {
     data
   })
 }
-  export function deleteListItem(data) {
-    console.log('sbssssssssssssssssssss')
-    return request({
-      url: `/vue-admin-template/noti/delete`,
-      method: 'post',
-      data
-    })
+
+export function deleteListItem(data) {
+  console.log('sbssssssssssssssssssss')
+  return request({
+    url: `/vue-admin-template/noti/delete`,
+    method: 'post',
+    data
+  })
 }
 export function fetchListItem(date) {
   return request({

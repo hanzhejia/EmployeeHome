@@ -3,8 +3,10 @@
     <article>
       <template>
         <div>
-          face demo0.2 无后端链接api 前端拍照返回base64并弹窗显示
-          *改为按钮+弹窗式验证+关闭
+          face demo0.3
+          后端链接api
+          与数据库相连接 验证当前人脸是否在数据库中 在返回用户ID号 ，不在记作ID为-1
+          *按钮+弹窗式验证
         </div>
       </template>
       <!--      <section>-->
@@ -13,20 +15,20 @@
       <!--            <section>-->
       <!--              <audio id="audio" />-->
       <!--            </section>-->
-<!--      <button id="btn" @click="tackcapture">拍照</button>-->
-<!--      <button @click="opening">开启</button>-->
-<!--      <section>-->
-<!--        <video id="video" />-->
-<!--      </section>-->
-<!--      <section>-->
-<!--        <canvas id="canvas" />-->
-<!--      </section>-->
-<!--      <section><img id="img" src="" alt=""></section>-->
-<!--      <button @click="close">关闭</button>-->
-      <!--      <section>-->
-      <!--        <canvas id="canvas" />-->
-      <!--      </section>-->
-      <!--      <section><img id="img" src="" alt=""></section>-->
+      <!--            <button id="btn" @click="tackcapture">拍照</button>-->
+      <!--            <button @click="opening">开启</button>-->
+      <!--            <section>-->
+      <!--              <video id="video" />-->
+      <!--            </section>-->
+      <!--            <section>-->
+      <!--              <canvas id="canvas" />-->
+      <!--            </section>-->
+      <!--            <section><img id="img" src="" alt=""></section>-->
+      <!--            <button @click="close">关闭</button>-->
+      <!--            <section>-->
+      <!--              <canvas id="canvas" />-->
+      <!--            </section>-->
+      <!--            <section><img id="img" src="" alt=""></section>-->
     </article>
     <template>
       <el-button type="text" @click="dialogVisible = true;">刷脸</el-button>
@@ -39,13 +41,13 @@
         @closed="close"
         @close="tackcapture"
       >
-                <section>
-                  <video id="video" />
-                </section>
-                <section>
-                  <canvas id="canvas" v-show="false"/>
-                </section>
-                <section><img id="img" src="" alt="" v-show="false"></section>
+        <section>
+          <video id="video" />
+        </section>
+        <section>
+          <canvas v-show="false" id="canvas" />
+        </section>
+        <section><img v-show="false" id="img" src="" alt=""></section>
         <!--        <span slot="footer" class="dialog-footer">-->
         <!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
         <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;">登录</el-button>
@@ -59,18 +61,39 @@
 // 拍照上传组件
 // 父组件通过函数 getImg 获取照片路径,如 @getImg="getImg"
 // eslint-disable-next-line no-unused-vars
-const Address = ''
+import { faceList, faceResult } from '@/api/face_manage'
 export default {
   name: 'TakePhotos',
   data() {
     return {
-      dialogVisible: false
+      ID: 1,
+      facedatalist: null,
+      base64: null,
+      dialogVisible: false,
+      nowface: {
+        id: 0,
+        base64: ''
+      }
     }
   },
   // mounted() {
-  //   this.opening()
+  //   this.getList()
+  // },
+  // created() {
+  // this.getList()
+  // this.getFace()
   // },
   methods: {
+    getList() {
+      faceList().then(response => {
+        this.facedatalist = response.data.items
+        const basedata = JSON.parse(JSON.stringify(this.facedatalist))
+        console.log(basedata[0].id)
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1000)
+      })
+    },
     opening() {
       // eslint-disable-next-line no-unused-vars
       const convas = document.querySelector('#canvas') //
@@ -108,11 +131,24 @@ export default {
       let height = 0 //
       let streaming = true // 是否开始捕获媒体
       if (streaming) {
-        // context.drawImage(video, 0, 0, 350, 200) // 将视频画面捕捉后绘制到canvas里面
+        context.drawImage(video, 0, 0, 350, 200) // 将视频画面捕捉后绘制到canvas里面
         // eslint-disable-next-line no-undef
         img.src = canvas.toDataURL('image/png') // 将canvas的数据传送到img里 base64格式
-        console.log(img.src)
-        alert(img.src) // 这边的值可以传入后端
+        // eslint-disable-next-line no-undef
+        const temp = canvas.toDataURL('image/png').slice(22)
+        // eslint-disable-next-line no-const-assign,no-undef
+        // temp.split(',')[-1]
+        // const test = 'asdefd%+n15161%+%'
+        this.nowface.base64 = temp
+        // console.log(this.nowface.base64)
+        faceResult(this.nowface).then(response => {
+          console.log('finish')
+          const faceresult = JSON.parse(JSON.stringify(response.data.items))
+          console.log(faceresult)
+          setTimeout(() => {
+            this.listLoading = false
+          }, 5000)
+        })
       }
 
       // 监听视频流就位事件,即视频可以播放了

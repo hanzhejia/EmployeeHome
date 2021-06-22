@@ -9,7 +9,6 @@ const state = {
   introduction: '',
   roles: []
 }
-
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
@@ -33,10 +32,21 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      console.log('vuex中的请求')
+      console.log('userinfo', userInfo)
+      login({ username: username, password: password }).then(response => {
+        console.log('respose的是：', response)
+        // const { data } = response
+        // const data1 = response.data.token
+        // state.name = username
+        // console.log('新的data是：', data1)
+        // commit('SET_TOKEN', data.token)
+        // console.log('data1:', data.token)
+        // setToken(data.token)
         const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+        commit('SET_TOKEN', data.name)
+        console.log('data1:', data.name)
+        setToken(data.name)
         resolve()
       }).catch(error => {
         reject(error)
@@ -49,7 +59,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
-
+        console.log('getinfo获取用户信息data是', data)
         if (!data) {
           reject('Verification failed, please Login again.')
         }
@@ -80,7 +90,6 @@ const actions = {
         commit('SET_ROLES', [])
         removeToken()
         resetRouter()
-
         // reset visited views and cached views
         // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
         dispatch('tagsView/delAllViews', null, { root: true })

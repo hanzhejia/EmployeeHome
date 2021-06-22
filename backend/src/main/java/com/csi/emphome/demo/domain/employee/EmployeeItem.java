@@ -1,227 +1,278 @@
 package com.csi.emphome.demo.domain.employee;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Date;
+import java.util.Date;
+
 
 @Entity
 @Table(name="employee_inf")
 public class EmployeeItem {
     @Id
-    private int ID;
-    private int DEPT_ID;
-    private int JOB_ID;
-    private String NAME;
-    private String CARD_ID;
-    private String ADDRESS;
-    private String POST_CODE;
-    private String TEL;
-    private String PHONE;
-    private String QQ_NUM;
-    private String EMAIL;
-    private int SEX;
-    private String PARTY;
-    private Date BIRTHDAY;
-    private String RACE;
-    private String EDUCTION;
-    private String SPECIALITY;
-    private String HOBBY;
-    private String REMARK;
-    private Date CREATE_DATE;
+    @Column(name = "ID")
+    private int id;
+    @Column(name = "DEPT_ID")
+    private int deptid;
+    @Column(name = "JOB_ID")
+    private int jobid;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "CARD_ID")
+    private String card;
+    @Column(name = "ADDRESS")
+    private String address;
+    @Column(name = "POST_CODE")
+    private String postcode;
+    @Column(name = "TEL")
+    private String tel;
+    @Column(name = "PHONE")
+    private String phone;
+    @Column(name = "QQ_NUM")
+    private String qqnum;
+    @Column(name = "EMAIL")
+    private String email;
+    @Column(name = "SEX")
+    private int sex;
+    @Column(name = "PARTY")
+    private String party;
+    @Column(name = "BIRTHDAY")
+    private Date birthday;
+    @Column(name = "RACE")
+    private String race;
+    @Column(name = "EDUCATION")
+    private String education;
+    @Column(name = "SPECIALITY")
+    private String speciality;
+    @Column(name = "HOBBY")
+    private String hobby;
+    @Column(name = "REMARK")
+    private String remark;
+    @Column(name = "CREATE_DATE")
+    private Date createdate;
 
     public EmployeeItem() {
     }
 
-    public EmployeeItem(int ID, int DEPT_ID, int JOB_ID, String NAME, String CARD_ID, String ADDRESS, String POST_CODE, String TEL, String PHONE, String QQ_NUM, String EMAIL, int SEX, String PARTY, Date BIRTHDAY, String RACE, String EDUCTION, String SPECIALITY, String HOBBY, String REMARK, Date CREATE_DATE) {
-        this.ID = ID;
-        this.DEPT_ID = DEPT_ID;
-        this.JOB_ID = JOB_ID;
-        this.NAME = NAME;
-        this.CARD_ID = CARD_ID;
-        this.ADDRESS = ADDRESS;
-        this.POST_CODE = POST_CODE;
-        this.TEL = TEL;
-        this.PHONE = PHONE;
-        this.QQ_NUM = QQ_NUM;
-        this.EMAIL = EMAIL;
-        this.SEX = SEX;
-        this.PARTY = PARTY;
-        this.BIRTHDAY = BIRTHDAY;
-        this.RACE = RACE;
-        this.EDUCTION = EDUCTION;
-        this.SPECIALITY = SPECIALITY;
-        this.HOBBY = HOBBY;
-        this.REMARK = REMARK;
-        this.CREATE_DATE = CREATE_DATE;
+
+
+    public EmployeeItem(int id ,String name, String card, int sex, int jobid, String education, String email,
+                        String tel, String phone, String party, String qqnum, String address, String postcode, Date birthday, String race,
+                        String speciality, String hobby, String remark, int deptid){
+        this.id = id;
+        this.deptid = deptid;
+        this.jobid = jobid;
+        this.name = name;
+        this.card = card;
+        this.address = address;
+        this.postcode = postcode;
+        this.tel = tel;
+        this.phone = phone;
+        this.qqnum = qqnum;
+        this.email = email;
+        this.sex = sex;
+        this.party = party;
+        this.birthday = birthday;
+        this.race = race;
+        this.education = education;
+        this.speciality = speciality;
+        this.hobby = hobby;
+        this.remark = remark;
+        this.createdate = new Date();
+    }
+    public int getId() {
+        return id;
     }
 
-    public int getID() {
-        return ID;
+    public void setId(int ID) {
+        this.id = ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public int getDeptid() {
+        return deptid;
     }
 
-    public int getDEPT_ID() {
-        return DEPT_ID;
+    public void setDeptid(int DEPT_ID) {
+        this.deptid = DEPT_ID;
     }
 
-    public void setDEPT_ID(int DEPT_ID) {
-        this.DEPT_ID = DEPT_ID;
+    public int getJobid() {
+        return jobid;
     }
 
-    public int getJOB_ID() {
-        return JOB_ID;
+    public void setJobid(int JOB_ID) {
+        this.jobid = JOB_ID;
     }
 
-    public void setJOB_ID(int JOB_ID) {
-        this.JOB_ID = JOB_ID;
+    public String getName() {
+        return name;
     }
 
-    public String getNAME() {
-        return NAME;
+    public void setName(String NAME) {
+        this.name = NAME;
     }
 
-    public void setNAME(String NAME) {
-        this.NAME = NAME;
+    public String getCard() {
+        return card;
     }
 
-    public String getCARD_ID() {
-        return CARD_ID;
+    public void setCard(String CARD_ID) {
+        this.card = CARD_ID;
     }
 
-    public void setCARD_ID(String CARD_ID) {
-        this.CARD_ID = CARD_ID;
+    public String getAddress() {
+        return address;
     }
 
-    public String getADDRESS() {
-        return ADDRESS;
+    public void setAddress(String ADDRESS) {
+        this.address = ADDRESS;
     }
 
-    public void setADDRESS(String ADDRESS) {
-        this.ADDRESS = ADDRESS;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public String getPOST_CODE() {
-        return POST_CODE;
+    public void setPostcode(String POST_CODE) {
+        this.postcode = POST_CODE;
     }
 
-    public void setPOST_CODE(String POST_CODE) {
-        this.POST_CODE = POST_CODE;
+    public String getTel() {
+        return tel;
     }
 
-    public String getTEL() {
-        return TEL;
+    public void setTel(String TEL) {
+        this.tel = TEL;
     }
 
-    public void setTEL(String TEL) {
-        this.TEL = TEL;
+    public String getPhone() {
+        return phone;
     }
 
-    public String getPHONE() {
-        return PHONE;
+    public void setPhone(String PHONE) {
+        this.phone = PHONE;
     }
 
-    public void setPHONE(String PHONE) {
-        this.PHONE = PHONE;
+    public String getQqnum() {
+        return qqnum;
     }
 
-    public String getQQ_NUM() {
-        return QQ_NUM;
+    public void setQqnum(String QQ_NUM) {
+        this.qqnum = QQ_NUM;
     }
 
-    public void setQQ_NUM(String QQ_NUM) {
-        this.QQ_NUM = QQ_NUM;
+    public String getEmail() {
+        return email;
     }
 
-    public String getEMAIL() {
-        return EMAIL;
+    public void setEmail(String EMAIL) {
+        this.email = EMAIL;
     }
 
-    public void setEMAIL(String EMAIL) {
-        this.EMAIL = EMAIL;
+    public int getSex() {
+        return sex;
     }
 
-    public int getSEX() {
-        return SEX;
+    public void setSex(int SEX) {
+        this.sex = SEX;
     }
 
-    public void setSEX(int SEX) {
-        this.SEX = SEX;
+    public String getParty() {
+        return party;
     }
 
-    public String getPARTY() {
-        return PARTY;
+    public void setParty(String PARTY) {
+        this.party = PARTY;
     }
 
-    public void setPARTY(String PARTY) {
-        this.PARTY = PARTY;
+    public Date getBirthday() {
+        return birthday;
     }
 
-    public Date getBIRTHDAY() {
-        return BIRTHDAY;
+    public void setBirthday(Date BIRTHDAY) {
+        this.birthday = BIRTHDAY;
     }
 
-    public void setBIRTHDAY(Date BIRTHDAY) {
-        this.BIRTHDAY = BIRTHDAY;
+    public String getRace() {
+        return race;
     }
 
-    public String getRACE() {
-        return RACE;
+    public void setRace(String RACE) {
+        this.race = RACE;
     }
 
-    public void setRACE(String RACE) {
-        this.RACE = RACE;
+    public String getEducation() {
+        return education;
     }
 
-    public String getEDUCTION() {
-        return EDUCTION;
+    public void setEducation(String EDUCTION) {
+        this.education = EDUCTION;
     }
 
-    public void setEDUCTION(String EDUCTION) {
-        this.EDUCTION = EDUCTION;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public String getSPECIALITY() {
-        return SPECIALITY;
+    public void setSpeciality(String SPECIALITY) {
+        this.speciality = SPECIALITY;
     }
 
-    public void setSPECIALITY(String SPECIALITY) {
-        this.SPECIALITY = SPECIALITY;
+    public String getHobby() {
+        return hobby;
     }
 
-    public String getHOBBY() {
-        return HOBBY;
+    public void setHobby(String HOBBY) {
+        this.hobby = HOBBY;
     }
 
-    public void setHOBBY(String HOBBY) {
-        this.HOBBY = HOBBY;
+    public String getRemark() {
+        return remark;
     }
 
-    public String getREMARK() {
-        return REMARK;
+    public void setRemark(String REMARK) {
+        this.remark = REMARK;
     }
 
-    public void setREMARK(String REMARK) {
-        this.REMARK = REMARK;
+    public Date getCreatedate() {
+        return createdate;
     }
 
-    public Date getCREATE_DATE() {
-        return CREATE_DATE;
+    public void setCreatedate(Date CREATE_DATE) {
+        this.createdate = CREATE_DATE;
     }
 
-    public void setCREATE_DATE(Date CREATE_DATE) {
-        this.CREATE_DATE = CREATE_DATE;
+    @Override
+    public String toString() {
+        return "EmployeeItem{" +
+                "ID=" + id +
+                ", DEPT_ID=" + deptid +
+                ", JOB_ID=" + jobid +
+                ", NAME='" + name + '\'' +
+                ", CARD_ID='" + card + '\'' +
+                ", ADDRESS='" + address + '\'' +
+                ", POST_CODE='" + postcode + '\'' +
+                ", TEL='" + tel + '\'' +
+                ", PHONE='" + phone + '\'' +
+                ", QQ_NUM='" + qqnum + '\'' +
+                ", EMAIL='" + email + '\'' +
+                ", SEX=" + sex +
+                ", PARTY='" + party + '\'' +
+                ", BIRTHDAY=" + birthday +
+                ", RACE='" + race + '\'' +
+                ", EDUCTION='" + education + '\'' +
+                ", SPECIALITY='" + speciality + '\'' +
+                ", HOBBY='" + hobby + '\'' +
+                ", REMARK='" + remark + '\'' +
+                ", CREATE_DATE=" + createdate +
+                '}';
     }
 
-//    @Override
-//    public String toString() {
-//        return "ListItem{" +
-//                "id=" + id +
-//                ", info='" + info + '\'' +
-//                ", time=" + time +
-//                '}';
-//    }
+    public EmployeeItem(int deptid, int jobid, String name, String card, String phone, int sex) {
+        this.deptid = deptid;
+        this.jobid = jobid;
+        this.name = name;
+        this.card = card;
+        this.phone = phone;
+        this.sex = sex;
+    }
 }
