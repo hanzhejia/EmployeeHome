@@ -152,7 +152,6 @@ public class DownloadServiceImpl implements DownloadService {
         String resData = "failed";
 
         DownloadItem tag_item = downloadRepository.findByStorageId(data.getStorageId());
-        System.out.println(tag_item);
         if (tag_item != null){
             FileUtil.del(tag_item.getPath());
             downloadRepository.delete(tag_item);

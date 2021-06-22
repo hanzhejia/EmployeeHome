@@ -1,13 +1,9 @@
 package com.csi.emphome.demo.config;
 
-
 import com.csi.emphome.demo.utils.EHConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * @author Zheng Jie
- */
 @Configuration
 @ConfigurationProperties(prefix = "file")
 public class FileProperties {
