@@ -6,7 +6,6 @@ import com.csi.emphome.demo.service.login.dto.PwdTemp;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @Controller
@@ -14,59 +13,27 @@ import java.util.HashMap;
 public class LoginController {
     private final LoginService loginService;
     public LoginController(LoginService loginService){this.loginService=loginService;}
-//    @CrossOrigin
-//    @PostMapping(value = "/login")
-//    @ResponseBody
-//    public HashMap<String, Object> login() {
-//        HashMap<String, Object> response = new HashMap<>();
-//        HashMap<String, Object> responseData = new HashMap<>();
-//        responseData.put("token",1);
-//        response.put("code",20000);
-//        response.put("msg","登录成功");
-//        response.put("data",responseData);
-//        return response;
-//    }
-@CrossOrigin
-@PostMapping(value = "/login")
-@ResponseBody
-public HashMap<String, Object> login(@RequestBody LoginTemp data) {
-    System.out.println("LoginController:"+data);
-  //  HashMap<String, Object> response = new HashMap<>();
-  //  HashMap<String, Object> responseData = new HashMap<>();
-  //  responseData.put("token",1);
-  //  response.put("code",20000);
- //   response.put("msg","登录成功");
-  //  response.put("data",responseData);
-    return loginService.createLoginItemFunc(data);
-}
-@CrossOrigin
-@PostMapping(value = "/updatePwd")
-@ResponseBody
-public  HashMap<String, Object> updatePwd(@RequestBody PwdTemp data){
-    System.out.println("pwddata:"+data);
-    return loginService.updateLoginPwdFunc(data);
-}
 
+    @CrossOrigin
+    @PostMapping(value = "/login")
+    @ResponseBody
+    public HashMap<String, Object> login(@RequestBody LoginTemp data) {
+        return loginService.createLoginItemFunc(data);
+    }
 
-
+    @CrossOrigin
+    @PostMapping(value = "/updatePwd")
+    @ResponseBody
+    public  HashMap<String, Object> updatePwd(@RequestBody PwdTemp data){
+        System.out.println("pwddata:"+data);
+        return loginService.updateLoginPwdFunc(data);
+    }
 
     @CrossOrigin
     @GetMapping(value = "/info")
     @ResponseBody
-    public HashMap<String, Object> info() {
-        System.out.println("infoLoginController");
-//        HashMap<String, Object> responseInfo = new HashMap<>();
-//        HashMap<String, Object> responseData = new HashMap<>();
-//        ArrayList<String> roles = new ArrayList<>();
-//        roles.add("admin");
-//        responseData.put("roles",roles);
-//        responseData.put("name","Super admin");
-//        responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-//        responseInfo.put("code",20000);
-//        responseInfo.put("msg","登录成功");
-//        responseInfo.put("data",responseData);
-       // return responseInfo;
-        return loginService.getLoginInfoFunc();
+    public HashMap<String, Object> info(@RequestParam("token") String data) {
+        return loginService.getLoginInfoFunc(data);
     }
 
     @CrossOrigin

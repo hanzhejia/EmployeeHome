@@ -1,6 +1,8 @@
 import request from '@/utils/request'
+import da from 'element-ui/src/locale/lang/da'
 
 export function login(data) {
+  console.log('call /user/login', data)
   return request({
     url: '/vue-admin-template/user/login',
     method: 'post',
@@ -8,7 +10,7 @@ export function login(data) {
   })
 }
 export function updatePwd(data) {
-  console.log('updata', data)
+  console.log('call /user/updatePwd', data)
   return request({
     url: '/vue-admin-template/user/updatePwd',
     method: 'post',
@@ -17,7 +19,7 @@ export function updatePwd(data) {
 }
 
 export function getInfo(token) {
-  console.log('api/user/getInfo', token)
+  console.log('call /user/info', token, typeof token)
   return request({
     url: '/vue-admin-template/user/info',
     method: 'get',
@@ -26,6 +28,7 @@ export function getInfo(token) {
 }
 
 export function logout() {
+  console.log('call /user/logout')
   return request({
     url: '/vue-admin-template/user/logout',
     method: 'post'

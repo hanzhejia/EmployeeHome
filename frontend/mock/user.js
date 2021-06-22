@@ -53,9 +53,7 @@ module.exports = [
     type: 'get',
     response: config => {
       const { token } = config.query
-      console.log('mock/user.js', token)
       const info = users[token]
-      console.log(config)
 
       // mock error
       if (!info) {
@@ -75,6 +73,17 @@ module.exports = [
   // user logout
   {
     url: '/vue-admin-template/user/logout',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
+  },
+
+  {
+    url: '/vue-admin-template/user/updatePwd',
     type: 'post',
     response: _ => {
       return {
