@@ -3,6 +3,7 @@ package com.csi.emphome.demo.service.face.impl;
 import com.csi.emphome.demo.domain.face.Face;
 import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
+import org.json.JSONException;
 import org.springframework.stereotype.Service;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class FaceServiceImpl implements FaceService {
         return response;
     }
     @Override
-    public HashMap<String, Object> serchFace(Face nowbase64){
+    public HashMap<String, Object> serchFace(Face nowbase64) throws JSONException {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
         List<Face> listItems = faceRepository.findAll();

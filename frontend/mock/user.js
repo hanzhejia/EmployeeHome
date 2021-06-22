@@ -54,6 +54,7 @@ module.exports = [
     response: config => {
       const { token } = config.query
       const info = users[token]
+      console.log(config)
 
       // mock error
       if (!info) {
