@@ -27,7 +27,6 @@ public class TestServiceImpl implements TestService {
         List<TestItem> list = testRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
         responseData.put("total",testRepository.count());
         responseData.put("items",list);
-
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data",responseData);

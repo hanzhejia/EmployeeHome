@@ -3,8 +3,8 @@ import request from '@/utils/request'
 export function fetchList(query) {
   return request({
     url: '/vue-admin-template/employee/list',
-    method: 'get',
-    params: query
+    method: 'post',
+    data: query
   })
 }
 
@@ -17,7 +17,6 @@ export function fetchListItem(id) {
 }
 
 export function fetchPv(pv) {
-
   return request({
     url: '/vue-admin-template/employee/pv',
     method: 'get',
@@ -41,10 +40,18 @@ export function updateListItem(data) {
   })
 }
 
-export function searchdateListItem(data) {
+export function searchdateListItem(data, data2) {
   return request({
-    url: '/vue-admin-template/employee/searchdate',
+    url: '/vue-admin-template/employee/search',
+    method: 'get',
+    params: { ...data, ...data2 }
+  })
+}
+
+export function deleteListItem(data) {
+  return request({
+    url: '/vue-admin-template/employee/delete',
     method: 'post',
-    params: data
+    data
   })
 }

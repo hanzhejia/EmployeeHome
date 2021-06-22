@@ -2,7 +2,7 @@
   <div class="func1-container">
     <el-table
       v-loading="listLoading"
-      :data="list"
+      :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       highlight-current-row
     >
@@ -54,9 +54,8 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 
-import { fetchList, createListItem, updateListItem, deleteListItem } from '@/api/dept_manage'
+import { fetchList, fetchListItem, updateListItem, deleteListItem } from '@/api/dept_manage'
 import Pagination from '@/components/Pagination'
-import { fetchListItem } from '@/api/test' // secondary package based on el-pagination
 
 export default {
   name: 'Func1',

@@ -1,21 +1,29 @@
 <template>
-  <div class="func2-container">
-    <div style="margin: 50px;"></div>
-    <el-form ref="form" :model="form" label-width="80px">
-      <el-form-item label="部门名称">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="详细描述">
-        <el-input
-          type="textarea"
-          v-model="form.remark"
-          :autosize="{ minRows: 4, maxRows: 8}"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">添加</el-button>
-        <el-button>取消</el-button>
-      </el-form-item>
-    </el-form>
+  <div style="padding:30px">
+    <div class="func2-container">
+      <el-form :rules="rules" ref="form" :model="form" label-width="80px" label-position="top">
+        <el-form-item label="部门名称" prop="name">
+          <div style="width: 300px">
+            <el-input v-model="form.name"></el-input>
+          </div>
+        </el-form-item>
+        <el-form-item label="详细描述" prop="remark">
+          <div style="width: 500px">
+            <el-input
+              type="textarea"
+              v-model="form.remark"
+              :autosize="{ minRows: 6, maxRows: 10}"
+              maxlength="50"
+              show-word-limit>
+            </el-input>
+          </div>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">添加</el-button>
+          <el-button @click="reset">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -28,6 +36,14 @@ export default {
       form: {
         name: '',
         remark: ''
+      },
+      rules: {
+        name: [
+          { required: true, message: '请输入部门名称', trigger: 'blur' }
+        ],
+        remark: [
+          { required: true, message: '请输入详细描述', trigger: 'blur' }
+        ]
       }
     }
   },
@@ -47,6 +63,12 @@ export default {
           })
         }
       })
+    },
+    reset() {
+      this.form = {
+        name: '',
+        remark: ''
+      }
     }
   }
 }
