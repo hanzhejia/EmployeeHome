@@ -59,7 +59,6 @@
         <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">提交</el-button>
       </div>
     </el-dialog>
-
   </div>
 </template>
 
@@ -120,9 +119,11 @@ export default {
   methods: {
     getList() {
       this.listLoading = true
+      console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
         this.total = response.data.total
+        console.log(response)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false

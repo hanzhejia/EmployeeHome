@@ -57,9 +57,9 @@
             <el-select v-model="searcheForm.deptid" placeholder="选择部门搜索">
               <el-option
                 v-for="item in optionsdept"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
@@ -168,9 +168,9 @@
           <el-select v-model="temp.deptid" placeholder="请选择">
             <el-option
               v-for="item in optionsdept"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             />
           </el-select>
         </el-form-item>
@@ -193,7 +193,7 @@
 <script>
 
 import checkPermission from '@/utils/permission'
-import { fetchList, searchdateListItem, updateListItem, deleteListItem } from '@/api/employee_manage'
+import { fetchList, searchdateListItem, updateListItem, deleteListItem, fetchDept } from '@/api/employee_manage'
 import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
 
@@ -254,31 +254,29 @@ export default {
         value: 5,
         label: '北京烤鸭'
       }],
-      optionsdept: [{
-        value: 1,
-        label: '黄金糕'
-      }, {
-        value: 2,
-        label: '双皮奶'
-      }, {
-        value: 3,
-        label: '蚵仔煎'
-      }, {
-        value: 4,
-        label: '龙须面'
-      }, {
-        value: 5,
-        label: '北京烤鸭'
-      }]
+      optionsdept: []
     }
   },
   created() {
+    this.getdept()
     this.getList()
   },
   methods: {
     checkPermission,
     handleRolesChange() {
       this.key++
+    },
+    getdept() {
+      this.listLoading = true
+      fetchDept().then(response => {
+        this.optionsdept = response.data.items
+        response.data.total
+        console.log(response.data.items)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
     },
     handleDelete(index, row) {
       // const tempData = Object.assign({}, row)
@@ -288,8 +286,8 @@ export default {
         }
       })
       this.optionsdept.forEach((vul) => {
-        if (row.deptid === vul.label) {
-          row.deptid = vul.value
+        if (row.deptid === vul.name) {
+          row.deptid = vul.id
         }
       })
       if (row.sex === '男') {
@@ -318,8 +316,8 @@ export default {
             }
           })
           this.optionsdept.forEach((vul) => {
-            if (val.deptid === vul.value) {
-              val.deptid = vul.label
+            if (val.deptid === vul.id) {
+              val.deptid = vul.name
             }
           })
           if (val.sex === 1) {
@@ -353,8 +351,8 @@ export default {
             }
           })
           this.optionsdept.forEach((vul) => {
-            if (tempData.deptid === vul.label) {
-              tempData.deptid = vul.value
+            if (tempData.deptid === vul.name) {
+              tempData.deptid = vul.id
             }
           })
           if (tempData.sex === '男') {
@@ -393,8 +391,8 @@ export default {
                 }
               })
               this.optionsdept.forEach((vul) => {
-                if (val.deptid === vul.value) {
-                  val.deptid = vul.label
+                if (val.deptid === vul.id) {
+                  val.deptid = vul.name
                 }
               })
               if (val.sex === 1) {

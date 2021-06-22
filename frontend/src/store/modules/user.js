@@ -30,23 +30,24 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
+    console.log('modules/user', userInfo)
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      console.log('vuex中的请求')
-      console.log('userinfo', userInfo)
-      login({ username: username, password: password }).then(response => {
-        console.log('respose的是：', response)
-        // const { data } = response
+      // console.log('vuex中的请求')
+      // console.log('userinfo', userInfo)
+      login({ username: username.trim(), password: password }).then(response => {
+        console.log('modules/user/respose的是：', response)
+        const { data } = response
         // const data1 = response.data.token
         // state.name = username
         // console.log('新的data是：', data1)
-        // commit('SET_TOKEN', data.token)
+        commit('SET_TOKEN', data.token)
         // console.log('data1:', data.token)
-        // setToken(data.token)
-        const { data } = response
-        commit('SET_TOKEN', data.name)
-        console.log('data1:', data.name)
-        setToken(data.name)
+        setToken(data.token)
+        // const { data } = response
+        // commit('SET_TOKEN', data.name)
+        // console.log('data1:', data.name)
+        // setToken(data.name)
         resolve()
       }).catch(error => {
         reject(error)

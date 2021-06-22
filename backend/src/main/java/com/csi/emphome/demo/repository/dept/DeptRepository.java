@@ -11,4 +11,5 @@ public interface DeptRepository extends JpaRepository<DeptItem,Integer>  {
     List<DeptItem> findAllByNameLike(String name);
     DeptItem findTopByOrderByIdDesc();
     List<DeptItem> findAll(Specification spec);
+
 }

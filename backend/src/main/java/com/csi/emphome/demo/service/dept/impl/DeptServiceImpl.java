@@ -34,6 +34,21 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    @Override
+    public HashMap<String, Object> fetchDeptList() {
+        HashMap<String, Object> responseData = new HashMap<>();
+        List<DeptItem> list = deptRepository.findAll();
+        System.out.println(list);
+        responseData.put("total",deptRepository.count());
+        responseData.put("items",list);
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data",responseData);
+        return response;
+    }
+
+
     public static List<DeptItem> splicePage(List<DeptItem> list, Integer pageNum, Integer pageSize) {
         if(list == null){
             return null;

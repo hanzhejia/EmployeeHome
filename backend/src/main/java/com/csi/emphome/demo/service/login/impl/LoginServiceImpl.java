@@ -62,6 +62,10 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public HashMap<String, Object> getLoginInfoFunc() {
+        System.out.println("impl:getLoginInfoFunc");
+        HashMap<String, Object> response=new HashMap<>();
+        response.put("code",20000);
+        response.put("data", responseData);
         return response;
     }
 
