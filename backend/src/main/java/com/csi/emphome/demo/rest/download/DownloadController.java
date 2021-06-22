@@ -5,13 +5,9 @@ import com.csi.emphome.demo.service.download.dto.DownloadListQuery;
 import com.csi.emphome.demo.service.download.dto.DownloadSearchData;
 import com.csi.emphome.demo.service.download.dto.DownloadTemp;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
 import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/vue-admin-template/download")
@@ -55,13 +51,6 @@ public class DownloadController {
     @ResponseBody
     public HashMap<String, Object> deleteListItem(@RequestBody DownloadTemp data) {
         return downloadService.deleteListItemFunc(data);
-    }
-
-    @CrossOrigin
-    @PostMapping(value = "/download")
-    @ResponseBody
-    public HashMap<String, Object> downloadFile(@RequestBody DownloadTemp data) {
-        return downloadService.downloadFileFunc(data);
     }
 
     @CrossOrigin

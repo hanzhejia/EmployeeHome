@@ -79,17 +79,6 @@ module.exports = [
   },
 
   {
-    url: '/vue-admin-template/download/download',
-    type: 'post',
-    response: _ => {
-      return {
-        code: 20000,
-        data: 'success'
-      }
-    }
-  },
-
-  {
     url: '/vue-admin-template/download/upload',
     type: 'post',
     response: _ => {
