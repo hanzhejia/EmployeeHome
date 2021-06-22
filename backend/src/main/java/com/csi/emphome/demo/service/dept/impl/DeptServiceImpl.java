@@ -69,13 +69,14 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public HashMap<String, Object> fetchListItemFunc(DeptSearchData data) {
+        System.out.println(data);
         HashMap<String, Object> responseData = new HashMap<>();
 
         if(data.getSearch().equals("")){
             return fetchListFunc(data.getListQuery());
         }
 
-        List<DeptItem> listAll = deptRepository.findAllByName(data.getSearch());
+        List<DeptItem> listAll = deptRepository.findAllByNameLike("%" + data.getSearch() + "%");
         List<DeptItem> list;
         if(listAll.size()>0){
             list = splicePage(listAll, data.getListQuery().getPage(), data.getListQuery().getLimit());
