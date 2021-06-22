@@ -1,6 +1,8 @@
 package com.csi.emphome.demo.repository.user;
-
-import com.csi.emphome.demo.domain.notice.noti;
+import com.csi.emphome.demo.domain.user.UserItem;
 import org.springframework.data.jpa.repository.JpaRepository;
-public interface UserRepository extends JpaRepository<noti,Integer> {
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+public interface UserRepository extends JpaRepository<UserItem,Integer> , JpaSpecificationExecutor<UserItem> {
+
 }

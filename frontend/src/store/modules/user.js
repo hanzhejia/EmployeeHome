@@ -33,9 +33,17 @@ const actions = {
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      console.log('vuex中的请求')
+      console.log('userinfo', userInfo)
+      console.log('username', username)
+      console.log('password', password)
+      login({ username: username, password: password }).then(response => {
+        console.log('respose的data是：', response.data)
         const { data } = response
+        const data1 = response.data.token
+        console.log('新的data是：', data1)
         commit('SET_TOKEN', data.token)
+        console.log('data1:', data.token)
         setToken(data.token)
         resolve()
       }).catch(error => {
@@ -49,7 +57,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
-
+        console.log('获取用户信息data是', data)
         if (!data) {
           reject('Verification failed, please Login again.')
         }

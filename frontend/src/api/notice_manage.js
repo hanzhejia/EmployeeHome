@@ -18,7 +18,7 @@ export function fetchListItem(id) {
 }
 
 export function createListItem(data) {
-  console.log('sbssssssssssssssssssss')
+
   return request({
     url: '/vue-admin-template/noti/create',
     method: 'post',
@@ -26,9 +26,19 @@ export function createListItem(data) {
   })
 }
 export function updateListItem(data) {
+
+  console.log(data)
   return request({
-    url: '/vue-admin-template/test/update',
+    url: '/vue-admin-template/noti/update',
     method: 'post',
     data
   })
+}
+  export function deleteListItem(data) {
+    console.log('sbssssssssssssssssssss')
+    return request({
+      url: `/vue-admin-template/noti/delete`,
+      method: 'post',
+      data
+    })
 }

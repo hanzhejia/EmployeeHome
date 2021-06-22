@@ -1,18 +1,18 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchList(data) {
   return request({
     url: '/vue-admin-template/department/list',
-    method: 'get',
-    params: query
+    method: 'post',
+    data
   })
 }
 
-export function fetchListItem(id) {
+export function fetchListItem(data) {
   return request({
-    url: '/vue-admin-template/department/detail',
-    method: 'get',
-    params: { id }
+    url: '/vue-admin-template/department/listItem',
+    method: 'post',
+    data
   })
 }
 
@@ -27,6 +27,14 @@ export function createListItem(data) {
 export function updateListItem(data) {
   return request({
     url: '/vue-admin-template/department/update',
+    method: 'post',
+    data
+  })
+}
+
+export function deleteListItem(data) {
+  return request({
+    url: `/vue-admin-template/department/delete`,
     method: 'post',
     data
   })

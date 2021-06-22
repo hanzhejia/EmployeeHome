@@ -3,7 +3,6 @@ package com.csi.emphome.demo.domain.dept;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Date;
 
 @Entity
 @Table(name="dept_inf")
