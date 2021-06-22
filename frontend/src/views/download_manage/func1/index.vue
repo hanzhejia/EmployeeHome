@@ -8,7 +8,6 @@
     >
       <el-table-column type="selection" width="55" />
 
-<!--      <el-table-column label="文件名" prop="name" />-->
       <el-table-column label="文件名" prop="name">
         <template slot-scope="scope">
           <el-popover
@@ -45,7 +44,7 @@
           </el-input>
         </template>
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleDownload(scope.$index, scope.row)">下载</el-button>
+          <el-button size="mini" :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName">下载</el-button>
 
           <template v-if="checkPermission(['admin'])">
             <el-button size="mini" type="danger" @click="handleCreate(scope.$index, scope.row)">添加</el-button>
@@ -92,10 +91,8 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 
-import { downloadFile, fetchList, fetchListItem, createListItem, updateListItem, deleteListItem } from '@/api/download_manage'
+import { fetchList, fetchListItem, createListItem, updateListItem, deleteListItem } from '@/api/download_manage'
 import Pagination from '@/components/Pagination'
-
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Func1',
@@ -182,12 +179,6 @@ export default {
       })
     },
 
-    handleDownload(index, row) {
-      console.log(index, row)
-      this.listLoading = true
-      this.listLoading = false
-    },
-
     handleCreate() {
       this.resetTemp()
       this.dialogStatus = 'create'
@@ -209,7 +200,6 @@ export default {
 
     handleDelete(index, row) {
       deleteListItem(row).then(() => {
-        // TODO download file
         this.$notify({
           title: 'Success',
           message: 'Delete Successfully',

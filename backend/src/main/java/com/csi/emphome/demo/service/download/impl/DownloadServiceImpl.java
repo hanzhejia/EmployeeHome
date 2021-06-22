@@ -1,5 +1,6 @@
 package com.csi.emphome.demo.service.download.impl;
 
+import com.csi.emphome.demo.config.FileProperties;
 import com.csi.emphome.demo.domain.download.DownloadItem;
 import com.csi.emphome.demo.repository.download.DownloadRepository;
 import com.csi.emphome.demo.service.download.DownloadService;
@@ -12,17 +13,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DownloadServiceImpl implements DownloadService {
     private final DownloadRepository downloadRepository;
+    private final FileProperties properties;
 
-    public DownloadServiceImpl(DownloadRepository downloadRepository) {
+    public DownloadServiceImpl(DownloadRepository downloadRepository, FileProperties properties) {
         this.downloadRepository = downloadRepository;
+        this.properties = properties;
     }
 
     @Override
@@ -151,7 +152,6 @@ public class DownloadServiceImpl implements DownloadService {
         String resData = "failed";
 
         DownloadItem tag_item = downloadRepository.findByStorageId(data.getStorageId());
-        System.out.println(tag_item);
         if (tag_item != null){
             FileUtil.del(tag_item.getPath());
             downloadRepository.delete(tag_item);
@@ -166,32 +166,14 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public HashMap<String, Object> downloadFileFunc(DownloadTemp data) {
-        int resCode = 20001;
-        String resData = "failed";
-
-        //TODO download file
-        System.out.println("down ok");
-        resCode = 20000;
-        resData = "success";
-
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("code",resCode);
-        response.put("data",resData);
-        return response;
-    }
-
-    @Override
     public HashMap<String, Object> uploadFileFunc(DownloadTemp data, MultipartFile multipartFile) {
         int resCode = 20001;
         String resData = "failed";
 
-        int properties_getMaxSize = 100;
-        String properties_getPath_getPath = "C:\\doghome\\file\\";
-        FileUtil.checkSize(properties_getMaxSize, multipartFile.getSize());
+        FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
         String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
         String type = FileUtil.getFileType(suffix);
-        File file = FileUtil.upload(multipartFile, properties_getPath_getPath + type +  File.separator);
+        File file = FileUtil.upload(multipartFile, properties.getPath().getPath() + type +  File.separator);
 
         DownloadItem tag_item = downloadRepository.findByRealName(file.getName());
         if (tag_item == null) {

@@ -11,13 +11,11 @@ import com.baidu.aip.face.MatchRequest;
 import com.csi.emphome.demo.service.face.util.BaiduAIPCommon;
 import com.csi.emphome.demo.service.face.util.Base64Util;
 import com.csi.emphome.demo.service.face.util.FileUtil;
-import com.alibaba.fastjson.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 @Service
 public class FaceServiceImpl implements FaceService {
     private final FaceRepository faceRepository;
