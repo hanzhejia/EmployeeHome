@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public HashMap<String, Object> createListItemFunc(UserItem data) {
         System.out.println(data);
-
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data","success");

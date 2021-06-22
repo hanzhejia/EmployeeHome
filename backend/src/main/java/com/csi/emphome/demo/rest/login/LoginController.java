@@ -1,5 +1,7 @@
 package com.csi.emphome.demo.rest.login;
 
+import com.csi.emphome.demo.service.login.LoginService;
+import com.csi.emphome.demo.service.login.dto.LoginTemp;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,18 +11,32 @@ import java.util.HashMap;
 @Controller
 @RequestMapping(value = "/vue-admin-template/user")
 public class LoginController {
-    @CrossOrigin
-    @PostMapping(value = "/login")
-    @ResponseBody
-    public HashMap<String, Object> login() {
-        HashMap<String, Object> response = new HashMap<>();
-        HashMap<String, Object> responseData = new HashMap<>();
-        responseData.put("token",1);
-        response.put("code",20000);
-        response.put("msg","登录成功");
-        response.put("data",responseData);
-        return response;
-    }
+    private final LoginService loginService;
+    public LoginController(LoginService loginService){this.loginService=loginService;}
+//    @CrossOrigin
+//    @PostMapping(value = "/login")
+//    @ResponseBody
+//    public HashMap<String, Object> login() {
+//        HashMap<String, Object> response = new HashMap<>();
+//        HashMap<String, Object> responseData = new HashMap<>();
+//        responseData.put("token",1);
+//        response.put("code",20000);
+//        response.put("msg","登录成功");
+//        response.put("data",responseData);
+//        return response;
+//    }
+@CrossOrigin
+@PostMapping(value = "/login")
+@ResponseBody
+public HashMap<String, Object> login(@RequestBody LoginTemp data) {
+  //  HashMap<String, Object> response = new HashMap<>();
+  //  HashMap<String, Object> responseData = new HashMap<>();
+  //  responseData.put("token",1);
+  //  response.put("code",20000);
+ //   response.put("msg","登录成功");
+  //  response.put("data",responseData);
+    return loginService.createLoginItemFunc(data);
+}
 
     @CrossOrigin
     @GetMapping(value = "/info")
