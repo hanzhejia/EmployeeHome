@@ -14,4 +14,5 @@ public interface DeptService {
     HashMap<String, Object> createListItemFunc(DeptTemp data);
     HashMap<String, Object> deleteListItemFunc(DeptTemp data);
     HashMap<String, Object> updateListItemFunc(DeptTemp data);
+    HashMap<String, Object> fetchDeptList();
 }

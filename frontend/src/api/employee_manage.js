@@ -8,6 +8,13 @@ export function fetchList(query) {
   })
 }
 
+export function fetchDept() {
+  return request({
+    url: '/vue-admin-template/department/deptlist',
+    method: 'post'
+  })
+}
+
 export function fetchListItem(id) {
   return request({
     url: '/vue-admin-template/employee/detail',
