@@ -1,22 +1,26 @@
 package com.csi.emphome.demo.service.face.impl;
 
+import com.baidu.aip.face.AipFace;
+import com.baidu.aip.face.MatchRequest;
 import com.csi.emphome.demo.domain.face.Face;
 import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
+
 import org.json.JSONException;
 import org.springframework.stereotype.Service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.baidu.aip.face.AipFace;
 import com.baidu.aip.face.MatchRequest;
+
 import com.csi.emphome.demo.service.face.util.BaiduAIPCommon;
-import com.csi.emphome.demo.service.face.util.Base64Util;
-import com.csi.emphome.demo.service.face.util.FileUtil;
-import java.io.IOException;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 @Service
 public class FaceServiceImpl implements FaceService {
     private final FaceRepository faceRepository;

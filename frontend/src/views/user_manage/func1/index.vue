@@ -1,32 +1,31 @@
-<template v-if="checkPermission(['admin'])">
+<template>
   <div>
-    <div class="func1-container">
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="用户名：">
-          <el-input v-model="formInline.username" placeholder="请输入用户名" />
+<!--    <div class="func1-container">
+      <el-form :inline="true" ref="searchfrom" :model="searchform" class="demo-form-inline">
+        <el-form-item label="用户名：" prop="username">
+          <el-input v-model="searchform.username" placeholder="请输入用户名搜索" />
         </el-form-item>
-        <el-form-item label="用户状态：">
-          <el-select v-model="formInline.status" placeholder="全部">
-            <el-option label="全部" value="全部" />
+        <el-form-item label="用户状态：" prop="status">
+          <el-select v-model="searchform.status" placeholder="用户状态">
             <el-option label="管理员" value="1" />
             <el-option label="普通用户" value="2" />
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="finds()">搜索</el-button>
-          <el-button type="primary" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
+          <el-button type="primary" @click="search(scope.$index,scope.row)">搜索</el-button>
+
         </el-form-item>
       </el-form>
-    </div>
+    </div>-->
     <div>
       <el-table
         ref="multipleTable"
-        :data="list"
+        :data="list.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%"
         tooltip-effect="dark"
-        @selection-change="handleSelectionChange"
+        :model="temp"
       >
-        <el-table-column type="selection" width="55"/>
+
         <el-table-column label="登录名" prop="loginname"/>
         <el-table-column label="密码" prop="password"/>
         <el-table-column label="用户名" prop="username"/>
@@ -36,9 +35,14 @@
             <span>{{ row.createdate | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作">
+        <el-table-column align="right">
+          <template slot="header">
+            <el-input v-model="search" size="mini" placeholder="输入用户名搜索">
+              <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
+            </el-input>
+          </template>
           <template slot-scope="scope">
-
+            <el-button type="mini" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
             <!--跳转至用户修改页面-->
             <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">编辑</el-button>
 
@@ -77,10 +81,16 @@
 </template>
 
 <script>
-import {deleteListItem,fetchList,updateListItem, searchdateListItem} from '@/api/user_manage'
+import {
+  deleteListItem,
+  fetchList,
+  updateListItem,
+  searchdateListItem
+} from '@/api/user_manage'
 import Pagination from '@/components/Pagination'// secondary package based on el-pagination
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission'
+import { fetchListItem } from '@/api/dept_manage'
 
 export default {
   name: 'Func1',
@@ -128,14 +138,14 @@ export default {
       },
       formLabelWidth: '50px',
       /*搜索栏*/
-      formInline: {
+    /*  searchform: {
         username: ' ',
         status: '全部'
-      },
-      /* 数据举例*/
+      },*/
+      /* 数据*/
       temp:
         {
-          id:undefined,
+          id:'',
           loginname: '',
           password: '',
           username: '',
@@ -183,6 +193,7 @@ export default {
         updateListItem(tempData).then(() => {
           const index = this.list.findIndex(v => v.id === this.temp.id)
           this.list.splice(index, 1, this.temp)
+          console.log(this.list)
           this.dialogFormVisible = false
           this.$notify({
             title: 'Success',
@@ -193,22 +204,41 @@ export default {
         })
       },
       /*搜索用户*/
-      finds()
-      {
-        const tempData = Object.assign({}, this.formInline)
-        searchdateListItem(tempData).then(response => {
+     /* search(){
+       /!* this.$refs['searcheform'].validate((valid) => {
+          if (valid) {*!/
+            const tempData = Object.assign({}, this.searcheform)
+            if (tempData.status === '') { tempData.status = 0 }
+            searchdateListItem(tempData, this.listQuery).then(response => {
+              this.list = response.data.items
+              this.list.forEach((val) => {
+                if(val.status === 1)
+                { val.status = '管理员'}
+                else if(val.status === 2){
+                  val.status = '普通用户'
+                }
+              })
+      })
+      },*/
+      handleSearch(index, row) {
+        this.listLoading = true
+        this.searchData = {
+          search: this.search,
+          listQuery: this.listQuery
+        }
+        fetchListItem(this.searchData).then(response => {
           this.list = response.data.items
-          console.log(this.list)
           this.total = response.data.total
+          // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
           }, 100)
         })
-        console.log('search!')
       },
       /*删除用户*/
-      handleDelete()
+      handleDelete(index, row)
       {
+        console.log("delete"),
         deleteListItem(row).then(() => {
           this.$notify({
             title: 'Success',
@@ -219,21 +249,6 @@ export default {
           this.list.splice(index, 1)
         })
       },
-      /*选择用户*/
-      toggleSelection(rows)
-      {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row)
-          })
-        } else {
-          this.$refs.multipleTable.clearSelection()
-        }
-      },
-      handleSelectionChange(val)
-      {
-        this.multipleSelection = val
-      }
     }
   }
 
