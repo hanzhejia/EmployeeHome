@@ -21,10 +21,10 @@ public class notiServiceImpl implements notiService {
     public HashMap<String, Object> fetchListFunc(TestListQuery data) {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
-
         List listItems = notiRepository.findAll();
         responseData.put("total",listItems.size());
         responseData.put("items",listItems);
+
         response.put("code",20000);
         response.put("data",responseData);
         return response;

@@ -104,13 +104,13 @@ export const asyncRoutes = [
         path: 'func1',
         name: 'Func1',
         component: () => import('@/views/face_mamage/func1/index'),
-        meta: { title: '信息管理', icon: 'el-icon-tickets' }
+        meta: { title: '人脸增改', icon: 'el-icon-camera' }
       },
       {
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/face_mamage/func2/index'),
-        meta: { title: '人脸注册', icon: 'el-icon-camera' }
+        meta: { title: '信息管理', icon: 'el-icon-tickets' }
       }
     ]
   },

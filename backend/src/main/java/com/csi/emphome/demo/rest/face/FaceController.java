@@ -36,4 +36,11 @@ public class FaceController {
     public HashMap<String, Object> faceAdd(@RequestBody Face nowbase64) {
         return faceService.addFace(nowbase64);
     }
+
+    @CrossOrigin
+    @PostMapping(value = "/del")
+    @ResponseBody
+    public HashMap<String, Object> faceDel(@RequestBody Face nowface) {
+        return faceService.delFace(nowface);
+    }
 }
