@@ -16,7 +16,6 @@ export function fetchDept() {
 }
 
 export function fetchJob() {
-  console.log(111111)
   return request({
     url: '/vue-admin-template/job/joblist',
     method: 'post'

@@ -218,7 +218,7 @@ export const asyncRoutes = [
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/employee_manage/func2/index'),
-        meta: { title: '添加员工', icon: 'el-icon-plus' }
+        meta: { title: '添加员工', icon: 'el-icon-plus', roles: ['admin'] }
       }
     ]
   },

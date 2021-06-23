@@ -1,7 +1,7 @@
 <template>
   <div class="func1-container">
     <switch-roles @change="handleRolesChange" />
-    <el-form ref="searcheForm" :model="searcheForm" label-width="100px" class="demo-ruleForm">
+    <el-form ref="searcheForm"  status-icon :rules="rules" :model="searcheForm" label-width="100px" class="demo-ruleForm">
       <el-row>
         <el-col :span="4">
           <el-form-item label="职位" prop="jobid">
@@ -38,8 +38,8 @@
         <el-col :span="4">
           <el-form-item label="性别" prop="sex">
             <el-select v-model="searcheForm.sex" placeholder="选择性别搜索">
-              <el-option label="男" value="1" />
-              <el-option label="女" value="2" />
+              <el-option label="男" value=1 />
+              <el-option label="女" value=2 />
             </el-select>
           </el-form-item>
         </el-col>
@@ -135,17 +135,20 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="search" />
 
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
-      <el-form ref="temp" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+      <el-form ref="temp"  status-icon :rules="rules2" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="姓名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
         <el-form-item label="性别" prop="sex">
-          <el-input v-model="temp.sex" />
+          <el-select v-model="temp.sex" >
+            <el-option label="男" value=1 />
+            <el-option label="女" value=2 />
+          </el-select>
         </el-form-item>
-        <el-form-item label="手机号" prop="phone">
+        <el-form-item label="手机号" prop="phone" required>
           <el-input v-model="temp.phone" />
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
+        <el-form-item label="邮箱" prop="email" required>
           <el-input v-model="temp.email" />
         </el-form-item>
         <el-form-item label="职位" prop="jobid">
@@ -161,7 +164,7 @@
         <el-form-item label="学历" prop="education">
           <el-input v-model="temp.education" />
         </el-form-item>
-        <el-form-item label="身份证号码" prop="card">
+        <el-form-item label="身份证号码" prop="card" required>
           <el-input v-model="temp.card" />
         </el-form-item>
         <el-form-item label="部门" prop="deptid">
@@ -214,6 +217,58 @@ export default {
   components: { Pagination },
   directives: { permission },
   data() {
+    var validateCard = (rule, value, callback) => {
+      if (value !== '') {
+        if ((value.length !== 18)) {
+          callback(new Error('身份证长度为18个字符'))
+        } else if (value !== '') {
+          var reg = /(^\d{17}(\d|X)$)/
+          if (!reg.test(value)) {
+            callback(new Error('请输入有效身份证号码'))
+          }
+        }
+      }
+      callback()
+    }
+    var validatePhone = (rule, value, callback) => {
+      if (value !== '') {
+        if ((value.length !== 11)) {
+          callback(new Error('手机号码长度为11个字符'))
+        } else if (value !== '') {
+          var reg = /(^\d{11}$)/
+          if (!reg.test(value)) {
+            callback(new Error('请输入有效手机号码'))
+          }
+        }
+      }
+      callback()
+    }
+    var validateEmail = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入邮箱'))
+      } else {
+        if (value !== '') {
+          var reg = /^[A-Za-z0-9_\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+          if (!reg.test(value)) {
+            callback(new Error('请输入有效的邮箱'))
+          }
+        }
+        callback()
+      }
+    }
+    var validatePhone2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入手机号码'))
+      } else if (value.length !== 11) {
+        callback(new Error('手机号码长度为11个字符'))
+      } else if (value !== '') {
+        var reg = /(^\d{11}$)/
+        if (!reg.test(value)) {
+          callback(new Error('请输入有效手机号码'))
+        }
+      }
+      callback()
+    }
     return {
 
       temp: {
@@ -246,7 +301,43 @@ export default {
         deptid: ''
       },
       options: [],
-      optionsdept: []
+      optionsdept: [],
+      rules: {
+        name: [
+          { min: 2, max: 24, message: '长度在 2 到 24 个字符', trigger: 'blur' }
+        ],
+        card: [{ validator: validateCard, trigger: 'blur' }],
+        sex: [
+          { message: '请选择性别', trigger: 'change' }
+        ],
+        phone: [{ validator: validatePhone, trigger: 'blur' }]
+      },
+      rules2: {
+        name: [
+          { required: true, message: '请输入姓名', trigger: 'blur' },
+          { min: 2, max: 24, message: '长度在 2 到 24 个字符', trigger: 'blur' }
+        ],
+        card: [{ validator: validateCard, trigger: 'blur' }],
+        sex: [
+          { required: true, message: '请选择性别', trigger: 'change' }
+        ],
+        jobid: [
+          { required: true, message: '请选择职位', trigger: 'change' }
+        ],
+        education: [
+          { required: true, message: '请输入学历', trigger: 'blur' },
+          { min: 2, max: 8, message: '长度在 2 到 8 个字符', trigger: 'blur' }
+        ],
+        email: [{ validator: validateEmail, trigger: 'blur' }],
+        phone: [{ validator: validatePhone2, trigger: 'blur' }],
+        address: [
+          { required: true, message: '请输入联系地址', trigger: 'blur' },
+          { min: 1, max: 30, message: '长度在 1 到 30 个字符', trigger: 'blur' }
+        ],
+        deptid: [
+          { required: true, message: '请选择职位', trigger: 'change' }
+        ]
+      }
     }
   },
   created() {
@@ -348,6 +439,7 @@ export default {
       this.$refs['temp'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
+          console.log(tempData)
           this.options.forEach((vul) => {
             if (tempData.jobid === vul.name) {
               tempData.jobid = vul.id
@@ -363,6 +455,7 @@ export default {
           } else if (tempData.sex === '女') {
             tempData.sex = 2
           }
+          tempData.sex = parseInt(tempData.sex)
           updateListItem(tempData).then(() => {
             const index = this.list.findIndex(v => v.card === this.temp.card)
             this.list.splice(index, 1, this.temp)
@@ -385,6 +478,9 @@ export default {
           if (tempData.sex === '') { tempData.sex = 0 }
           if (tempData.deptid === '') { tempData.deptid = 0 }
           if (tempData.jobid === '') { tempData.jobid = 0 }
+          if (tempData.sex !== 0) {
+            tempData.sex = parseInt(tempData.sex)
+          }
           searchdateListItem(tempData, this.listQuery).then(response => {
             this.list = response.data.items
             this.list.forEach((val) => {
