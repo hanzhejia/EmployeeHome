@@ -66,6 +66,7 @@ public class noti {
 
     @Override
     public String toString() {
+        System.out.println(caredate);
         return "ListItem{" +
                 "id=" + id +
                 ", tittle='" + title + '\'' +
