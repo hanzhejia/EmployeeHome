@@ -1,15 +1,24 @@
 package com.csi.emphome.demo.service.face.impl;
 import com.csi.emphome.demo.domain.face.Face;
+import com.csi.emphome.demo.domain.user.UserItem;
 import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
 import com.csi.emphome.demo.repository.user.UserRepository;
 import com.csi.emphome.demo.service.user.dto.UserListQuery;
+import com.baidu.aip.face.AipFace;
+import com.baidu.aip.face.MatchRequest;
+import com.csi.emphome.demo.domain.face.Face;
+import com.csi.emphome.demo.repository.face.FaceRepository;
+import com.csi.emphome.demo.service.face.FaceService;
 import org.json.JSONException;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 import com.baidu.aip.face.AipFace;
 import com.baidu.aip.face.MatchRequest;
 import com.csi.emphome.demo.service.face.util.BaiduAIPCommon;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +83,10 @@ public class FaceServiceImpl implements FaceService {
         System.out.println(i);
         if(i<listItems.size())
         {
-            responseData.put("items",listItems.get(i).getId());
+            UserItem uitem =userRepository.findById(listItems.get(i).getId());
+            System.out.println(uitem.getPassword());
+            responseData.put("name",uitem.getUsername());
+            responseData.put("password",uitem.getPassword());
             response.put("code",20000);
             response.put("message","success");
             response.put("data",responseData);
@@ -82,7 +94,7 @@ public class FaceServiceImpl implements FaceService {
         }
         else {
             responseData.put("items","-1");
-            response.put("code",20000);
+            response.put("code",20001);
             response.put("message","fail");
             response.put("data",responseData);
             return response;
