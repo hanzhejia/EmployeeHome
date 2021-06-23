@@ -38,7 +38,6 @@ public class DeptServiceImpl implements DeptService {
     public HashMap<String, Object> fetchDeptList() {
         HashMap<String, Object> responseData = new HashMap<>();
         List<DeptItem> list = deptRepository.findAll();
-        System.out.println(list);
         responseData.put("total",deptRepository.count());
         responseData.put("items",list);
 

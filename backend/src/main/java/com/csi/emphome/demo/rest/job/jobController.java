@@ -32,6 +32,14 @@ public class jobController {
 //    }
 
     @CrossOrigin
+    @PostMapping(value = "/joblist")
+    @ResponseBody
+    public HashMap<String, Object> fetchJobList() {
+        return jobService.fetchJobList();
+    }
+
+
+    @CrossOrigin
     @GetMapping(value = "/create")
     @ResponseBody
     public HashMap<String, Object> createListItem(job data) {

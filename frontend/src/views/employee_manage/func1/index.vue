@@ -8,9 +8,9 @@
             <el-select v-model="searcheForm.jobid" placeholder="选择职位搜索">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
               />
             </el-select>
           </el-form-item>
@@ -152,9 +152,9 @@
           <el-select v-model="temp.jobid" placeholder="请选择">
             <el-option
               v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             />
           </el-select>
         </el-form-item>
@@ -193,7 +193,14 @@
 <script>
 
 import checkPermission from '@/utils/permission'
-import { fetchList, searchdateListItem, updateListItem, deleteListItem, fetchDept } from '@/api/employee_manage'
+import {
+  fetchList,
+  searchdateListItem,
+  updateListItem,
+  deleteListItem,
+  fetchDept,
+  fetchJob
+} from '@/api/employee_manage'
 import Pagination from '@/components/Pagination'
 import permission from '@/directive/permission'
 
@@ -238,27 +245,13 @@ export default {
         phone: '',
         deptid: ''
       },
-      options: [{
-        value: 1,
-        label: '黄金糕'
-      }, {
-        value: 2,
-        label: '双皮奶'
-      }, {
-        value: 3,
-        label: '蚵仔煎'
-      }, {
-        value: 4,
-        label: '龙须面'
-      }, {
-        value: 5,
-        label: '北京烤鸭'
-      }],
+      options: [],
       optionsdept: []
     }
   },
   created() {
     this.getdept()
+    this.getjob()
     this.getList()
   },
   methods: {
@@ -271,7 +264,17 @@ export default {
       fetchDept().then(response => {
         this.optionsdept = response.data.items
         response.data.total
-        console.log(response.data.items)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
+    },
+    getjob() {
+      this.listLoading = true
+      fetchJob().then(response => {
+        this.options = response.data.items
+        response.data.total
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -311,8 +314,8 @@ export default {
         this.list = response.data.items
         this.list.forEach((val) => {
           this.options.forEach((vul) => {
-            if (val.jobid === vul.value) {
-              val.jobid = vul.label
+            if (val.jobid === vul.id) {
+              val.jobid = vul.name
             }
           })
           this.optionsdept.forEach((vul) => {
@@ -346,8 +349,8 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           this.options.forEach((vul) => {
-            if (tempData.jobid === vul.label) {
-              tempData.jobid = vul.value
+            if (tempData.jobid === vul.name) {
+              tempData.jobid = vul.id
             }
           })
           this.optionsdept.forEach((vul) => {
@@ -386,8 +389,8 @@ export default {
             this.list = response.data.items
             this.list.forEach((val) => {
               this.options.forEach((vul) => {
-                if (val.jobid === vul.value) {
-                  val.jobid = vul.label
+                if (val.jobid === vul.id) {
+                  val.jobid = vul.name
                 }
               })
               this.optionsdept.forEach((vul) => {
