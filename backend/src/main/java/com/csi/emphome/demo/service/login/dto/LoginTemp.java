@@ -1,16 +1,21 @@
 package com.csi.emphome.demo.service.login.dto;
 
-public class LoginTemp {
+import java.io.Serializable;
+
+public class LoginTemp implements Serializable {
+
     private String username;
     private String password;
 
     public LoginTemp() {
     }
 
-    public LoginTemp(String loginname, String password) {
-        this.username = loginname;
+    public LoginTemp( String username, String password) {
+
+        this.username = username;
         this.password = password;
     }
+
 
     public String getUsername() {
         return username;
@@ -31,7 +36,7 @@ public class LoginTemp {
     @Override
     public String toString() {
         return "LoginTemp{" +
-                "loginname='" + username + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

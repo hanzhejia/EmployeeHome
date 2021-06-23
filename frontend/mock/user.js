@@ -80,5 +80,16 @@ module.exports = [
         data: 'success'
       }
     }
+  },
+
+  {
+    url: '/vue-admin-template/user/updatePwd',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
+    }
   }
 ]

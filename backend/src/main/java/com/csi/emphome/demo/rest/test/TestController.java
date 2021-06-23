@@ -5,6 +5,7 @@ import com.csi.emphome.demo.service.test.dto.TestListQuery;
 import com.csi.emphome.demo.service.test.dto.TestSearchData;
 import com.csi.emphome.demo.service.test.dto.TestTemp;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;

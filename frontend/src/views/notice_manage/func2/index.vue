@@ -50,10 +50,10 @@ export default {
   },
   methods: {
     getList() {
-      console.log('sb')
+      console.log('sb11111111111')
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        console.log('sb')
+        console.log('sbppppp')
         this.list = response.data.items
         this.total = response.data.total
         this.tableData = this.list
@@ -80,6 +80,21 @@ export default {
       this.temp.careTime = systemDate
       console.log(this.temp)
       createListItem(this.temp).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: 'Created Successfully',
+          type: 'success',
+          duration: 2000
+        })
+      })
+      this.$alert('公告发布成功', '标题', {
+        confirmButtonText: '确定',
+        callback: action => {
+          this.$message({
+            type: 'info',
+            message: `action: ${action}`
+          })
+        }
       })
     },
     kong(sb){

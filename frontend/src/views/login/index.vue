@@ -40,12 +40,12 @@
             <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
           </span>
         </el-form-item>
-
+        <el-checkbox v-model="checked" class="remeberPwd">记住密码</el-checkbox><p></p>
         <el-button :loading="loading" type="primary" style="width:48%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
         <el-button :loading="loading" type="primary" style="width:48%;margin-bottom:30px;" @click.native.prevent="handleLogin">刷脸</el-button>
         <div class="tips">
           <span style="margin-right:20px;">username: admin</span>
-          <span> password: any</span>
+          <span> password: 111111</span>
         </div>
 
       </el-form>
@@ -61,7 +61,8 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        // callback(new Error('Please enter the correct user name'))
+        callback()
       } else {
         callback()
       }
@@ -84,7 +85,10 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      timeInterval: null,
+      loginin: false,
+      checked: false
     }
   },
   watch: {
@@ -95,7 +99,36 @@ export default {
       immediate: true
     }
   },
+  created() {
+    console.log('create')
+    var vm = this
+    // 在页面加载时从cookie获取登录信息
+    const userName = vm.getCookie('userName')
+    const userPwd = vm.getCookie('userPwd')
+    // 如果存在赋值给表单，并且将记住密码勾选
+    console.log('username', userName, 'pwd', userPwd)
+    if (userName) {
+      vm.loginForm.username = userName
+      vm.loginForm.password = userPwd
+      this.checked = true
+    }
+  },
   methods: {
+    setUserInfo() {
+      console.log('setinfo')
+      var vm = this
+      // 判断用户是否勾选记住密码，如果勾选，向cookie中储存登录信息，
+      // 如果没有勾选，储存的信息为空
+      if (vm.checked) {
+        vm.setCookie('userName', vm.loginForm.username)
+        vm.setCookie('userPwd', vm.loginForm.password)
+        vm.setCookie('checked', vm.checked)
+      } else {
+        vm.setCookie('userName', '')
+        vm.setCookie('userPwd', '')
+      }
+      console.log('name', vm.getCookie('userName'))
+    },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -110,8 +143,8 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log('点击登录按钮')
-          console.log(this.loginForm.username, this.loginForm.password)
+          // this.setCookie(this.loginForm.username, this.loginForm.password, 7)
+          this.setUserInfo()
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             console.log('登录成功')
             this.$router.push({ path: this.redirect || '/' })
@@ -124,6 +157,34 @@ export default {
           return false
         }
       })
+    },
+    account() {
+      // if (document.cookie.length <= 0) {
+      console.log(this.getCookie('username'))
+      this.loginForm.username = this.getCookie('username')
+      this.loginForm.password = this.getCookie('password')
+      // }
+    },
+    setCookie(c_name, c_pwd, expiredays) {
+      var exdate = new Date()
+      exdate.setTime(exdate.getDate() + expiredays)
+      document.cookie = c_name + '=' + decodeURIComponent(c_pwd) +
+        ((expiredays == null) ? '' : ';expires=' + exdate.toGMTString())
+    },
+    getCookie: function(key) {
+      if (document.cookie.length > 0) {
+        var start = document.cookie.indexOf(key + '=')
+        if (start !== -1) {
+          start = start + key.length + 1
+          var end = document.cookie.indexOf(';', start)
+          if (end === -1) end = document.cookie.length
+          return unescape(document.cookie.substring(start, end))
+        }
+      }
+      return ''
+    },
+    clearCookie() {
+      this.setCookie('', '', -1)
     }
   }
 }

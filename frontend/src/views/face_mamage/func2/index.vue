@@ -9,26 +9,6 @@
           *按钮+弹窗式验证
         </div>
       </template>
-      <!--      <section>-->
-      <!--        <video id="video" />-->
-      <!--      </section>-->
-      <!--            <section>-->
-      <!--              <audio id="audio" />-->
-      <!--            </section>-->
-      <!--            <button id="btn" @click="tackcapture">拍照</button>-->
-      <!--            <button @click="opening">开启</button>-->
-      <!--            <section>-->
-      <!--              <video id="video" />-->
-      <!--            </section>-->
-      <!--            <section>-->
-      <!--              <canvas id="canvas" />-->
-      <!--            </section>-->
-      <!--            <section><img id="img" src="" alt=""></section>-->
-      <!--            <button @click="close">关闭</button>-->
-      <!--            <section>-->
-      <!--              <canvas id="canvas" />-->
-      <!--            </section>-->
-      <!--            <section><img id="img" src="" alt=""></section>-->
     </article>
     <template>
       <el-button type="text" @click="dialogVisible = true;">刷脸</el-button>
@@ -39,7 +19,6 @@
         :before-close="handleClose"
         @opened="opening"
         @closed="close"
-        @close="tackcapture"
       >
         <section>
           <video id="video" />
@@ -48,9 +27,7 @@
           <canvas v-show="false" id="canvas" />
         </section>
         <section><img v-show="false" id="img" src="" alt=""></section>
-        <!--        <span slot="footer" class="dialog-footer">-->
-        <!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
-        <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;">登录</el-button>
+        <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;tackcapture()">登录</el-button>
         <!--        </span>-->
       </el-dialog>
     </template>
@@ -137,8 +114,6 @@ export default {
         // eslint-disable-next-line no-undef
         const temp = canvas.toDataURL('image/png').slice(22)
         // eslint-disable-next-line no-const-assign,no-undef
-        // temp.split(',')[-1]
-        // const test = 'asdefd%+n15161%+%'
         this.nowface.base64 = temp
         // console.log(this.nowface.base64)
         faceResult(this.nowface).then(response => {

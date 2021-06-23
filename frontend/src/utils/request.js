@@ -19,7 +19,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers['DogHome-Token'] = getToken()
     }
     return config
   },
@@ -44,11 +44,11 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log('res', res)
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message({
         message: res.message || 'name or password Error',
+        // message: 'name or password Error',
         type: 'error',
         duration: 5 * 1000
       })
@@ -66,7 +66,8 @@ service.interceptors.response.use(
           })
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
+      // return Promise.reject(new Error(res.message || 'Error'))
+      return Promise.reject(new Error('Error'))
     } else {
       return res
     }

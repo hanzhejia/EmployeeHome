@@ -6,9 +6,9 @@ public class UserListQuery implements Serializable {
     private int page;
     private int limit;
 
-/*    public UserListQuery(){
+    public UserListQuery(){
 
-    }*/
+    }
     public UserListQuery(int page,int limit){
         this.page = page;
         this.limit = limit;

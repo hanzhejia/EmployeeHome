@@ -3,6 +3,7 @@ package com.csi.emphome.demo.rest.face;
 
 import com.csi.emphome.demo.domain.face.Face;
 import com.csi.emphome.demo.service.face.FaceService;
+import org.json.JSONException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class FaceController {
     @CrossOrigin
     @PostMapping(value = "/find")
     @ResponseBody
-    public HashMap<String, Object> faceResult(@RequestBody Face nowbase64) {
+    public HashMap<String, Object> faceResult(@RequestBody Face nowbase64) throws JSONException {
         return faceService.serchFace(nowbase64);
     }
 
@@ -34,5 +35,12 @@ public class FaceController {
     @ResponseBody
     public HashMap<String, Object> faceAdd(@RequestBody Face nowbase64) {
         return faceService.addFace(nowbase64);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/del")
+    @ResponseBody
+    public HashMap<String, Object> faceDel(@RequestBody Face nowface) {
+        return faceService.delFace(nowface);
     }
 }

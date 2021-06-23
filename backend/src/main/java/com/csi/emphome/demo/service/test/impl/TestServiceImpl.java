@@ -27,7 +27,6 @@ public class TestServiceImpl implements TestService {
         List<TestItem> list = testRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
         responseData.put("total",testRepository.count());
         responseData.put("items",list);
-
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data",responseData);
@@ -96,14 +95,15 @@ public class TestServiceImpl implements TestService {
     public HashMap<String, Object> createListItemFunc(TestTemp data) {
         int resCode = 20001;
         String resData = "failed";
+
         TestItem tag_item = testRepository.findById(data.getId());
         if (tag_item == null){
-            System.out.println("sdsd");
             TestItem temp_item = new TestItem(data.getId(), data.getInfo(), data.getTime());
             testRepository.save(temp_item);
             resCode = 20000;
             resData = "success";
         }
+
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);
         response.put("data",resData);
@@ -114,6 +114,7 @@ public class TestServiceImpl implements TestService {
     public HashMap<String, Object> updateListItemFunc(TestTemp data) {
         int resCode = 20001;
         String resData = "failed";
+
         TestItem tag_item = testRepository.findById(data.getId());
         if (tag_item != null){
             tag_item.setId(data.getId());
@@ -123,22 +124,25 @@ public class TestServiceImpl implements TestService {
             resCode = 20000;
             resData = "success";
         }
+
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);
         response.put("data",resData);
         return response;
     }
 
+    @Override
     public HashMap<String, Object> deleteListItemFunc(TestTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        TestItem tag_item = testRepository.findById(data.getId());
 
+        TestItem tag_item = testRepository.findById(data.getId());
         if (tag_item != null){
             testRepository.delete(tag_item);
             resCode = 20000;
             resData = "success";
         }
+
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);
         response.put("data",resData);

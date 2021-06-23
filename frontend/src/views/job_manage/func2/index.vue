@@ -3,14 +3,15 @@
     <el-form ref="form" :model="form" label-width="80px">
       <el-form-item label="职位名称">
         <el-input
-          v-model="form.title"
+          id="nt"
+          v-model="textarea2"
           maxlength="10"
           show-word-limit
         ></el-input>
       </el-form-item>
       <el-form-item label="详细信息">
         <el-input
-          v-model="form.desc"
+          v-model="textarea1"
           maxlength="30"
           show-word-limit
           type="textarea"
@@ -18,34 +19,67 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">提交</el-button>
-        <el-button @click="onReset">重置</el-button>
+        <el-button type="primary" @click="edit('scope.row')">提交</el-button>
+        <el-button @click="kong('sb')">重置</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-
+import { fetchList, createListItem } from '@/api/job_manage'
 export default {
-  name: 'Func2',
   data() {
     return {
-      form: {
-        title: '',
-        desc: ''
+      textarea1: '',
+      textarea2: '',
+      temp: {
+        ID: '',
+        NAME: '',
+        REMAKE: ''
       }
+
     }
   },
+  created() {
+    this.getList()
+  },
   methods: {
-    onSubmit() {
-      console.log('submit!')
+    getList() {
+      console.log('sb11111111111')
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        console.log('sbppppp')
+        this.list = response.data.items
+        this.total = response.data.total
+        this.tableData = this.list
+        console.log(this.list)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
     },
-    onReset() {
-      console.log('reset!')
+    edit(detailInfo) {
+      this.temp.ID = parseInt(Math.random() * 100) + 1024 // mock a id
+      this.temp.NAME = this.textarea2
+      this.temp.REMAKE = this.textarea1
+      createListItem(this.temp).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: 'Created Successfully',
+          type: 'success',
+          duration: 2000
+        })
+      })
+    },
+    kong(sb){
+      this.textarea1=''
+      this.textarea2=''
+      console.log('sdsd')
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

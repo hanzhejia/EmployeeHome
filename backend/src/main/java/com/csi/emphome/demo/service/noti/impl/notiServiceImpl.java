@@ -3,6 +3,7 @@ package com.csi.emphome.demo.service.noti.impl;
 import com.csi.emphome.demo.domain.notice.noti;
 import com.csi.emphome.demo.repository.noti.notiRepository;
 import com.csi.emphome.demo.service.noti.notiService;
+import com.csi.emphome.demo.service.test.dto.TestListQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -17,15 +18,26 @@ public class notiServiceImpl implements notiService {
     }
 
     @Override
-    public HashMap<String, Object> fetchListFunc() {
+    public HashMap<String, Object> fetchListFunc(TestListQuery data) {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
         List listItems = notiRepository.findAll();
         responseData.put("total",listItems.size());
         responseData.put("items",listItems);
+
         response.put("code",20000);
         response.put("data",responseData);
         return response;
+//        TestListQuery data
+//        HashMap<String, Object> responseData = new HashMap<>();
+//        List<noti> list = notiRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
+//        System.out.println(notiRepository.count());
+//        responseData.put("total",notiRepository.count());
+//        responseData.put("items",list);
+//        HashMap<String, Object> response = new HashMap<>();
+//        response.put("code",20000);
+//        response.put("data",responseData);
+//        return response;
     }
 
     @Override
