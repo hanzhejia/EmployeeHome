@@ -28,7 +28,18 @@ public class jobServiceImpl implements jobService {
         return response;
     }
 
-
+    @Override
+    public HashMap<String, Object> fetchJobList() {
+        HashMap<String, Object> response = new HashMap<>();
+        HashMap<String, Object> responseData = new HashMap<>();
+        List listItems = jobRepository.findAll();
+        System.out.println(listItems);
+        responseData.put("total",listItems.size());
+        responseData.put("items",listItems);
+        response.put("code",20000);
+        response.put("data",responseData);
+        return response;
+    }
 
     @Override
     public HashMap<String,Object> createListItemFunc(job data){

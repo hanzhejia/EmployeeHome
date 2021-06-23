@@ -12,59 +12,62 @@ import java.util.HashMap;
 
 @Service
 public class LoginServiceImpl implements LoginService {
-  //  private final TestRepository testRepository;
     private final LoginRepo loginRepo;
-   // public LoginServiceImpl(TestRepository testRepository) {
-       // this.testRepository = testRepository;
-  //  }
-    private static  HashMap<String, Object> response=new HashMap<>();
-    private static HashMap<String, Object> responseData = new HashMap<>();
-    private static ArrayList<String> roles = new ArrayList<>();
+    private static final HashMap<String, Object> response=new HashMap<>();
     public LoginServiceImpl(LoginRepo loginRepo){this.loginRepo=loginRepo;}
+
     @Override
     public HashMap<String, Object> createLoginItemFunc(LoginTemp data) {
-        System.out.println("createLoginItemFunc:"+data);
-        response.clear();
-        responseData.clear();
-        roles.clear();
-//        HashMap<String, Object> response=new HashMap<>();
-//        HashMap<String, Object> responseData = new HashMap<>();
-//        ArrayList<String> roles = new ArrayList<>();
         Login loginTemp= loginRepo.findByusername(data.getUsername());
-       if(data.getUsername().equals("admin")&&data.getPassword().equals(loginTemp.getPassword())){
-            roles.add("admin");
-            responseData.put("roles",roles);
-            responseData.put("name",data.getUsername());
-            responseData.put( "introduction","I am a super administrator");
-            responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-            response.put("code",20000);
-            response.put("msg","success");
-            response.put("data",responseData);
+        if(loginTemp!=null){
+            if(loginTemp.getUsername().equals(data.getUsername()) && loginTemp.getPassword().equals(data.getPassword())){
+                HashMap<String, Object> token = new HashMap<>();
+                // TODO Create Token
+                if (loginTemp.getUsername().equals("admin")){
+                    token.put("token", "admin-token");
+                }else {
+                    token.put("token", "editor-token");
+                }
+                response.put("code",20000);
+                response.put("data",token);
+                return response;
+            }
         }
-       else if (data.getUsername().equals(loginTemp.getUsername())&&data.getPassword().equals(loginTemp.getPassword())){
-           roles.add("editor");
-           responseData.put("roles",roles);
-           responseData.put("name",data.getUsername());
-           responseData.put( "introduction","I am an editor");
-           responseData.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-           response.put("code",20000);
-           response.put("msg","success");
-           response.put("data",responseData);
-       }
-        else {
-            response.put("code",60204);
-        //    response.put("data",responseData);
-         //   responseData.put("token",0);
-            response.put("msg","Account and password are incorrect");
-        }
+        response.put("code",60204);
+        response.put("message","Account and password are incorrect.");
         return response;
     }
 
     @Override
-    public HashMap<String, Object> getLoginInfoFunc() {
+    public HashMap<String, Object> getLoginInfoFunc(String data) {
+        HashMap<String, Object> user = new HashMap<>();
+
+        HashMap<String, Object> user_admin = new HashMap<>();
+        ArrayList<String> roles_admin = new ArrayList<>();
+        roles_admin.add("admin");
+        user_admin.put("roles", roles_admin);
+        user_admin.put("introduction", "I am a super administrator");
+        user_admin.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        user_admin.put("name", "Super Admin");
+        user.put("admin-token", user_admin);
+
+        HashMap<String, Object> user_editor = new HashMap<>();
+        ArrayList<String> roles_editor = new ArrayList<>();
+        roles_editor.add("editor");
+        user_editor.put("roles", roles_editor);
+        user_editor.put("introduction", "I am an editor");
+        user_editor.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        user_editor.put("name", "Normal Editor");
+        user.put("editor-token", user_editor);
+
+        // TODO Explanation Token
+        Object info =  user.get(data);
+
+        HashMap<String, Object> response=new HashMap<>();
+        response.put("code",20000);
+        response.put("data",info);
         return response;
     }
-
 
     @Override
     public HashMap<String, Object> updateLoginPwdFunc(PwdTemp data) {
@@ -78,9 +81,4 @@ public class LoginServiceImpl implements LoginService {
         response.put("data","success");
         return response;
     }
-
-    // @Override
-   // public List<TestItem> list() {
-      //  return testRepository.findAll();
-  //  }
 }

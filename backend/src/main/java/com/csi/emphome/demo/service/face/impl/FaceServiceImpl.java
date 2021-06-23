@@ -5,6 +5,14 @@ import com.baidu.aip.face.MatchRequest;
 import com.csi.emphome.demo.domain.face.Face;
 import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
+
+import org.json.JSONException;
+import org.springframework.stereotype.Service;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import com.baidu.aip.face.AipFace;
+import com.baidu.aip.face.MatchRequest;
+
 import com.csi.emphome.demo.service.face.util.BaiduAIPCommon;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +29,15 @@ public class FaceServiceImpl implements FaceService {
         this.faceRepository = faceRepository;
     }
 
+    @Override
+    public HashMap<String, Object> delFace(Face nowface){
+        faceRepository.delete(nowface);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("message","face");
+        response.put("data","successdel");
+        return response;
+    };
     @Override
     public HashMap<String, Object> faceListFunc() {
         HashMap<String, Object> response = new HashMap<>();

@@ -70,36 +70,14 @@ export default {
       this.$refs.resetForm.validate(valid => {
         if (valid) {
           this.resetForm.username = this.$store.getters.name
-          console.log('form', this.resetForm, 'form')
-          //   this.open()
-          console.log('getters', this.$store.getters, 'getters')
           updatePwd(this.resetForm).then(response => {
             console.log('update', response)
+            window.alert('ok')
+            this.logout()
+          }).catch(response => {
+            console.log('update', response)
+            window.alert('reset some thing!!')
           })
-          window.alert('ok')
-          this.logout()
-          // 这里的api.materialQuery.toAmend是调用前期我们统一的api接口url路径，不作参考 ，只要把后台需要的字段正常传进去即可
-          // eslint-disable-next-line no-undef
-          // api.materialQuery.toAmend(this.resetForm)
-          //   .then(res => {
-          //     if (res.code === 2) {
-          //       this.$message({
-          //         message: res.msg,
-          //         type: 'error',
-          //         duration: '2000'
-          //       })
-          //       return false
-          //     }
-          //     if (res.code === 0) {
-          //       this.$message.success('修改成功,3秒后跳转到登录页！')
-          //       setTimeout(() => {
-          //         this.logout()// 调用跳转到登陆页的方法
-          //       }, 3000)
-          //     }
-          //     // eslint-disable-next-line no-undef
-          //     ic
-          //   })
-          //   .catch(() => {})
         }
       })
     },
