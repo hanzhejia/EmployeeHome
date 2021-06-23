@@ -23,7 +23,7 @@ export function updateListItem(data) {
     data
   })
 }
-export function searchdateListItem(data) {
+export function fetchListItem(data) {
   return request({
     url: '/vue-admin-template/user/searchdate',
     method: 'post',

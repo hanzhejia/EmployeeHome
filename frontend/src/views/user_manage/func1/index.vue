@@ -20,7 +20,9 @@
     <div>
       <el-table
         ref="multipleTable"
-        :data="list.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
+        :data="list.filter(data => !search ||
+        (data.username.toLowerCase().includes(search.toLowerCase())&&
+        data.status.toLowerCase().includes(search.toLowerCase())) )"
         style="width: 100%"
         tooltip-effect="dark"
         :model="temp"
@@ -90,7 +92,7 @@ import {
 import Pagination from '@/components/Pagination'// secondary package based on el-pagination
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission'
-import { fetchListItem } from '@/api/dept_manage'
+import { fetchListItem } from '@/api/user_manage'
 
 export default {
   name: 'Func1',
@@ -124,7 +126,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        multipleSelection: []
+        /*multipleSelection: []*/
       },
       dialogFormVisible: false, // 弹窗默认关闭
       dialogStatus: '',
@@ -170,7 +172,7 @@ export default {
         fetchList(this.listQuery).then(response => {
           this.list = response.data.items
           this.total = response.data.total
-          console.log(this.list)
+          console.log(this.listQuery)
           // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
