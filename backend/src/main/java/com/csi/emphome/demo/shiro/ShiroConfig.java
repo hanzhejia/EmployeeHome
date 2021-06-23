@@ -51,6 +51,7 @@ public class ShiroConfig {
         //放行请求
         filterChainDefinitionMap.put("/shiro/getToken", "anon");
         filterChainDefinitionMap.put("/vue-admin-template/user/login", "anon");
+        filterChainDefinitionMap.put("/vue-admin-template/face/faceLogin", "anon");
         filterChainDefinitionMap.put("/vue-admin-template/user/logout", "anon");
         //拦截剩下的其他请求
         filterChainDefinitionMap.put("/**", "authc");

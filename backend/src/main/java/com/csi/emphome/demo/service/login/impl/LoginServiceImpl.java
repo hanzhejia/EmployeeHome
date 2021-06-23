@@ -31,7 +31,7 @@ public class LoginServiceImpl implements LoginService {
         if(loginTemp!=null){
             if(loginTemp.getLoginname().equals(data.getUsername()) && loginTemp.getPassword().equals(data.getPassword())){
                 HashMap<String, Object> token = new HashMap<>();
-                String token_str = JwtUtil.sign(loginTemp.getUsername(), loginTemp.getPassword());
+                String token_str = JwtUtil.sign(loginTemp.getLoginname(), loginTemp.getPassword());
                 redisTemplate.opsForValue().set(token_str,token_str, expireTime*2/100, TimeUnit.SECONDS);
                 token.put("token", token_str);
                 response.put("code",20000);

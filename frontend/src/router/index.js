@@ -76,7 +76,22 @@ export const constantRoutes = [
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/login/func2/index'),
-        meta: { title: 'func2', icon: 'table' },
+        meta: { title: '修改密码', icon: 'table' },
+        hidden: true
+      }
+    ]
+  },
+
+  {
+    path: '/face_mamage',
+    component: Layout,
+    hidden: true,
+    children: [
+      {
+        path: 'func1',
+        name: 'Func1',
+        component: () => import('@/views/face_mamage/func1/index'),
+        meta: { title: '人脸管理', icon: 'el-icon-camera' },
         hidden: true
       }
     ]
@@ -88,33 +103,6 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  {
-    path: '/face_manage',
-    component: Layout,
-    redirect: '/face_manage/func1',
-    alwaysShow: true, // will always show the root menu
-    name: 'Face_manage',
-    meta: {
-      title: '人脸管理',
-      icon: 'el-icon-s-tools',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'func1',
-        name: 'Func1',
-        component: () => import('@/views/face_mamage/func1/index'),
-        meta: { title: '人脸增改', icon: 'el-icon-camera' }
-      },
-      {
-        path: 'func2',
-        name: 'Func2',
-        component: () => import('@/views/face_mamage/func2/index'),
-        meta: { title: '信息管理', icon: 'el-icon-tickets' }
-      }
-    ]
-  },
-
   {
     path: '/user_manage',
     component: Layout,

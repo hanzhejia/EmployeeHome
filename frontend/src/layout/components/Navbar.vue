@@ -15,6 +15,11 @@
               首页
             </el-dropdown-item>
           </router-link>
+          <router-link to="/face_mamage/func1">
+            <el-dropdown-item>
+              人脸管理
+            </el-dropdown-item>
+          </router-link>
           <router-link to="/login/func2">
             <el-dropdown-item>
               修改密码
