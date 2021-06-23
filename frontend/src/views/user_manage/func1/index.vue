@@ -72,7 +72,6 @@
     <div>
 <!--分页     -->
       <pagination v-show="total>0" :limit.sync="listQuery.limit" :page.sync="listQuery.page" :total="total" @pagination="getList" />
-
     </div>
   </div>
 </template>

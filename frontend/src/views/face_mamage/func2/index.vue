@@ -39,7 +39,6 @@
         :before-close="handleClose"
         @opened="opening"
         @closed="close"
-        @close="tackcapture"
       >
         <section>
           <video id="video" />
@@ -50,7 +49,7 @@
         <section><img v-show="false" id="img" src="" alt=""></section>
         <!--        <span slot="footer" class="dialog-footer">-->
         <!--        <el-button @click="dialogVisible = false">取 消</el-button>-->
-        <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;">登录</el-button>
+        <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;tackcapture()">登录</el-button>
         <!--        </span>-->
       </el-dialog>
     </template>

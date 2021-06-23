@@ -25,6 +25,15 @@ public class FaceServiceImpl implements FaceService {
     }
 
     @Override
+    public HashMap<String, Object> delFace(Face nowface){
+        faceRepository.delete(nowface);
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("message","face");
+        response.put("data","successdel");
+        return response;
+    };
+    @Override
     public HashMap<String, Object> faceListFunc() {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
