@@ -3,6 +3,7 @@ package com.csi.emphome.demo.rest.login;
 import com.csi.emphome.demo.service.login.LoginService;
 import com.csi.emphome.demo.service.login.dto.LoginTemp;
 import com.csi.emphome.demo.service.login.dto.PwdTemp;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
