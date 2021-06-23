@@ -85,7 +85,7 @@
                 <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
               </span>
             </el-dialog>
-            <el-button type="text" size="small" @click="edit(scope.row)">编辑</el-button>
+            <el-button v-if=" buttonid==2 " type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-dialog
               :title="neww"
               :modal-append-to-body="false"
@@ -98,24 +98,25 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="block">
-        <el-pagination
-          v-show="total>0"
-          :total="total"
-          :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" @current-change="changePage">
-        </el-pagination>
+      <div class="block" >
+<!--        <el-pagination-->
+<!--          v-show="total>0"-->
+<!--          :total="total"-->
+<!--          :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" @current-change="changePage">-->
+<!--        </el-pagination>-->
+
 <!--        <div class="block">-->
-<!--          <span class="demonstration">完整功能</span>-->
-<!--          <el-pagination-->
-<!--            @pagination="getList"-->
-<!--            @size-change="handleSizeChange"-->
-<!--            @current-change="changePage"-->
-<!--            :current-page="currentPage4"-->
-<!--            :page-sizes="[100, 200, 300, 400]"-->
-<!--            :page-size="100"-->
-<!--            layout="total, sizes, prev, pager, next, jumper"-->
-<!--            :total="400">-->
-<!--          </el-pagination>-->
+          <el-pagination
+            style="position: relative;top: 10px"
+            @pagination="getList"
+            @size-change="handleSizeChange"
+            @current-change="changePage"
+            :page-sizes="[10, 20, 30, 40]"
+            :page-size="10"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+          </el-pagination>
+
         </div>
 <!--        <el-pagination-->
 <!--          @size-change="handleSizeChange"-->
@@ -140,6 +141,7 @@ export default {
   },
   data() {
     return {
+      buttonid:1,
       list: null,
       listLoading: true,
       tempid:'',
@@ -151,6 +153,7 @@ export default {
       input1: '',
       input2: '',
       total: 0,
+      size:10,
       listQuery: {
         page: 5,
         limit: 10
@@ -165,25 +168,35 @@ export default {
         tiitle: 'opo',
         userid: '2' }]
     }
+
   },
   created() {
     this.getList()
   },
   methods: {
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.size = val
+      this.curData = this.midData.slice(0,this.size)
+    },
     getList() {
+      this.buttonid=2
       console.log('sbsssssssssssssddd')
       this.listLoading = true
       console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
+        console.log(response)
         this.list = response.data.items
         this.total = response.data.total
         console.log('sssssssssssssssssssssssssssssssssssssssssda1111111111111111111111')
-        console.log(this.total)
         this.tableDatasize = this.total
         this.tableData = this.list
+        for(var i=0;i<this.tableData.length;i++){
+          this.tableData[i].careTime=this.datetimeFormat(this.tableData[i].careTime)
+        }
         this.midData = this.tableData
         console.log(this.tableData)
-        this.curData = this.midData.slice(0,10)
+        this.curData = this.midData.slice(0,this.size)
         console.log(this.list)
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -193,6 +206,19 @@ export default {
     },
     handleClick(row) {
       console.log(row.date)
+    },
+    datetimeFormat(longTypeDate){
+      var dateTypeDate = "";
+      var date = new Date();
+      date.setTime(longTypeDate);
+      console.log(date)
+      dateTypeDate += date.getFullYear(); //年
+      var q=date.getMonth()+1
+      dateTypeDate += "-" +q; //月
+      let d = date.getDate()
+      d = d < 10 ? ('0' + d) : d
+      dateTypeDate += "-" + d;
+      return dateTypeDate;
     },
     searchs(sb) {
       // console.log(this.input1)
@@ -206,14 +232,14 @@ export default {
       }
       this.total = this.midData.length
       console.log(this.total)
-      this.curData = this.midData.slice(0,10)
+      this.curData = this.midData.slice(0,this.size)
       this.time=0
     },
     valuechange(){
 
       if(this.input1==''){
         this.midData = this.tableData
-        this.curData = this.midData.slice(0,10)
+        this.curData = this.midData.slice(0,this.size)
         this.total = this.tableDatasize
 }
     },
@@ -233,7 +259,7 @@ export default {
       this.dialogVisible = true
     },
     changePage(page){
-      this.curData = this.midData.slice((page-1)*10,(page-1)*10+9)
+      this.curData = this.midData.slice((page-1)*this.size,(page-1)*this.size+this.size)
     }
   }
 }

@@ -23,8 +23,8 @@
       </el-col>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="add('formName')">添加</el-button>
-      <el-button type="primary" @click="cancel('c')">取消</el-button>
+      <el-button type="primary" @click="add">添加</el-button>
+      <el-button type="primary" @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
   </div>
@@ -36,23 +36,21 @@ export default {
   data() {
     return {
       form: {
-        username:'',
+        username: '',
         status: '',
-        loginname:'',
-        password:''
+        loginname: '',
+        password: ''
       }
     }
   },
   methods: {
     /*添加用户*/
-    add(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          createListItem(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
-            this.dialogFormVisible = false
+    add() {
+ /*     this.$refs['form'].validate((valid)=>{
+        if (valid) {*/
+          // this.form.id = parseInt(Math.random() * 100) + 1024
+          console.log(this.form)
+          createListItem(this.form).then(() => {
             this.$notify({
               title: 'Success',
               message: 'Update Successfully',
@@ -60,14 +58,16 @@ export default {
               duration: 2000
             })
           })
-        } else {
-          console.log('error submit!!')
-          return false
         }
-      })
-      console.log('add!')
-    },
-    cancel(c) {
+    /*  })
+    }*/,
+    cancel() {
+      this.form={
+        username:'',
+        status:'',
+        loginname:'',
+        password:''
+      }
       console.log('cancel!')
     }
   }

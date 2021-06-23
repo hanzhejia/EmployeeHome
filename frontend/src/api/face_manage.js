@@ -24,3 +24,11 @@ export function addFace(data) {
     data: data
   })
 }
+export function faceDel(data) {
+  console.log('testadd')
+  return request({
+    url: '/vue-admin-template/face/del',
+    method: 'post',
+    data: data
+  })
+}
