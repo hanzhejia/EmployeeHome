@@ -11,7 +11,7 @@
  Target Server Version : 80020
  File Encoding         : 65001
 
- Date: 20/06/2021 17:11:41
+ Date: 23/06/2021 16:35:02
 */
 
 SET NAMES utf8mb4;
@@ -30,26 +30,6 @@ CREATE TABLE `dept_inf`  (
 
 -- ----------------------------
 -- Records of dept_inf
--- ----------------------------
-
--- ----------------------------
--- Table structure for document_inf
--- ----------------------------
-DROP TABLE IF EXISTS `document_inf`;
-CREATE TABLE `document_inf`  (
-  `ID` int NOT NULL,
-  `TITLE` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `Filename` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `REMARK` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `CREATE_DATE` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
-  `USER_ID` int NULL DEFAULT NULL,
-  PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `USER_ID_1`(`USER_ID`) USING BTREE,
-  CONSTRAINT `USER_ID_1` FOREIGN KEY (`USER_ID`) REFERENCES `user_inf` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of document_inf
 -- ----------------------------
 
 -- ----------------------------
@@ -77,12 +57,10 @@ CREATE TABLE `employee_inf`  (
   `HOBBY` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `REMARK` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `CREATE_DATE` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
+  `eduction` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
   INDEX `DEPT_ID`(`DEPT_ID`) USING BTREE,
-  INDEX `JOB_ID`(`JOB_ID`) USING BTREE,
-  CONSTRAINT `DEPT_ID_FK` FOREIGN KEY (`DEPT_ID`) REFERENCES `dept_inf` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `JOB_ID_FK` FOREIGN KEY (`JOB_ID`) REFERENCES `job_inf` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `USER_ID_FK` FOREIGN KEY (`ID`) REFERENCES `user_inf` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE
+  INDEX `JOB_ID`(`JOB_ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -95,10 +73,7 @@ CREATE TABLE `employee_inf`  (
 DROP TABLE IF EXISTS `facekey_inf`;
 CREATE TABLE `facekey_inf`  (
   `ID` int NOT NULL,
-  `appID` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `apiKey` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `secretKey` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `threshold` int NOT NULL,
+  `base64` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
@@ -114,12 +89,39 @@ CREATE TABLE `job_inf`  (
   `ID` int NOT NULL,
   `NAME` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `REMARK` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `remake` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of job_inf
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for local_storage
+-- ----------------------------
+DROP TABLE IF EXISTS `local_storage`;
+CREATE TABLE `local_storage`  (
+  `storage_id` int NOT NULL,
+  `real_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `suffix` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `size` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `create_time` timestamp(0) NULL DEFAULT NULL,
+  `update_time` timestamp(0) NULL DEFAULT NULL,
+  `detail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`storage_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of local_storage
+-- ----------------------------
+INSERT INTO `local_storage` VALUES (1024, '47687676 (1)-20210622033553417.jpeg', '231222', 'jpeg', 'C:\\doghome\\file\\图片\\47687676 (1)-20210622033553417.jpeg', '图片', '17.75KB   ', 'Super admin', NULL, '2021-06-22 15:35:53', NULL, '213222');
+INSERT INTO `local_storage` VALUES (1093, 'csi-20210622114329290.sql', '321', 'sql', 'C:\\doghome\\file\\其他\\csi-20210622114329290.sql', '其他', '7.69KB   ', 'Super admin', NULL, '2021-06-22 11:43:29', NULL, '312');
 
 -- ----------------------------
 -- Table structure for notice_inf
@@ -135,8 +137,7 @@ CREATE TABLE `notice_inf`  (
   `tiitle` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `userid` int NOT NULL,
   PRIMARY KEY (`ID`) USING BTREE,
-  INDEX `USER_ID`(`USER_ID`) USING BTREE,
-  CONSTRAINT `USER_ID` FOREIGN KEY (`USER_ID`) REFERENCES `user_inf` (`ID`) ON DELETE SET NULL ON UPDATE CASCADE
+  INDEX `USER_ID`(`USER_ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -157,8 +158,18 @@ CREATE TABLE `test_inf`  (
 -- ----------------------------
 -- Records of test_inf
 -- ----------------------------
-INSERT INTO `test_inf` VALUES (1, '2', '2021-06-19 16:14:31');
-INSERT INTO `test_inf` VALUES (3, '4', '2021-06-18 16:14:52');
+INSERT INTO `test_inf` VALUES (2, '22', '2021-06-20 18:49:34');
+INSERT INTO `test_inf` VALUES (3, '33', '2021-06-18 16:14:52');
+INSERT INTO `test_inf` VALUES (4, '44', '2021-06-20 18:50:09');
+INSERT INTO `test_inf` VALUES (5, '55', '2021-06-20 18:50:21');
+INSERT INTO `test_inf` VALUES (6, '66', '2021-06-20 18:50:31');
+INSERT INTO `test_inf` VALUES (7, '77', '2021-06-20 18:50:46');
+INSERT INTO `test_inf` VALUES (8, '88', '2021-06-20 18:50:58');
+INSERT INTO `test_inf` VALUES (9, '99', '2021-06-20 18:51:17');
+INSERT INTO `test_inf` VALUES (10, '1010', '2021-06-20 18:51:31');
+INSERT INTO `test_inf` VALUES (11, '1111', '2021-06-20 18:51:43');
+INSERT INTO `test_inf` VALUES (1041, '213123', '2021-06-21 00:00:00');
+INSERT INTO `test_inf` VALUES (1062, '11', '2021-06-21 00:00:00');
 
 -- ----------------------------
 -- Table structure for user_inf
@@ -171,13 +182,16 @@ CREATE TABLE `user_inf`  (
   `STATUS` int NOT NULL,
   `Createdate` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `Username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `Faceurl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `Facepath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `Faceurl` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `Facepath` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`ID`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_inf
 -- ----------------------------
+INSERT INTO `user_inf` VALUES (0, 'admin', '111111', 1, NULL, 'ADMIN', NULL, NULL);
+INSERT INTO `user_inf` VALUES (1, 'editor', '111111', 2, NULL, 'EDITOR', NULL, NULL);
+INSERT INTO `user_inf` VALUES (2, 'sb', '111111', 2, '2021-06-23 00:00:00', 'SB', NULL, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
