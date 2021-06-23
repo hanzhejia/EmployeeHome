@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
             return fetchListFunc(data.getListQuery());
         }
 
-        List<UserItem> listAll = userRepository.findAllByNameLike("%" + data.getSearch() + "%");
+        List<UserItem> listAll = userRepository.findAllByUsername("%" + data.getSearch() + "%");
         List<UserItem> list;
         if(listAll.size()>0){
             list = splicePage(listAll, data.getListQuery().getPage(), data.getListQuery().getLimit());
