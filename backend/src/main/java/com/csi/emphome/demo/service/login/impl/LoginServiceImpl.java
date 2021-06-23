@@ -40,8 +40,8 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public HashMap<String, Object> getLoginInfoFunc(String data) {
+        System.out.println("getinfo:"+data);
         HashMap<String, Object> user = new HashMap<>();
-
         HashMap<String, Object> user_admin = new HashMap<>();
         ArrayList<String> roles_admin = new ArrayList<>();
         roles_admin.add("admin");
