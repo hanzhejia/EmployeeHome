@@ -50,6 +50,8 @@ public class ShiroConfig {
         LinkedHashMap<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //放行请求
         filterChainDefinitionMap.put("/shiro/getToken", "anon");
+        filterChainDefinitionMap.put("/vue-admin-template/user/login", "anon");
+        filterChainDefinitionMap.put("/vue-admin-template/user/logout", "anon");
         //拦截剩下的其他请求
         filterChainDefinitionMap.put("/**", "authc");
         //设置拦截规则给shiro的拦截链工厂

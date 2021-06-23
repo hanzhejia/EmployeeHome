@@ -59,20 +59,19 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //权限认证
         System.out.println("开始进行权限认证.............");
-        //获取用户名
-        String token = (String) SecurityUtils.getSubject().getPrincipal();
-        String username = JwtUtil.getUsername(token);
-        //模拟数据库校验,写死用户名xsy，其他用户无法登陆成功
-        if (!"xsy".equals(username)) {
-            return null;
-        }
         //创建授权信息
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //创建set集合，存储权限
         HashSet<String> rootSet = new HashSet<>();
         //添加权限
-        rootSet.add("user:show");
-        rootSet.add("user:admin");
+        //获取用户名
+        String token = (String) SecurityUtils.getSubject().getPrincipal();
+        String username = JwtUtil.getUsername(token);
+        //数据库校验
+        //TODO 写个getUserRoles，根据username读取userRoles
+        if ("admin".equals(username)) {
+            rootSet.add("user:admin");
+        }
         //设置权限
         info.setStringPermissions(rootSet);
         //返回权限实例
@@ -86,17 +85,22 @@ public class ShiroRealm extends AuthorizingRealm {
         String token = (String) authenticationToken.getCredentials();
         //创建字符串，存储用户信息
         String username = null;
+        String password = null;
         try {
             //获取用户名
             username = JwtUtil.getUsername(token);
+            password = JwtUtil.getPassword(token);
         } catch (AuthenticationException e) {
+            System.out.println("heard的token拼写错误或者值为空");
             throw new AuthenticationException("heard的token拼写错误或者值为空");
         }
         if (username == null) {
+            System.out.println("token无效");
             throw new AuthenticationException("token无效");
         }
         // 校验token是否超时失效 & 或者账号密码是否错误
-        if (!jwtTokenRefresh(token, username, "123")) {
+        if (!jwtTokenRefresh(token, username, password)) {
+            System.out.println("Token失效，请重新登录!");
             throw new AuthenticationException("Token失效，请重新登录!");
         }
         //返回身份认证信息

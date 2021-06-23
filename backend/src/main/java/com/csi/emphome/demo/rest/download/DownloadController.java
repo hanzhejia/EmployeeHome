@@ -4,6 +4,7 @@ import com.csi.emphome.demo.service.download.DownloadService;
 import com.csi.emphome.demo.service.download.dto.DownloadListQuery;
 import com.csi.emphome.demo.service.download.dto.DownloadSearchData;
 import com.csi.emphome.demo.service.download.dto.DownloadTemp;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ public class DownloadController {
         this.downloadService = downloadService;
     }
 
+    @RequiresPermissions("user:admin")
     @CrossOrigin
     @PostMapping(value = "/list")
     @ResponseBody

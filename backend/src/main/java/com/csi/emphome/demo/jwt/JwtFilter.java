@@ -1,12 +1,15 @@
 package com.csi.emphome.demo.jwt;
 
-import com.alibaba.fastjson.JSONObject;
-import com.csi.emphome.demo.common.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.Filter;
 import javax.servlet.ServletRequest;
@@ -14,6 +17,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 
 /**
@@ -23,6 +27,7 @@ import java.io.IOException;
  * @date 2021/01/21 15:40:42
  */
 @Slf4j
+@ControllerAdvice
 public class JwtFilter extends BasicHttpAuthenticationFilter implements Filter {
     /**
      * 执行登录
@@ -68,19 +73,28 @@ public class JwtFilter extends BasicHttpAuthenticationFilter implements Filter {
     }
 
     /**
-     * 认证失败时，自定义返回json数据
+     * 异常拦截，认证失败时，自定义返回json数据
      *
-     * @param request  请求
-     * @param response 响应
      * @return boolean* @throws Exception 异常
      */
-    @Override
-    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-        Result result = Result.fail(-1,"认证失败");
-        Object parse = JSONObject.toJSON(result);
-        response.setCharacterEncoding("utf-8");
-        response.getWriter().print(parse);
-        return super.onAccessDenied(request, response);
+    @ResponseBody
+    @ExceptionHandler(UnauthorizedException.class)
+    public HashMap<String, Object> handleShiroException(Exception ex) {
+        System.out.println("无权限");
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code", 20002);
+        response.put("data", "无权限");
+        return response;
+    }
+
+    @ResponseBody
+    @ExceptionHandler(AuthorizationException.class)
+    public HashMap<String, Object> AuthorizationException(Exception ex) {
+        System.out.println("权限认证失败");
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code", 20002);
+        response.put("data", "权限认证失败");
+        return response;
     }
 
     /**
