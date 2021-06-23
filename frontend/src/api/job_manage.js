@@ -1,10 +1,12 @@
 import request from '@/utils/request'
 
-export function fetchList(query) {
+export function fetchList(data) {
+  console.log('hah')
+  console.log(data)
   return request({
     url: '/vue-admin-template/job/list',
     method: 'get',
-    params: query
+    params: {data}
   })
 }
 
@@ -25,16 +27,25 @@ export function fetchPv(pv) {
 }
 
 export function createListItem(data) {
+  console.log(data)
   return request({
     url: '/vue-admin-template/job/create',
-    method: 'post',
-    data
+    method: 'get',
+    params: data
   })
 }
 
 export function updateListItem(data) {
+  console.log(data)
   return request({
     url: '/vue-admin-template/job/update',
+    method: 'post',
+    data
+  })
+}
+export function deleteListItem(data) {
+  return request({
+    url: `/vue-admin-template/job/delete`,
     method: 'post',
     data
   })

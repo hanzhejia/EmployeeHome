@@ -1,7 +1,6 @@
 package com.csi.emphome.demo.domain.download;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity

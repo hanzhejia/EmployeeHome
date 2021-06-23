@@ -39,19 +39,3 @@ export function deleteListItem(data) {
     data
   })
 }
-
-export function downloadFile(data) {
-  return request({
-    url: `/vue-admin-template/download/download`,
-    method: 'post',
-    data
-  })
-}
-
-export function uploadFile(data) {
-  return request({
-    url: `/vue-admin-template/download/upload`,
-    method: 'post',
-    data
-  })
-}

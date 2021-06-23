@@ -1,6 +1,6 @@
 <template>
   <div class="func2-container">
-    <el-form :ref="ruleForm" :model="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form ref="ruleForm" :model="ruleForm" label-width="100px" class="demo-ruleForm">
 
       <el-row>
         <el-col :span="10">
@@ -19,16 +19,20 @@
         <el-col :span="10">
           <el-form-item label="性别" prop="sex">
             <el-select v-model="ruleForm.sex" placeholder="♂/♀">
-              <el-option label="男" value="男"></el-option>
-              <el-option label="女" value="女"></el-option>
+              <el-option label="男" value=1></el-option>
+              <el-option label="女" value=2></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="10" :offset="2">
-          <el-form-item label="职位" prop="job">
-            <el-select v-model="ruleForm.job" >
-              <el-option label="蒙古海军司令" value="蒙古海军司令"></el-option>
-              <el-option label="梵蒂冈空军最高指挥官" value="梵蒂冈空军最高指挥官"></el-option>
+          <el-form-item label="职位" prop="jobid">
+            <el-select v-model="ruleForm.jobid" placeholder="请选择">
+              <el-option
+                v-for="item in options"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -128,17 +132,21 @@
           </el-form-item>
         </el-col>
         <el-col :span="10" :offset="2">
-          <el-form-item label="所属部门" prop="dept">
-            <el-select v-model="ruleForm.dept" >
-              <el-option label="人事部" value="人事部"></el-option>
-              <el-option label="采购部" value="采购部"></el-option>
+          <el-form-item label="所属部门" prop="deptid">
+            <el-select v-model="ruleForm.deptid" placeholder="请选择">
+              <el-option
+                v-for="item in optionsdept"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
         </el-col>
       </el-row>
 
       <el-form-item>
-        <el-button type="primary" @click="submitForm('ruleForm')">添加</el-button>
+        <el-button type="primary" @click="createData('ruleForm')">添加</el-button>
         <el-button @click="resetForm('ruleForm')">取消</el-button>
       </el-form-item>
     </el-form>
@@ -147,8 +155,7 @@
 <script>
 // import { mapGetters } from 'vuex'
 
-import { fetchList, fetchPv, createListItem, updateListItem } from '@/api/employee_manage'
-
+import { createListItem, fetchDept, fetchJob } from '@/api/employee_manage'
 
 export default {
   name: 'Func2',
@@ -159,11 +166,13 @@ export default {
   // }
   data() {
     return {
+      list: null,
       ruleForm: {
+        id: '',
         name: '',
         card: '',
         sex: '',
-        job: '',
+        jobid: '',
         education: '',
         email: '',
         tel: '',
@@ -177,29 +186,54 @@ export default {
         speciality: '',
         hobby: '',
         remark: '',
-        dept: ''
-      }
+        deptid: ''
+      },
+      options: [],
+      optionsdept: []
     }
   },
+  created() {
+    this.getdept()
+    this.getjob()
+  },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+    getdept() {
+      this.listLoading = true
+      fetchDept().then(response => {
+        this.optionsdept = response.data.items
+        response.data.total
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
+    },
+    getjob() {
+      this.listLoading = true
+      fetchJob().then(response => {
+        this.options = response.data.items
+        response.data.total
+        console.log(response.data.items)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
+    },
+    createData() {
+      this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          createListItem(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
+          this.ruleForm.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          createListItem(this.ruleForm).then(() => {
+            // this.list.unshift(this.ruleForm)
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
-              message: 'Update Successfully',
+              message: 'Created Successfully',
               type: 'success',
               duration: 2000
             })
           })
-        } else {
-          console.log('error submit!!')
-          return false
         }
       })
     },

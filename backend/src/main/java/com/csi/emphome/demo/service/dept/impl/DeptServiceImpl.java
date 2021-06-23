@@ -34,6 +34,20 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    @Override
+    public HashMap<String, Object> fetchDeptList() {
+        HashMap<String, Object> responseData = new HashMap<>();
+        List<DeptItem> list = deptRepository.findAll();
+        responseData.put("total",deptRepository.count());
+        responseData.put("items",list);
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data",responseData);
+        return response;
+    }
+
+
     public static List<DeptItem> splicePage(List<DeptItem> list, Integer pageNum, Integer pageSize) {
         if(list == null){
             return null;
@@ -69,13 +83,14 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public HashMap<String, Object> fetchListItemFunc(DeptSearchData data) {
+        System.out.println(data);
         HashMap<String, Object> responseData = new HashMap<>();
 
         if(data.getSearch().equals("")){
             return fetchListFunc(data.getListQuery());
         }
 
-        List<DeptItem> listAll = deptRepository.findAllByName(data.getSearch());
+        List<DeptItem> listAll = deptRepository.findAllByNameLike("%" + data.getSearch() + "%");
         List<DeptItem> list;
         if(listAll.size()>0){
             list = splicePage(listAll, data.getListQuery().getPage(), data.getListQuery().getLimit());

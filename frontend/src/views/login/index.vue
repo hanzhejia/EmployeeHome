@@ -45,7 +45,7 @@
         <el-button :loading="loading" type="primary" style="width:48%;margin-bottom:30px;" @click.native.prevent="handleLogin">刷脸</el-button>
         <div class="tips">
           <span style="margin-right:20px;">username: admin</span>
-          <span> password: any</span>
+          <span> password: 111111</span>
         </div>
 
       </el-form>
@@ -61,7 +61,8 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        // callback(new Error('Please enter the correct user name'))
+        callback()
       } else {
         callback()
       }
@@ -110,8 +111,6 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log('点击登录按钮')
-          console.log(this.loginForm.username, this.loginForm.password)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             console.log('登录成功')
             this.$router.push({ path: this.redirect || '/' })
