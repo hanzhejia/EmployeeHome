@@ -12,6 +12,7 @@
 
     <div>
       <el-table
+        v-if="this.$store.getters.roles[0] === 'admin'"
         ref="multipleTable"
         :data="curData"
         style="width: 100%"
@@ -26,11 +27,6 @@
             <span v-else>未注册</span>
           </template>
         </el-table-column>
-        <!--        <el-table-column label="创建时间">-->
-        <!--          <template slot-scope="{row}">-->
-        <!--            <span>{{ row.createdate | formatDate }}</span>-->
-        <!--          </template>-->
-        <!--        </el-table-column>-->
         <el-table-column label="人脸操作">
           <template slot-scope="data">
             <el-button @click="dialogVisible = true; clickid=data.row.id">扫脸</el-button>
@@ -42,19 +38,46 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <el-table
+        v-else
+        ref="multipleTable"
+        :data="userData"
+        style="width: 100%"
+        tooltip-effect="dark"
+      >
+        <el-table-column label="UID" prop="id" />
+        <el-table-column label="登录名" prop="loginname" />
+        <el-table-column label="用户名" prop="username" />
+        <el-table-column label="人脸状态">
+          <template slot-scope="face2">
+            <span v-if="ifFace(face2.row.id)">已注册</span>
+            <span v-else>未注册</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="人脸操作">
+          <template slot-scope="data2">
+            <el-button @click="dialogVisible = true; clickid=data2.row.id">扫脸</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="注销人脸">
+          <template slot-scope="del2">
+            <el-button v-if="ifFace(del2.row.id)" @click="delFace.id = del2.row.id;dialogVisibleDel = true;">注销</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
       <el-dialog
         title="确定要注销吗"
         :visible.sync="dialogVisibleDel"
         width="30%"
       >
-        <el-button  @click="dialogVisibleDel = false;">取消</el-button>
-        <el-button type="primary"  @click="dialogVisibleDel = false;delNowFace();overFlod();">确定</el-button>
+        <el-button @click="dialogVisibleDel = false;">取消</el-button>
+        <el-button type="primary" @click="dialogVisibleDel = false;delNowFace();overFlod();">确定</el-button>
       </el-dialog>
       <el-dialog
         title="请正对屏幕"
         :visible.sync="dialogVisible"
         width="50%"
-        :before-close="handleClose"
         @opened="opening"
         @closed="close"
       >
@@ -71,7 +94,6 @@
     <div>
       <el-pagination
         v-show="total>0"
-        :total="total"
         :page.sync="listQuery.page"
         :limit.sync="listQuery.limit"
         @pagination="getList"
@@ -107,6 +129,7 @@ export default {
   },
   data() {
     return {
+      nowrole: null,
       list: [],
       findface: [],
       total: 0,
@@ -135,6 +158,7 @@ export default {
         createdate: ''
       },
       curData: [],
+      userData: [],
       tableData: [{
         careTime: '2021-06-19',
         content: 'face',
@@ -169,9 +193,17 @@ export default {
         this.list = response.data.items
         this.total = response.data.total
         this.tableData = this.list
-        console.log(this.tableData)
         this.curData = this.tableData.slice(0, 10)
-        console.log(this.list)
+        // eslint-disable-next-line eqeqeq
+        if (this.$store.getters.roles[0] === 'editor') {
+          for (var i in this.tableData) {
+            if (this.tableData[i].username === this.$store.getters.name) {
+              this.userData.push(this.tableData[i])
+              break
+            }
+          }
+        }
+        console.log(this.userData)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
