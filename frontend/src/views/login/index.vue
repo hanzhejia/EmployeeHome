@@ -111,8 +111,6 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          console.log('点击登录按钮')
-          console.log(this.loginForm.username, this.loginForm.password)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             console.log('登录成功')
             this.$router.push({ path: this.redirect || '/' })

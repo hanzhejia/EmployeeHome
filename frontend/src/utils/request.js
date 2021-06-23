@@ -47,8 +47,8 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message({
-        // message: res.message || 'name or password Error',
-        message: 'name or password Error',
+        message: res.message || 'name or password Error',
+        // message: 'name or password Error',
         type: 'error',
         duration: 5 * 1000
       })

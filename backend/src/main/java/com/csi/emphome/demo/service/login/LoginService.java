@@ -8,8 +8,7 @@ import java.util.HashMap;
 
 @Service
 public interface LoginService {
-   // List<TestItem> list();
    HashMap<String, Object> createLoginItemFunc(LoginTemp data);
-   HashMap<String, Object> getLoginInfoFunc();
+   HashMap<String, Object> getLoginInfoFunc(String data);
    HashMap<String, Object> updateLoginPwdFunc(PwdTemp data);
 }
