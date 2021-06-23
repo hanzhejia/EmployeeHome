@@ -24,12 +24,6 @@ public class UserController {
     public HashMap<String,Object> fetchList(@RequestBody UserListQuery data){
         return userService.fetchListFunc(data);
     }
-/*    @CrossOrigin
-    @PostMapping(value = "/listItem")
-    @ResponseBody
-    public HashMap<String, Object> fetchList(@RequestBody UserSearchData data) {
-        return userService.fetchListItemFunc(data);
-    }*/
     /*添加*/
     @CrossOrigin
     @PostMapping(value = "/create")

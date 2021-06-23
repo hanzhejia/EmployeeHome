@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserItem,Integer> , JpaSpecificationExecutor<UserItem> {
     UserItem findById(int id);
-    List< UserItem> findAllByNameLike(String name);
+    List< UserItem> findAllByUsernameLike(String username);
     UserItem findTopByOrderByIdDesc();
     List< UserItem> findAll(Specification spec);
 }
