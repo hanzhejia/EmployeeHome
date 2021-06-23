@@ -1,7 +1,9 @@
 package com.csi.emphome.demo.shiro;
 
+import com.csi.emphome.demo.domain.user.UserItem;
 import com.csi.emphome.demo.jwt.JwtToken;
 import com.csi.emphome.demo.jwt.JwtUtil;
+import com.csi.emphome.demo.repository.login.LoginRepo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -28,6 +30,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class ShiroRealm extends AuthorizingRealm {
 
+    private final LoginRepo loginRepo;
+
     @Autowired
     private RedisTemplate redisTemplate;
 
@@ -36,6 +40,10 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Value("${custom.jwt.expire_time}")
     private long expireTime;
+
+    public ShiroRealm(LoginRepo loginRepo) {
+        this.loginRepo = loginRepo;
+    }
 
     /**
      * 设置对应的token类型
@@ -68,8 +76,8 @@ public class ShiroRealm extends AuthorizingRealm {
         String token = (String) SecurityUtils.getSubject().getPrincipal();
         String username = JwtUtil.getUsername(token);
         //数据库校验
-        //TODO 写个getUserRoles，根据username读取userRoles
-        if ("admin".equals(username)) {
+        UserItem loginTemp= loginRepo.findByusername(username);
+        if (loginTemp.getStatus() == 1){
             rootSet.add("user:admin");
         }
         //设置权限
