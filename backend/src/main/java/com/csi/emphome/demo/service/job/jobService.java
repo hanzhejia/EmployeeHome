@@ -13,4 +13,5 @@ public interface jobService {
     HashMap<String, Object> createListItemFunc(job data);
     HashMap<String, Object> updateListItemFunc(job data);
     HashMap<String, Object> deleteListItemFunc(job data);
+    HashMap<String, Object> fetchJobList();
 }

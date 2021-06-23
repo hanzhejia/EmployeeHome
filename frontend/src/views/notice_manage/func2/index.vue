@@ -80,6 +80,12 @@ export default {
       this.temp.careTime = systemDate
       console.log(this.temp)
       createListItem(this.temp).then(() => {
+        this.$notify({
+          title: 'Success',
+          message: 'Created Successfully',
+          type: 'success',
+          duration: 2000
+        })
       })
       this.$alert('公告发布成功', '标题', {
         confirmButtonText: '确定',

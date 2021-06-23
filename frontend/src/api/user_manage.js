@@ -30,3 +30,10 @@ export function searchdateListItem(data) {
     params: data
   })
 }
+export function deleteListItem(data) {
+  return request({
+    url: `/vue-admin-template/user/delete`,
+    method: 'post',
+    data
+  })
+}

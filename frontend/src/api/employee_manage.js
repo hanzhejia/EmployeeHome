@@ -15,6 +15,14 @@ export function fetchDept() {
   })
 }
 
+export function fetchJob() {
+  console.log(111111)
+  return request({
+    url: '/vue-admin-template/job/joblist',
+    method: 'post'
+  })
+}
+
 export function fetchListItem(id) {
   return request({
     url: '/vue-admin-template/employee/detail',

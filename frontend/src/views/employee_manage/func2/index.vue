@@ -29,10 +29,10 @@
             <el-select v-model="ruleForm.jobid" placeholder="请选择">
               <el-option
                 v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -136,10 +136,10 @@
             <el-select v-model="ruleForm.deptid" placeholder="请选择">
               <el-option
                 v-for="item in optionsdept"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+              />
             </el-select>
           </el-form-item>
         </el-col>
@@ -155,7 +155,7 @@
 <script>
 // import { mapGetters } from 'vuex'
 
-import { createListItem } from '@/api/employee_manage'
+import { createListItem, fetchDept, fetchJob } from '@/api/employee_manage'
 
 export default {
   name: 'Func2',
@@ -188,41 +188,38 @@ export default {
         remark: '',
         deptid: ''
       },
-      options: [{
-        value: 1,
-        label: '黄金糕'
-      }, {
-        value: 2,
-        label: '双皮奶'
-      }, {
-        value: 3,
-        label: '蚵仔煎'
-      }, {
-        value: 4,
-        label: '龙须面'
-      }, {
-        value: 5,
-        label: '北京烤鸭'
-      }],
-      optionsdept: [{
-        value: 1,
-        label: '黄金糕'
-      }, {
-        value: 2,
-        label: '双皮奶'
-      }, {
-        value: 3,
-        label: '蚵仔煎'
-      }, {
-        value: 4,
-        label: '龙须面'
-      }, {
-        value: 5,
-        label: '北京烤鸭'
-      }]
+      options: [],
+      optionsdept: []
     }
   },
+  created() {
+    this.getdept()
+    this.getjob()
+  },
   methods: {
+    getdept() {
+      this.listLoading = true
+      fetchDept().then(response => {
+        this.optionsdept = response.data.items
+        response.data.total
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
+    },
+    getjob() {
+      this.listLoading = true
+      fetchJob().then(response => {
+        this.options = response.data.items
+        response.data.total
+        console.log(response.data.items)
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 100)
+      })
+    },
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {

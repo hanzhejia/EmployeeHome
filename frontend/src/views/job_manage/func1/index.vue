@@ -34,17 +34,26 @@
         </template>
 
         <template slot-scope="scope">
-          <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button v-if="checkPermission(['admin'])" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button v-if="buttonid==3" size="mini" type="danger"  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button v-if="buttonid==3" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-
 <!--    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" @current-change="changePage" />-->
+<!--    <el-pagination-->
+<!--      v-show="total>0"-->
+<!--      :total="total"-->
+<!--      :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" @current-change="changePage">-->
+<!--    </el-pagination>-->
     <el-pagination
-      v-show="total>0"
-      :total="total"
-      :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" @current-change="changePage">
+      style="position: relative;top: 10px"
+      @pagination="getList"
+      @size-change="handleSizeChange"
+      @current-change="changePage"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="10"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
     </el-pagination>
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -75,7 +84,7 @@ export default {
   directives: { permission },
   data() {
     return {
-
+      buttonid:1,
       textarea1: '',
       textarea2: '',
       superDatasize:0,
@@ -91,6 +100,7 @@ export default {
         name:'',
         remake:''
       },
+      size:10,
       midData:{
         id:'',
         name:'',
@@ -118,6 +128,11 @@ export default {
   },
   methods: {
     checkPermission,
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.size = val
+      this.tableData= this.midData.slice(0,this.size)
+    },
     valuechange(){
       if(this.search==''){
         this.midData = this.superData
@@ -134,6 +149,7 @@ export default {
       })
     },
     getList() {
+      this.buttonid=3
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.temp = response.data.items
@@ -141,7 +157,7 @@ export default {
         this.superData = this.temp
         this.superDatasize = this.total
         this.midData=this.superData
-        this.tableData=this.midData.slice(0,10)
+        this.tableData=this.midData.slice(0,this.size)
         console.log(this.tableData[0].id)
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -163,7 +179,7 @@ export default {
     },
     changePage(page){
       console.log('sdsd')
-      this.tableData = this.midData.slice((page-1)*10,(page-1)*10+9)
+      this.tableData = this.midData.slice((page-1)*this.size,(page-1)*this.size+this.size)
     },
     searchs(sb) {
 console.log(this.search)
@@ -179,7 +195,7 @@ console.log(this.search)
       }
       this.total = this.midData.length
       console.log(this.total)
-      this.tableData = this.midData.slice(0,10)
+      this.tableData = this.midData.slice(0,this.size)
       console.log(this.tableData)
       this.time=0
     },
