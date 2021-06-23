@@ -12,4 +12,5 @@ public interface UserRepository extends JpaRepository<UserItem,Integer> , JpaSpe
     List< UserItem> findAllByUsernameLike(String username);
     UserItem findTopByOrderByIdDesc();
 //    List< UserItem> findAll(Specification spec);
+
 }

@@ -5,7 +5,7 @@
       <el-row>
         <el-col :span="4">
           <el-form-item label="职位" prop="jobid">
-            <el-select v-model="searcheForm.jobid" placeholder="选择职位搜索">
+            <el-select v-model="searcheForm.jobid"  clearable  placeholder="选择职位搜索">
               <el-option
                 v-for="item in options"
                 :key="item.id"
@@ -37,7 +37,7 @@
       <el-row>
         <el-col :span="4">
           <el-form-item label="性别" prop="sex">
-            <el-select v-model="searcheForm.sex" placeholder="选择性别搜索">
+            <el-select v-model="searcheForm.sex"  clearable  placeholder="选择性别搜索">
               <el-option label="男" value=1 />
               <el-option label="女" value=2 />
             </el-select>
@@ -54,7 +54,7 @@
         </el-col>
         <el-col :span="6" :offset="2">
           <el-form-item label="所属部门" prop="deptid">
-            <el-select v-model="searcheForm.deptid" placeholder="选择部门搜索">
+            <el-select v-model="searcheForm.deptid"  clearable  placeholder="选择部门搜索">
               <el-option
                 v-for="item in optionsdept"
                 :key="item.id"
@@ -230,19 +230,19 @@ export default {
       }
       callback()
     }
-    var validatePhone = (rule, value, callback) => {
-      if (value !== '') {
-        if ((value.length !== 11)) {
-          callback(new Error('手机号码长度为11个字符'))
-        } else if (value !== '') {
-          var reg = /(^\d{11}$)/
-          if (!reg.test(value)) {
-            callback(new Error('请输入有效手机号码'))
-          }
-        }
-      }
-      callback()
-    }
+    // var validatePhone = (rule, value, callback) => {
+    //   if (value !== '') {
+    //     if ((value.length !== 11)) {
+    //       callback(new Error('手机号码长度为11个字符'))
+    //     } else if (value !== '') {
+    //       var reg = /(^\d{11}$)/
+    //       if (!reg.test(value)) {
+    //         callback(new Error('请输入有效手机号码'))
+    //       }
+    //     }
+    //   }
+    //   callback()
+    // }
     var validateEmail = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入邮箱'))
@@ -303,14 +303,14 @@ export default {
       options: [],
       optionsdept: [],
       rules: {
-        name: [
-          { min: 2, max: 24, message: '长度在 2 到 24 个字符', trigger: 'blur' }
-        ],
-        card: [{ validator: validateCard, trigger: 'blur' }],
-        sex: [
-          { message: '请选择性别', trigger: 'change' }
-        ],
-        phone: [{ validator: validatePhone, trigger: 'blur' }]
+        // name: [
+        //   { min: 2, max: 24, message: '长度在 2 到 24 个字符', trigger: 'blur' }
+        // ],
+        // card: [{ validator: validateCard, trigger: 'blur' }],
+        // sex: [
+        //   { message: '请选择性别', trigger: 'change' }
+        // ],
+        // phone: [{ validator: validatePhone, trigger: 'blur' }]
       },
       rules2: {
         name: [
@@ -374,6 +374,7 @@ export default {
     },
     handleDelete(index, row) {
       // const tempData = Object.assign({}, row)
+      
       this.options.forEach((vul) => {
         if (row.jobid === vul.label) {
           row.jobid = vul.value

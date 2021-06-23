@@ -381,11 +381,12 @@ export default {
     createData() {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
-          this.ruleForm.id = parseInt(Math.random() * 100) + 1024 // mock a id
-          this.ruleForm.tel = this.ruleForm.tel1 + this.ruleForm.tel2
-          this.ruleForm.sex = parseInt(this.ruleForm.sex)
-          console.log(this.ruleForm)
-          createListItem(this.ruleForm).then(() => {
+          const tempData = Object.assign({}, this.ruleForm)
+          tempData.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          tempData.tel = tempData.tel1 + tempData.tel2
+          tempData.sex = parseInt(tempData.sex)
+          console.log(tempData)
+          createListItem(tempData).then(() => {
             // this.list.unshift(this.ruleForm)
             this.dialogFormVisible = false
             this.$notify({
