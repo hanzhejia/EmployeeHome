@@ -24,9 +24,9 @@ public class FaceController {
     }
 
     @CrossOrigin
-    @PostMapping(value = "/find")
+    @PostMapping(value = "/faceLogin")
     @ResponseBody
-    public HashMap<String, Object> faceResult(@RequestBody Face nowbase64) throws JSONException {
+    public HashMap<String, Object> faceLogin(@RequestBody Face nowbase64) throws JSONException {
         return faceService.serchFace(nowbase64);
     }
 

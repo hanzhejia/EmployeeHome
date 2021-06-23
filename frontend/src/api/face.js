@@ -7,10 +7,10 @@ export function faceList() {
   })
 }
 
-export function faceResult(data) {
-  console.log('testfind')
+export function faceLogin(data) {
+  console.log('faceLogin')
   return request({
-    url: '/vue-admin-template/face/find',
+    url: '/vue-admin-template/face/faceLogin',
     method: 'post',
     data: data
   })

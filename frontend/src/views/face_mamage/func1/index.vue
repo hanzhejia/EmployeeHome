@@ -82,7 +82,7 @@
 </template>
 <script>
 // eslint-disable-next-line no-unused-vars
-import { faceList, addFace, faceDel } from '@/api/face_manage'
+import { faceList, addFace, faceDel } from '@/api/face'
 import { fetchList } from '@/api/user_manage'
 export default {
   name: 'TakePhotos',
