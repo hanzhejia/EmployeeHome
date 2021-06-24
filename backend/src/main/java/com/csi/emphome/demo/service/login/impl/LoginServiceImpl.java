@@ -3,9 +3,11 @@ package com.csi.emphome.demo.service.login.impl;
 import com.csi.emphome.demo.domain.user.UserItem;
 import com.csi.emphome.demo.jwt.JwtUtil;
 import com.csi.emphome.demo.repository.login.LoginRepo;
+import com.csi.emphome.demo.repository.user.UserRepository;
 import com.csi.emphome.demo.service.login.LoginService;
 import com.csi.emphome.demo.service.login.dto.LoginTemp;
 import com.csi.emphome.demo.service.login.dto.PwdTemp;
+import com.csi.emphome.demo.service.user.dto.UserTemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,11 +29,11 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public HashMap<String, Object> createLoginItemFunc(LoginTemp data) {
-        UserItem loginTemp= loginRepo.findByusername(data.getUsername());
+        UserItem loginTemp= loginRepo.findByLoginname(data.getUsername());
         if(loginTemp!=null){
             if(loginTemp.getLoginname().equals(data.getUsername()) && loginTemp.getPassword().equals(data.getPassword())){
                 HashMap<String, Object> token = new HashMap<>();
-                String token_str = JwtUtil.sign(loginTemp.getUsername(), loginTemp.getPassword());
+                String token_str = JwtUtil.sign(loginTemp.getLoginname(), loginTemp.getPassword());
                 redisTemplate.opsForValue().set(token_str,token_str, expireTime*2/100, TimeUnit.SECONDS);
                 token.put("token", token_str);
                 response.put("code",20000);
@@ -47,7 +49,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public HashMap<String, Object> getLoginInfoFunc(String data) {
         String username = JwtUtil.getUsername(data);
-        UserItem loginTemp= loginRepo.findByusername(username);
+        UserItem loginTemp= loginRepo.findByLoginname(username);
 
         HashMap<String, Object> user = new HashMap<>();
         ArrayList<String> roles = new ArrayList<>();

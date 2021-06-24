@@ -1,6 +1,7 @@
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
+import { faceLogin } from '@/api/face'
 
 const state = {
   token: getToken(),
@@ -30,10 +31,23 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    console.log('modules/user', userInfo)
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
+        const { data } = response
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // face user login
+  faceLogin({ commit }, nowface) {
+    return new Promise((resolve, reject) => {
+      faceLogin(nowface).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.token)
         setToken(data.token)

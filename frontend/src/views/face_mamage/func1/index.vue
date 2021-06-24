@@ -12,6 +12,7 @@
 
     <div>
       <el-table
+        v-if="this.$store.getters.roles[0] === 'admin'"
         ref="multipleTable"
         :data="curData"
         style="width: 100%"
@@ -26,11 +27,6 @@
             <span v-else>未注册</span>
           </template>
         </el-table-column>
-        <!--        <el-table-column label="创建时间">-->
-        <!--          <template slot-scope="{row}">-->
-        <!--            <span>{{ row.createdate | formatDate }}</span>-->
-        <!--          </template>-->
-        <!--        </el-table-column>-->
         <el-table-column label="人脸操作">
           <template slot-scope="data">
             <el-button @click="dialogVisible = true; clickid=data.row.id">扫脸</el-button>
@@ -42,19 +38,46 @@
           </template>
         </el-table-column>
       </el-table>
+
+      <el-table
+        v-else
+        ref="multipleTable"
+        :data="userData"
+        style="width: 100%"
+        tooltip-effect="dark"
+      >
+        <el-table-column label="UID" prop="id" />
+        <el-table-column label="登录名" prop="loginname" />
+        <el-table-column label="用户名" prop="username" />
+        <el-table-column label="人脸状态">
+          <template slot-scope="face2">
+            <span v-if="ifFace(face2.row.id)">已注册</span>
+            <span v-else>未注册</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="人脸操作">
+          <template slot-scope="data2">
+            <el-button @click="dialogVisible = true; clickid=data2.row.id">扫脸</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="注销人脸">
+          <template slot-scope="del2">
+            <el-button v-if="ifFace(del2.row.id)" @click="delFace.id = del2.row.id;dialogVisibleDel = true;">注销</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
       <el-dialog
         title="确定要注销吗"
         :visible.sync="dialogVisibleDel"
         width="30%"
       >
-        <el-button  @click="dialogVisibleDel = false;">取消</el-button>
-        <el-button type="primary"  @click="dialogVisibleDel = false;delNowFace();overFlod();">确定</el-button>
+        <el-button @click="dialogVisibleDel = false;">取消</el-button>
+        <el-button type="primary" @click="dialogVisibleDel = false;delNowFace();overFlod();">确定</el-button>
       </el-dialog>
       <el-dialog
         title="请正对屏幕"
         :visible.sync="dialogVisible"
         width="50%"
-        :before-close="handleClose"
         @opened="opening"
         @closed="close"
       >
@@ -70,6 +93,7 @@
     </div>
     <div>
       <el-pagination
+        v-if="this.$store.getters.roles[0] === 'admin'"
         v-show="total>0"
         :total="total"
         :page.sync="listQuery.page"
@@ -82,7 +106,7 @@
 </template>
 <script>
 // eslint-disable-next-line no-unused-vars
-import { faceList, addFace, faceDel } from '@/api/face_manage'
+import { faceList, addFace, faceDel } from '@/api/face'
 import { fetchList } from '@/api/user_manage'
 export default {
   name: 'TakePhotos',
@@ -107,6 +131,7 @@ export default {
   },
   data() {
     return {
+      nowrole: null,
       list: [],
       findface: [],
       total: 0,
@@ -135,6 +160,7 @@ export default {
         createdate: ''
       },
       curData: [],
+      userData: [],
       tableData: [{
         careTime: '2021-06-19',
         content: 'face',
@@ -169,9 +195,17 @@ export default {
         this.list = response.data.items
         this.total = response.data.total
         this.tableData = this.list
-        console.log(this.tableData)
         this.curData = this.tableData.slice(0, 10)
-        console.log(this.list)
+        // eslint-disable-next-line eqeqeq
+        if (this.$store.getters.roles[0] === 'editor') {
+          for (var i in this.tableData) {
+            if (this.tableData[i].username === this.$store.getters.name) {
+              this.userData.push(this.tableData[i])
+              break
+            }
+          }
+        }
+        console.log(this.userData)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -214,10 +248,9 @@ export default {
       const img = document.querySelector('#img')
       const btn = document.querySelector('button')
       const context = canvas.getContext('2d')
-      const width = 320 // 视频和canvas的宽度
+      const width = 320
       const height = 0 //
-      const streaming = false // 是否开始捕获媒体
-      // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+      const streaming = false
       if (navigator.mediaDevices == undefined) {
         navigator.mediaDevices = {}
       }
@@ -225,8 +258,8 @@ export default {
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
-          video.srcObject = stream // 将捕获的视频流传递给video  放弃window.URL.createObjectURL(stream)的使用
-          video.play() //  播放视频
+          video.srcObject = stream
+          video.play()
           // audio.srcObject = stream
           // audio.play()
         })
@@ -239,13 +272,13 @@ export default {
       const img = document.querySelector('#img')
       const btn = document.querySelector('button')
       const context = canvas.getContext('2d')
-      const width = 320 // 视频和canvas的宽度
+      const width = 320
       let height = 0 //
-      let streaming = true // 是否开始捕获媒体
+      let streaming = true
       if (streaming) {
-        context.drawImage(video, 0, 0, 350, 200) // 将视频画面捕捉后绘制到canvas里面
+        context.drawImage(video, 0, 0, 350, 200)
         // eslint-disable-next-line no-undef
-        img.src = canvas.toDataURL('image/png') // 将canvas的数据传送到img里 base64格式
+        img.src = canvas.toDataURL('image/png')
         // eslint-disable-next-line no-undef
         const temp = canvas.toDataURL('image/png').slice(22)
         // eslint-disable-next-line no-const-assign,no-undef
@@ -261,7 +294,6 @@ export default {
           }, 5000)
         })
       }
-      // 监听视频流就位事件,即视频可以播放了
       video.addEventListener(
         'canplay',
         function(ev) {

@@ -1,6 +1,7 @@
 package com.csi.emphome.demo.service.face.impl;
 import com.csi.emphome.demo.domain.face.Face;
 import com.csi.emphome.demo.domain.user.UserItem;
+import com.csi.emphome.demo.jwt.JwtUtil;
 import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
 import com.csi.emphome.demo.repository.user.UserRepository;
@@ -11,6 +12,8 @@ import com.csi.emphome.demo.domain.face.Face;
 import com.csi.emphome.demo.repository.face.FaceRepository;
 import com.csi.emphome.demo.service.face.FaceService;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.json.JSONObject;
 import com.baidu.aip.face.AipFace;
@@ -22,11 +25,17 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @Service
 public class FaceServiceImpl implements FaceService {
+    private RedisTemplate redisTemplate;
+    @Value("${custom.jwt.expire_time}")
+    private long expireTime;
     private final FaceRepository faceRepository;
     private final UserRepository userRepository;
-    public FaceServiceImpl(FaceRepository faceRepository, UserRepository userRepository) {
+    public FaceServiceImpl(RedisTemplate redisTemplate, FaceRepository faceRepository, UserRepository userRepository) {
+        this.redisTemplate = redisTemplate;
         this.faceRepository = faceRepository;
         this.userRepository = userRepository;
     }
@@ -79,26 +88,22 @@ public class FaceServiceImpl implements FaceService {
                 }
             }
         }
-        System.out.println("local i \n");
+
+        System.out.println("local i");
         System.out.println(i);
-        if(i<listItems.size())
-        {
-            UserItem uitem =userRepository.findById(listItems.get(i).getId());
-            System.out.println(uitem.getPassword());
-            responseData.put("name",uitem.getUsername());
-            responseData.put("password",uitem.getPassword());
+        UserItem uitem =userRepository.findById(listItems.get(i).getId());
+        if(uitem!=null && i<listItems.size()){
+            HashMap<String, Object> token = new HashMap<>();
+            String token_str = JwtUtil.sign(uitem.getLoginname(), uitem.getPassword());
+            redisTemplate.opsForValue().set(token_str,token_str, expireTime*2/100, TimeUnit.SECONDS);
+            token.put("token", token_str);
             response.put("code",20000);
-            response.put("message","success");
-            response.put("data",responseData);
+            response.put("data",token);
             return response;
         }
-        else {
-            responseData.put("items","-1");
-            response.put("code",20001);
-            response.put("message","fail");
-            response.put("data",responseData);
-            return response;
-        }
+        response.put("code",60204);
+        response.put("message","Account and password are incorrect.");
+        return response;
     }
     @Override
     public HashMap<String, Object> addFace(Face nowbase64) {
