@@ -17,7 +17,7 @@ import Layout from '@/layout'
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
+    roles: ['admin','normal']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
@@ -112,7 +112,7 @@ export const asyncRoutes = [
     meta: {
       title: '用户管理',
       icon: 'el-icon-s-custom',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'normal'] // you can set roles in root nav
     },
     children: [
       {
@@ -139,7 +139,7 @@ export const asyncRoutes = [
     meta: {
       title: '部门管理',
       icon: 'el-icon-s-help',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'normal'] // you can set roles in root nav
     },
     children: [
       {
@@ -166,7 +166,7 @@ export const asyncRoutes = [
     meta: {
       title: '职位管理',
       icon: 'el-icon-s-management',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'normal'] // you can set roles in root nav
     },
     children: [
       {
@@ -193,7 +193,7 @@ export const asyncRoutes = [
     meta: {
       title: '员工管理',
       icon: 'el-icon-s-cooperation',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'normal'] // you can set roles in root nav
     },
     children: [
       {
@@ -220,7 +220,7 @@ export const asyncRoutes = [
     meta: {
       title: '公告管理',
       icon: 'el-icon-s-order',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'normal'] // you can set roles in root nav
     },
     children: [
       {
@@ -247,7 +247,7 @@ export const asyncRoutes = [
     meta: {
       title: '下载中心',
       icon: 'el-icon-s-promotion',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin', 'normal'] // you can set roles in root nav
     },
     children: [
       {
@@ -290,12 +290,6 @@ export const asyncRoutes = [
         name: 'Func2',
         component: () => import('@/views/test/func2/index'),
         meta: { title: 'func2', icon: '' }
-      },
-      {
-        path: 'func3',
-        name: 'Func3',
-        component: () => import('@/views/test/func3/index'),
-        meta: { title: 'func3', icon: '' }
       }
     ]
   },

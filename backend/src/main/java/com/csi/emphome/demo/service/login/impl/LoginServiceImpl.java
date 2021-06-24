@@ -54,10 +54,10 @@ public class LoginServiceImpl implements LoginService {
         if(loginTemp.getStatus() == 1){
             roles.add("admin");
         }else {
-            roles.add("editor");
+            roles.add("normal");
         }
         user.put("roles", roles);
-        user.put("introduction", "I am a SB");
+        user.put("introduction", "I am NB");
         user.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         user.put("name", loginTemp.getUsername());
 

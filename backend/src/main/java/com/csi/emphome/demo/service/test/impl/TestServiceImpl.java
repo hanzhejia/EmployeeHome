@@ -148,4 +148,21 @@ public class TestServiceImpl implements TestService {
         response.put("data",resData);
         return response;
     }
+
+
+    @Override
+    public HashMap<String, Object> apiTestNormalFunc() {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","OK");
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> apiTestAdminFunc() {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","OK");
+        return response;
+    }
 }

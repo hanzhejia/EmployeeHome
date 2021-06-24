@@ -20,7 +20,6 @@ public class DownloadController {
         this.downloadService = downloadService;
     }
 
-    @RequiresPermissions("user:admin")
     @CrossOrigin
     @PostMapping(value = "/list")
     @ResponseBody

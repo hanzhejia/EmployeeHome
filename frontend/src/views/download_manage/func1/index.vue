@@ -169,6 +169,7 @@ export default {
       m = m < 10 ? '0' + m : m
       let s = date.getSeconds()
       s = s < 10 ? '0' + s : s
+      // eslint-disable-next-line no-unused-vars
       const time1 = y + '-' + MM + '-' + d + ' ' + h + ':' + m + ':' + s
       const time2 = y + '-' + MM + '-' + d
       return time2

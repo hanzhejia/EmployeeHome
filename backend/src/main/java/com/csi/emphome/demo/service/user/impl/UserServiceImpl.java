@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
         List<UserItem> list= userRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
+        System.out.println(list);
         responseData.put("total",userRepository.count());
         responseData.put("items",list);
         response.put("code",20000);
