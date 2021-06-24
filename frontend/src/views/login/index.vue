@@ -95,6 +95,7 @@ export default {
         id: 0,
         base64: ''
       },
+
       loginForm: {
         username: '',
         password: ''

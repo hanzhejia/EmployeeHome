@@ -1,7 +1,7 @@
 <template>
   <div class="func1-container">
     <el-form :inline="true" class="demo-form-inline">
-      <el-form-item>
+      <el-form-item label="搜索">
         <template>
           <el-input v-model="search" placeholder="请输入内容" class="input-with-select">
             <el-select slot="prepend" v-model="select" placeholder="请选择">
@@ -20,7 +20,7 @@
       </el-form-item>
       <el-form-item style="float: right">
         <template v-if="checkPermission(['admin'])">
-          <el-button type="danger" @click="dialogFormVisible2 = true">上传文档</el-button>
+          <el-button type="primary" @click="dialogFormVisible2 = true">上传文档<i class="el-icon-upload el-icon--right"></i></el-button>
         </template>
       </el-form-item>
     </el-form>
@@ -78,13 +78,13 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-    <el-dialog title="编辑" :visible.sync="dialogFormVisible">
+    <el-dialog title="编辑" :visible.sync="dialogFormVisible" width="550px">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="文件名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
         <el-form-item label="创建时间" prop="createTime">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="Please pick a date" />
+          <el-date-picker v-model="temp.createTime" style="width:330px" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="创建人" prop="createBy">
           <el-input v-model="temp.createBy" />
@@ -92,19 +92,20 @@
         <el-form-item label="描述" prop="detail">
           <el-input v-model="temp.detail" />
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">提交</el-button>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+        </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">提交</el-button>
-      </div>
     </el-dialog>
-    <el-dialog title="添加" :visible.sync="dialogFormVisible2">
+    <el-dialog title="上传文档" :visible.sync="dialogFormVisible2" width="550px">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="文档标题">
           <el-input
             v-model="form.name"
             maxlength="10"
             show-word-limit
+            style="width:360px"
           />
         </el-form-item>
         <el-form-item label="文档描述">
@@ -114,6 +115,7 @@
             show-word-limit
             type="textarea"
             :autosize="{ minRows: 6, maxRows: 9}"
+            style="width:360px"
           />
         </el-form-item>
         <el-form-item label="文档选择">
@@ -136,7 +138,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="loading" @click="onSubmit">提交</el-button>
-          <el-button @click="onReset">重置</el-button>
+          <el-button type="danger" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
