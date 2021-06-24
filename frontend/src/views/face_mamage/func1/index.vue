@@ -93,7 +93,9 @@
     </div>
     <div>
       <el-pagination
+        v-if="this.$store.getters.roles[0] === 'admin'"
         v-show="total>0"
+        :total="total"
         :page.sync="listQuery.page"
         :limit.sync="listQuery.limit"
         @pagination="getList"
@@ -246,10 +248,9 @@ export default {
       const img = document.querySelector('#img')
       const btn = document.querySelector('button')
       const context = canvas.getContext('2d')
-      const width = 320 // 视频和canvas的宽度
+      const width = 320
       const height = 0 //
-      const streaming = false // 是否开始捕获媒体
-      // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
+      const streaming = false
       if (navigator.mediaDevices == undefined) {
         navigator.mediaDevices = {}
       }
@@ -257,8 +258,8 @@ export default {
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
-          video.srcObject = stream // 将捕获的视频流传递给video  放弃window.URL.createObjectURL(stream)的使用
-          video.play() //  播放视频
+          video.srcObject = stream
+          video.play()
           // audio.srcObject = stream
           // audio.play()
         })
@@ -271,13 +272,13 @@ export default {
       const img = document.querySelector('#img')
       const btn = document.querySelector('button')
       const context = canvas.getContext('2d')
-      const width = 320 // 视频和canvas的宽度
+      const width = 320
       let height = 0 //
-      let streaming = true // 是否开始捕获媒体
+      let streaming = true
       if (streaming) {
-        context.drawImage(video, 0, 0, 350, 200) // 将视频画面捕捉后绘制到canvas里面
+        context.drawImage(video, 0, 0, 350, 200)
         // eslint-disable-next-line no-undef
-        img.src = canvas.toDataURL('image/png') // 将canvas的数据传送到img里 base64格式
+        img.src = canvas.toDataURL('image/png')
         // eslint-disable-next-line no-undef
         const temp = canvas.toDataURL('image/png').slice(22)
         // eslint-disable-next-line no-const-assign,no-undef
@@ -293,7 +294,6 @@ export default {
           }, 5000)
         })
       }
-      // 监听视频流就位事件,即视频可以播放了
       video.addEventListener(
         'canplay',
         function(ev) {
