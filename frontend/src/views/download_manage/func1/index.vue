@@ -20,7 +20,7 @@
       </el-form-item>
       <el-form-item style="float: right">
         <template v-if="checkPermission(['admin'])">
-          <el-button type="primary" @click="dialogFormVisible2 = true">上传文档<i class="el-icon-upload el-icon--right"></i></el-button>
+          <el-button type="primary" @click="dialogFormVisible2 = true">上传文档<i class="el-icon-upload el-icon--right" /></el-button>
         </template>
       </el-form-item>
     </el-form>
@@ -65,7 +65,11 @@
 
       <el-table-column align="right" label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName">下载</el-button>
+          <template>
+            <el-link target="_blank" :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName" :underline="false" style="right: 10px;bottom: 1px">
+              <el-button size="mini" type="warning">下载</el-button>
+            </el-link>
+          </template>
           <template v-if="checkPermission(['admin'])">
             <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           </template>
