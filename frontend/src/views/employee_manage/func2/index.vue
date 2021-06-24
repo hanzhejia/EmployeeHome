@@ -217,10 +217,10 @@ export default {
     var validateQnum = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入QQ号码'))
-      } else if (value.length < 5 || value.length > 11) {
-        callback(new Error('QQ号码长度在 5 到 11 个字符'))
+      } else if (value.length < 5 || value.length > 10) {
+        callback(new Error('QQ号码长度在 5 到 10 个字符'))
       } else if (value !== '') {
-        var reg = /(^\d{5,11}$)/
+        var reg = /(^\d{5,10}$)/
         if (!reg.test(value)) {
           callback(new Error('请输入有效QQ号码'))
         }
