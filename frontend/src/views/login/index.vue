@@ -52,8 +52,7 @@
     <el-dialog
       title="请正对屏幕"
       :visible.sync="dialogVisible"
-      width="40%"
-      :before-close="handleClose"
+      width="50%"
       @opened="opening"
       @closed="close"
     >
@@ -390,7 +389,11 @@ $light_gray:#eee;
         }
       }
     }
-
+    &-facelog{
+      position: relative;
+      left: 30%;
+      width: 40%;
+    }
     .svg-container {
       padding: 6px 5px 6px 15px;
       color: $dark_gray;

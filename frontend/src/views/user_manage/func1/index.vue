@@ -13,21 +13,24 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="search(scope.$index,scope.row)">搜索</el-button>
-
         </el-form-item>
       </el-form>
     </div>-->
     <div>
       <el-table
-        ref="multipleTable"
-        :data="list.filter(data => !search || data.username.toLowerCase().includes(search.toLowerCase()))"
+        ref="temp"
+        :data="list.filter(data => !search ||
+        (data.username.toLowerCase().includes(search.toLowerCase()))
+       /* &&
+        data.status.toLowerCase().includes(search.toLowerCase()))*/
+         )"
         style="width: 100%"
         tooltip-effect="dark"
         :model="temp"
       >
 
         <el-table-column label="登录名" prop="loginname"/>
-        <el-table-column label="密码" prop="password"/>
+        <el-table-column v-if="checkPermission(['admin'])" label="密码" prop="password"/>
         <el-table-column label="用户名" prop="username"/>
         <el-table-column label="状态" prop="status"/>
         <el-table-column label="创建时间">
@@ -36,28 +39,28 @@
           </template>
         </el-table-column>
         <el-table-column align="right">
-          <template slot="header">
+          <template slot="header" slot-scope="data">
             <el-input v-model="search" size="mini" placeholder="输入用户名搜索">
               <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
             </el-input>
           </template>
-          <template slot-scope="scope">
+          <template v-if="checkPermission(['admin'])" slot-scope="scope">
             <el-button type="mini" @click="handleDelete(scope.$index,scope.row)">删除</el-button>
             <!--跳转至用户修改页面-->
             <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">编辑</el-button>
 
-            <el-dialog :visible.sync="dialogFormVisible" title="修改用户" top="20px" width="300px">
-              <el-form :model="temp">
-                <el-form-item :label-width="formLabeWidth" label="用户名:">
+            <el-dialog  :visible.sync="dialogFormVisible" title="修改用户" top="20px" width="300px">
+              <el-form ref="temp" :model="temp" :rules="rules">
+                <el-form-item :label-width="formLabeWidth" label="用户名:" prop="username">
                   <el-input v-model="temp.username" auto-complete="off"/>
                 </el-form-item>
-                <el-form-item :label-width="formLabeWidth" label="登录名:">
+                <el-form-item :label-width="formLabeWidth" label="登录名:" prop="loginname">
                   <el-input v-model="temp.loginname" auto-complete="off"/>
                 </el-form-item>
-                <el-form-item :label-width="formLabeWidth" label="密码:">
+                <el-form-item :label-width="formLabeWidth" label="密码:" prop="password">
                   <el-input v-model="temp.password" auto-complete="off"/>
                 </el-form-item>
-                <el-form-item label="状    态：">
+                <el-form-item label="状    态：" prop="status">
                   <el-select v-model="temp.status" placeholder="请选择状态">
                     <el-option label="管理员" value="1" />
                     <el-option label="普通用户" value="2" />
@@ -85,12 +88,12 @@ import {
   deleteListItem,
   fetchList,
   updateListItem,
-  searchdateListItem
+  fetchListItem, createListItem
 } from '@/api/user_manage'
 import Pagination from '@/components/Pagination'// secondary package based on el-pagination
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission'
-import { fetchListItem } from '@/api/dept_manage'
+/*import { fetchListItem } from '@/api/user_manage'*/
 
 export default {
   name: 'Func1',
@@ -124,18 +127,19 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        multipleSelection: []
+        /*multipleSelection: []*/
       },
       dialogFormVisible: false, // 弹窗默认关闭
       dialogStatus: '',
       downloadLoading: false,
       // 弹出层的表单
-      form: {
+     /* temp: {
         username: '',
         loginname: '',
         password: '',
         status: '管理员'
-      },
+      },*/
+
       formLabelWidth: '50px',
       /*搜索栏*/
     /*  searchform: {
@@ -152,31 +156,38 @@ export default {
           status: '',
           createdate: ''
         },
+      rules: {
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 6, message: '密码长度为6位', trigger: 'blur' }
+        ],
+      },
 
     }
   },
-      //初始化页面
-  created()
-    {
+
+    //初始化页面
+    created() {
       this.getList()
     },
 
     methods: {
 
       /*显示用户*/
-      getList()
-      {
+      getList() {
         this.listLoading = true
         fetchList(this.listQuery).then(response => {
           this.list = response.data.items
           this.total = response.data.total
-          console.log(this.list)
+          console.log(this.listQuery)
           // Just to simulate the time of the request
           setTimeout(() => {
             this.listLoading = false
           }, 100)
         })
       },
+      //v-if权限
+      checkPermission,
       /*编辑用户*/
       handleEdit(index, row) {
         this.temp = Object.assign({}, row)
@@ -184,27 +195,32 @@ export default {
         this.dialogStatus = 'update'
         this.dialogFormVisible = true
         this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
+          this.$refs['temp'].clearValidate()
         })
       },
       /*更新用户信息*/
       handleUpdate() {
-        const tempData = Object.assign({}, this.temp)
-        updateListItem(tempData).then(() => {
-          const index = this.list.findIndex(v => v.id === this.temp.id)
-          this.list.splice(index, 1, this.temp)
-          console.log(this.list)
-          this.dialogFormVisible = false
-          this.$notify({
-            title: 'Success',
-            message: 'Update Successfully',
-            type: 'success',
-            duration: 2000
-          })
-        })
+        this.$refs['temp'].validate((valid)=>{
+          if (valid) {
+            // this.form.id = parseInt(Math.random() * 100) + 1024
+            console.log(this.temp)
+            updateListItem(this.temp).then(() => {
+              const index = this.list.findIndex(v => v.id === this.temp.id)
+              this.list.splice(index, 1, this.temp)
+              console.log(this.list)
+              this.dialogFormVisible = false
+              this.$notify({
+                title: 'Success',
+                message: 'Update Successfully',
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }})
       },
+
       /*搜索用户*/
-     /* search(){
+      /* search(){
        /!* this.$refs['searcheform'].validate((valid) => {
           if (valid) {*!/
             const tempData = Object.assign({}, this.searcheform)
@@ -236,21 +252,21 @@ export default {
         })
       },
       /*删除用户*/
-      handleDelete(index, row)
-      {
+      handleDelete(index, row) {
         console.log("delete"),
-        deleteListItem(row).then(() => {
-          this.$notify({
-            title: 'Success',
-            message: 'Delete Successfully',
-            type: 'success',
-            duration: 2000
+          deleteListItem(row).then(() => {
+            this.$notify({
+              title: 'Success',
+              message: 'Delete Successfully',
+              type: 'success',
+              duration: 2000
+            })
+            this.list.splice(index, 1)
           })
-          this.list.splice(index, 1)
-        })
       },
     }
-  }
+
+}
 
 </script>
 
