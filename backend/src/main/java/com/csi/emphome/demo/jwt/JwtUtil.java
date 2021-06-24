@@ -55,6 +55,9 @@ public class JwtUtil {
      * @return token中包含的用户名
      */
     public static String getUsername(String token) {
+        if(token==null){
+            return null;
+        }
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("username").asString();
@@ -69,6 +72,9 @@ public class JwtUtil {
      * @return token中包含的密码
      */
     public static String getPassword(String token) {
+        if(token==null){
+            return null;
+        }
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("password").asString();

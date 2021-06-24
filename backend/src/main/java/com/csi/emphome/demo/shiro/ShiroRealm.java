@@ -76,7 +76,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String token = (String) SecurityUtils.getSubject().getPrincipal();
         String username = JwtUtil.getUsername(token);
         //数据库校验
-        UserItem loginTemp= loginRepo.findByusername(username);
+        UserItem loginTemp= loginRepo.findByLoginname(username);
         if (loginTemp.getStatus() == 1){
             rootSet.add("user:admin");
         }

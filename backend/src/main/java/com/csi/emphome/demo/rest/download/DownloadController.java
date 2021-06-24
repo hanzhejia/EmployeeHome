@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/vue-admin-template/download")
@@ -51,8 +52,8 @@ public class DownloadController {
     @CrossOrigin
     @PostMapping(value = "/delete")
     @ResponseBody
-    public HashMap<String, Object> deleteListItem(@RequestBody DownloadTemp data) {
-        return downloadService.deleteListItemFunc(data);
+    public HashMap<String, Object> deleteListItem(@RequestBody List<DownloadTemp> data) {
+        return downloadService.deleteListFunc(data);
     }
 
     @CrossOrigin

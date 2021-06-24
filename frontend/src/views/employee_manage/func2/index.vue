@@ -1,7 +1,6 @@
 <template>
   <div class="func2-container">
     <el-form ref="ruleForm" status-icon :rules="rules" :model="ruleForm" label-width="100px" class="demo-ruleForm">
-
       <el-row>
         <el-col :span="10">
           <el-form-item label="姓名" prop="name">

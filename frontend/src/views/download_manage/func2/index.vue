@@ -73,7 +73,7 @@ export default {
       return isLt2M
     },
     handleSuccess(response, file, fileList) {
-      this.fileList = []
+      this.onReset()
       this.$notify({
         title: 'Success',
         message: 'Created Successfully',
@@ -100,9 +100,11 @@ export default {
     },
     onReset() {
       this.fileList = []
-      this.form.title = ''
-      this.form.desc = ''
-      this.form.file = null
+      this.form.realName = ''
+      this.form.name = ''
+      this.form.createBy = ''
+      this.form.createTime = ''
+      this.form.detail = ''
     }
   }
 }

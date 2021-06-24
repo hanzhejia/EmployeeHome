@@ -3,11 +3,9 @@ package com.csi.emphome.demo.service.login.impl;
 import com.csi.emphome.demo.domain.user.UserItem;
 import com.csi.emphome.demo.jwt.JwtUtil;
 import com.csi.emphome.demo.repository.login.LoginRepo;
-import com.csi.emphome.demo.repository.user.UserRepository;
 import com.csi.emphome.demo.service.login.LoginService;
 import com.csi.emphome.demo.service.login.dto.LoginTemp;
 import com.csi.emphome.demo.service.login.dto.PwdTemp;
-import com.csi.emphome.demo.service.user.dto.UserTemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -72,7 +70,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public HashMap<String, Object> updateLoginPwdFunc(PwdTemp data) {
         System.out.println("updateLoginPwdFunc"+data);
-        UserItem login= loginRepo.findByusername(data.getUsername());
+        UserItem login= loginRepo.findByLoginname(data.getUsername());
         login.setPassword(data.getNewpassword1());
         loginRepo.save(login);
         System.out.println(login);
