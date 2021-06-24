@@ -87,12 +87,18 @@ public class UserTemp implements Serializable {
     public void setId(int id){
         this.id = id;
     }
+
     @Override
     public String toString() {
         return "UserTemp{" +
                 "id=" + id +
-                ",username='" + username + '\'' +
-                ",loginname=" + loginname +
+                ", loginname='" + loginname + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", createdate=" + createdate +
+                ", username='" + username + '\'' +
+                ", faceurl='" + faceurl + '\'' +
+                ", facepath='" + facepath + '\'' +
                 '}';
     }
 }

@@ -9,6 +9,7 @@ export function fetchList(data) {
 }
 
 export function createListItem(data) {
+  console.log(data)
   return request({
     url: '/vue-admin-template/user/create',
     method: 'post',
