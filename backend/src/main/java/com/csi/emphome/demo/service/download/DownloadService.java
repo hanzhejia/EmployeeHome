@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 public interface DownloadService {
@@ -38,7 +39,7 @@ public interface DownloadService {
      * 删除
      * @return /
      */
-    HashMap<String, Object> deleteListItemFunc(DownloadTemp data);
+    HashMap<String, Object> deleteListFunc(List<DownloadTemp> data);
 
     HashMap<String, Object> uploadFileFunc(DownloadTemp data, MultipartFile file);
 }

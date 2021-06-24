@@ -40,3 +40,17 @@ export function deleteListItem(data) {
     data
   })
 }
+
+export function apiTestNormal() {
+  return request({
+    url: `/vue-admin-template/test/apiTestNormal`,
+    method: 'post'
+  })
+}
+
+export function apiTestAdmin() {
+  return request({
+    url: `/vue-admin-template/test/apiTestAdmin`,
+    method: 'post'
+  })
+}

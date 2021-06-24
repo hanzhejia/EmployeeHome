@@ -53,6 +53,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/vue-admin-template/user/login", "anon");
         filterChainDefinitionMap.put("/vue-admin-template/face/faceLogin", "anon");
         filterChainDefinitionMap.put("/vue-admin-template/user/logout", "anon");
+        filterChainDefinitionMap.put("/file/**", "anon");
+        filterChainDefinitionMap.put("/vue-admin-template/download/upload", "anon");
         //拦截剩下的其他请求
         filterChainDefinitionMap.put("/**", "authc");
         //设置拦截规则给shiro的拦截链工厂

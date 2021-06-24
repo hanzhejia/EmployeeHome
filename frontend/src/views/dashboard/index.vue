@@ -1,6 +1,10 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">device: {{ device }}</div>
+    <div class="dashboard-text">avatar: {{ avatar }}</div>
+    <div class="dashboard-text">introduction: {{ introduction }}</div>
+    <div class="dashboard-text">roles: {{ roles }}</div>
   </div>
 </template>
 
@@ -14,7 +18,11 @@ export default {
   directives: { permission },
   computed: {
     ...mapGetters([
-      'name'
+      'name',
+      'device',
+      'avatar',
+      'introduction',
+      'roles'
     ])
   },
   methods: {

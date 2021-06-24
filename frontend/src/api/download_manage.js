@@ -32,7 +32,7 @@ export function updateListItem(data) {
   })
 }
 
-export function deleteListItem(data) {
+export function deleteList(data) {
   return request({
     url: `/vue-admin-template/download/delete`,
     method: 'post',

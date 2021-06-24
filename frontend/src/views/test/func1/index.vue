@@ -1,29 +1,66 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
-    <switch-roles @change="handleRolesChange" />
+    <div class="dashboard-text">device: {{ device }}</div>
+    <div class="dashboard-text">token: {{ token }}</div>
+    <div class="dashboard-text">avatar: {{ avatar }}</div>
+    <div class="dashboard-text">introduction: {{ introduction }}</div>
+    <div class="dashboard-text">roles: {{ roles }}</div>
+    <el-button type="danger" @click="apiTestNormal">接口测试-用户</el-button>
+    <el-button type="danger" @click="apiTestAdmin">接口测试-管理员</el-button>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import permission from '@/directive/permission/index.js' // 权限判断指令
-import checkPermission from '@/utils/permission' // 权限判断函数
-import SwitchRoles from '../components/SwitchRoles'
+import { apiTestNormal, apiTestAdmin } from '@/api/test'
 
 export default {
   name: 'Dashboard',
-  components: { SwitchRoles },
-  directives: { permission },
   computed: {
     ...mapGetters([
-      'name'
+      'name',
+      'device',
+      'token',
+      'avatar',
+      'introduction',
+      'roles'
     ])
   },
   methods: {
-    checkPermission,
-    handleRolesChange() {
-      this.key++
+    apiTestNormal() {
+      apiTestNormal().then(response => {
+        this.$notify({
+          title: 'Success',
+          message: 'Request Successfully',
+          type: 'success',
+          duration: 2000
+        })
+      }).catch(reason => {
+        this.$notify({
+          title: 'Failed',
+          message: 'Request Failed',
+          type: 'error',
+          duration: 2000
+        })
+      })
+    },
+    apiTestAdmin() {
+      apiTestAdmin().then(response => {
+        this.$notify({
+          title: 'Success',
+          message: 'Request Successfully',
+          type: 'success',
+          duration: 2000
+        })
+      }).catch(reason => {
+        this.$notify({
+          title: 'Failed',
+          message: 'Request Failed',
+          type: 'error',
+          duration: 2000
+        })
+      })
     }
   }
 }
@@ -35,7 +72,7 @@ export default {
     margin: 30px;
   }
   &-text {
-    font-size: 30px;
+    //font-size: 30px;
     line-height: 46px;
   }
 }

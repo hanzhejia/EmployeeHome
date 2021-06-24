@@ -3,15 +3,25 @@ package com.csi.emphome.demo.service.download.dto;
 import java.io.Serializable;
 
 public class DownloadSearchData implements Serializable {
+    private String select;
     private String search;
     private DownloadListQuery listQuery;
 
     public DownloadSearchData() {
     }
 
-    public DownloadSearchData(String search, DownloadListQuery listQuery) {
+    public DownloadSearchData(String select, String search, DownloadListQuery listQuery) {
+        this.select = select;
         this.search = search;
         this.listQuery = listQuery;
+    }
+
+    public String getSelect() {
+        return select;
+    }
+
+    public void setSelect(String select) {
+        this.select = select;
     }
 
     public String getSearch() {
@@ -32,8 +42,9 @@ public class DownloadSearchData implements Serializable {
 
     @Override
     public String toString() {
-        return "TestSearchData{" +
-                "search='" + search + '\'' +
+        return "DownloadSearchData{" +
+                "select='" + select + '\'' +
+                ", search='" + search + '\'' +
                 ", listQuery=" + listQuery +
                 '}';
     }
