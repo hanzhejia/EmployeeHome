@@ -1,11 +1,13 @@
 package com.csi.emphome.demo.service.user.impl;
 
+import com.csi.emphome.demo.domain.dept.DeptItem;
 import com.csi.emphome.demo.domain.user.UserItem;
 import com.csi.emphome.demo.repository.user.UserRepository;
 import com.csi.emphome.demo.service.user.UserService;
 import com.csi.emphome.demo.service.user.dto.UserListQuery;
 import com.csi.emphome.demo.service.user.dto.UserSearchData;
 import com.csi.emphome.demo.service.user.dto.UserTemp;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -23,13 +25,49 @@ public class UserServiceImpl implements UserService {
     public HashMap<String, Object> fetchListFunc(UserListQuery data) {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
-        List listItems = userRepository.findAll();
-        responseData.put("total",listItems.size());
-        responseData.put("items",listItems);
+        List<UserItem> list= userRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
+        responseData.put("total",userRepository.count());
+        responseData.put("items",list);
         response.put("code",20000);
         response.put("data",responseData);
         return response;
     }
+
+    public static List<UserItem> splicePage(List<UserItem> list, Integer pageNum, Integer pageSize) {
+        if(list == null){
+            return null;
+        }
+        if(list.size() == 0){
+            return null;
+        }
+
+        Integer count = list.size(); //记录总数
+        System.out.println("数据总数");
+        System.out.println(count);
+        Integer pageCount = 0; //页数
+        if (count % pageSize == 0) {
+            pageCount = count / pageSize;
+        } else {
+            pageCount = count / pageSize + 1;
+        }
+
+        int fromIndex = 0; //开始索引
+        int toIndex = 0; //结束索引
+
+        if(pageNum > pageCount){
+            pageNum = pageCount;
+        }
+        if (!pageNum.equals(pageCount)) {
+            fromIndex = (pageNum - 1) * pageSize;
+            toIndex = fromIndex + pageSize;
+        } else {
+            fromIndex = (pageNum - 1) * pageSize;
+            toIndex = count;
+        }
+
+        return list.subList(fromIndex, toIndex);
+    }
+
     public int getMaxId(){
         UserItem tag_item = userRepository.findTopByOrderByIdDesc();
         int max_id = tag_item.getId();
@@ -80,38 +118,6 @@ public class UserServiceImpl implements UserService {
         response.put("code",resCode);
         response.put("data",resData);
         return response;
-    }
-    public static List<UserItem> splicePage(List<UserItem> list, Integer pageNum, Integer pageSize) {
-        if(list == null){
-            return null;
-        }
-        if(list.size() == 0){
-            return null;
-        }
-
-        Integer count = list.size(); //记录总数
-        Integer pageCount = 0; //页数
-        if (count % pageSize == 0) {
-            pageCount = count / pageSize;
-        } else {
-            pageCount = count / pageSize + 1;
-        }
-
-        int fromIndex = 0; //开始索引
-        int toIndex = 0; //结束索引
-
-        if(pageNum > pageCount){
-            pageNum = pageCount;
-        }
-        if (!pageNum.equals(pageCount)) {
-            fromIndex = (pageNum - 1) * pageSize;
-            toIndex = fromIndex + pageSize;
-        } else {
-            fromIndex = (pageNum - 1) * pageSize;
-            toIndex = count;
-        }
-
-        return list.subList(fromIndex, toIndex);
     }
 
     @Override

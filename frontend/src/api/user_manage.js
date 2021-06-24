@@ -9,6 +9,7 @@ export function fetchList(data) {
 }
 
 export function createListItem(data) {
+  console.log(data)
   return request({
     url: '/vue-admin-template/user/create',
     method: 'post',
@@ -23,7 +24,7 @@ export function updateListItem(data) {
     data
   })
 }
-export function searchdateListItem(data) {
+export function fetchListItem(data) {
   return request({
     url: '/vue-admin-template/user/searchdate',
     method: 'post',

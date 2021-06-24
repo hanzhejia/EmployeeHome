@@ -23,11 +23,11 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public HashMap<String, Object> fetchListFunc(TestListQuery data) {
+        HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
         List<TestItem> list = testRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
         responseData.put("total",testRepository.count());
         responseData.put("items",list);
-        HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data",responseData);
         return response;

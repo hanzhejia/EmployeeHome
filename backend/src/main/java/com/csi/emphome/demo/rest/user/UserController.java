@@ -29,6 +29,8 @@ public class UserController {
     @PostMapping(value = "/create")
     @ResponseBody
     public HashMap<String, Object> createListItem(@RequestBody UserTemp data) {
+        System.out.println("hello");
+        System.out.println(data.getPassword());
         return userService.createListItemFunc(data);
     }
     /*修改*/
