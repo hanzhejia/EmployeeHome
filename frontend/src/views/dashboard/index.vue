@@ -27,7 +27,7 @@
             <span>公告</span>
           </div>
           <div>
-            <el-table v-loading="loading" :data="list" style="width: 100%;">
+            <el-table v-loading="listLoading" :data="list" style="width: 100%;">
               <el-table-column prop="tiitle" label="标题" />
               <el-table-column prop="content" label="内容" />
               <el-table-column label="创建时间">
@@ -35,10 +35,9 @@
                   <el-tag>{{ row.careTime | formatDate }}</el-tag>
                 </template>
               </el-table-column>
-              <el-table-column label="操作">
+              <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
                 <template slot-scope="scope">
-                  <el-button v-if="status === true" type="success" icon="el-icon-finished" circle @click="status = false" />
-                  <el-button v-else type="danger" icon="el-icon-finished" circle @click="status = true" />
+                  <el-button :type="scope.row.status" icon="el-icon-finished" circle @click="scope.row.status==='success'?scope.row.status='danger':scope.row.status='success'" />
                 </template>
               </el-table-column>
             </el-table>
@@ -55,9 +54,11 @@ import { mapGetters } from 'vuex'
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 import { fetchList } from '@/api/notice_manage'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'Dashboard',
+  components: { Pagination },
   directives: { permission },
   filters: {
     formatDate: function(value) {
@@ -87,8 +88,7 @@ export default {
       listQuery: {
         page: 1,
         limit: 10
-      },
-      status: true
+      }
     }
   },
   computed: {
@@ -108,19 +108,13 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        console.log(response)
+        this.listLoading = false
+        response.data.items.forEach(item => {
+          item.status = 'success'
+        })
         this.list = response.data.items
         this.total = response.data.total
       })
-    },
-    handleDelete(index, row) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
-      })
-      this.list.splice(index, 1)
     }
   }
 }
