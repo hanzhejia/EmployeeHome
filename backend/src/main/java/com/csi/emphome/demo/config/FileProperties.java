@@ -81,7 +81,7 @@ public class FileProperties {
     }
 
     public Long getMaxSize() {
-        maxSize = Long.parseLong("1");
+        maxSize = Long.parseLong("20");
         return maxSize;
     }
 
@@ -90,7 +90,7 @@ public class FileProperties {
     }
 
     public Long getAvatarMaxSize() {
-        avatarMaxSize = Long.parseLong("1");
+        avatarMaxSize = Long.parseLong("20");
         return avatarMaxSize;
     }
 

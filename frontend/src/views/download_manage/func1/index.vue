@@ -45,7 +45,7 @@
           >
             <a
               slot="reference"
-              :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName"
+              :href="baseURL + '/file/' + scope.row.type + '/' + scope.row.realName"
               class="el-link--primary"
               style="word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color: #1890ff;font-size: 13px;"
               target="_blank"
@@ -66,7 +66,7 @@
       <el-table-column align="right" label="操作">
         <template slot-scope="scope">
           <template>
-            <el-link target="_blank" :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName" :underline="false" style="right: 10px;bottom: 1px">
+            <el-link target="_blank" :href="baseURL + '/file/' + scope.row.type + '/' + scope.row.realName" :underline="false" style="right: 10px;bottom: 1px">
               <el-button size="mini" type="warning">下载</el-button>
             </el-link>
           </template>
@@ -155,7 +155,7 @@ import checkPermission from '@/utils/permission' // 权限判断函数
 
 import { fetchList, fetchListItem, createListItem, updateListItem, deleteList } from '@/api/download_manage'
 import Pagination from '@/components/Pagination'
-import { httphost } from '@/utils/global'
+import { httphost_baseURL, httphost_upload } from '@/utils/global'
 
 export default {
   name: 'Func1',
@@ -208,7 +208,8 @@ export default {
 
       multipleSelection: [],
 
-      uploadUrl: httphost,
+      uploadUrl: httphost_upload,
+      baseURL: httphost_baseURL,
       loading: false,
       fileList: [],
       form: {
@@ -355,13 +356,14 @@ export default {
 
     beforeUpload(file) {
       let isLt2M = true
-      isLt2M = file.size / 1024 / 1024 < 1
+      isLt2M = file.size / 1024 / 1024 < 20
       if (!isLt2M) {
-        this.$message.error('上传文件大小不能超过 1MB!')
+        this.$message.error('上传文件大小不能超过 20MB!')
       }
       return isLt2M
     },
     handleSuccess(response, file, fileList) {
+      console.log(response.data)
       this.list.unshift(response.data)
       this.onReset()
       this.dialogFormVisible2 = false

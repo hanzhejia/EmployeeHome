@@ -205,7 +205,7 @@ public class DownloadServiceImpl implements DownloadService {
             System.out.println(temp_item);
             downloadRepository.save(temp_item);
             response.put("code",20000);
-            response.put("data",data);
+            response.put("data",temp_item);
         }else {
             response.put("code",20001);
             response.put("data","failed");
