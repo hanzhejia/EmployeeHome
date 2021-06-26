@@ -33,7 +33,7 @@ public class FaceController {
     @CrossOrigin
     @PostMapping(value = "/add")
     @ResponseBody
-    public HashMap<String, Object> faceAdd(@RequestBody Face nowbase64) {
+    public HashMap<String, Object> faceAdd(@RequestBody Face nowbase64) throws JSONException{
         return faceService.addFace(nowbase64);
     }
 

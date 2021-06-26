@@ -76,7 +76,7 @@ export default {
             this.logout()
           }).catch(response => {
             console.log('updatenotok', response)
-            window.alert('error')
+            window.alert('password error')
           })
         }
       })
