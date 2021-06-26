@@ -71,12 +71,18 @@ public class LoginServiceImpl implements LoginService {
     public HashMap<String, Object> updateLoginPwdFunc(PwdTemp data) {
         System.out.println("updateLoginPwdFunc"+data);
         UserItem login= loginRepo.findByLoginname(data.getUsername());
-        login.setPassword(data.getNewpassword1());
-        loginRepo.save(login);
-        System.out.println(login);
-        HashMap<String, Object> response=new HashMap<>();
-        response.put("code",20000);
-        response.put("data","success");
+        if (login.getPassword().equals(data.getPassword())){
+            login.setPassword(data.getNewpassword1());
+            loginRepo.save(login);
+            System.out.println(login);
+            HashMap<String, Object> response=new HashMap<>();
+            response.put("code",20000);
+            response.put("data","success");
+            return response;
+        }
+        response.put("code",10000);
+        response.put("data","failse");
         return response;
+
     }
 }

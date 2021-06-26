@@ -78,14 +78,15 @@ export default {
       this.temp.id = this.ts
       console.log(this.temp)
       updateListItem(this.temp).then(() => {
+        this.$notify({
+          title: '成功',
+          message: '修改成功',
+          type: 'success',
+          duration: 2000
+        })
       })
     },
     kong(sb) {
-      // console.log(this.tempid)
-      // console.log(this.ts)
-      // this.textarea1 = ''
-      // this.textarea2 = ''
-      // console.log('sdsd')
       this.temp.tiitle=this.textarea1
       this.temp.content=this.textarea2
       const tempData = Object.assign({}, this.temp)
@@ -93,6 +94,12 @@ export default {
       this.temp.id = this.ts
       console.log(this.temp)
       deleteListItem(this.temp).then(() => {
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
       })
     }
   },

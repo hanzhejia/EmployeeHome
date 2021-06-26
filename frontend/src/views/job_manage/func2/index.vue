@@ -71,6 +71,8 @@ export default {
           type: 'success',
           duration: 2000
         })
+        this.textarea1=''
+        this.textarea2=''
       })
     },
     kong(sb){

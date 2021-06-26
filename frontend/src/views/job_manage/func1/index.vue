@@ -53,7 +53,7 @@
       :page-sizes="[10, 20, 30, 40]"
       :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="total">
+      :total="total">-
     </el-pagination>
     <el-dialog title="编辑" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
@@ -144,9 +144,17 @@ export default {
       this.faData.id=row.id
       this.faData.name=row.name
       this.faData.remake=row.remake
-      console.log(this.faData)
+
       deleteListItem(this.faData).then(() => {
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.getList()
       })
+
     },
     getList() {
       this.buttonid=3
@@ -208,6 +216,7 @@ console.log(this.search)
           updateListItem(this.faData).then(() => {
             const index = this.list.findIndex(v => v.id === this.temp.id)
             this.list.splice(index, 1, this.temp)
+            this.getList()
             this.dialogFormVisible = false
             this.$notify({
               title: 'Success',
