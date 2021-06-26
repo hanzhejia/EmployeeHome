@@ -1,22 +1,38 @@
 <template>
   <div class="func1-container">
+    <el-form :inline="true" class="demo-form-inline">
+      <el-form-item>
+        <template>
+          <el-input v-model="search" placeholder="请输入内容" class="input-with-select">
+            <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
+          </el-input>
+        </template>
+      </el-form-item>
+      <el-form-item>
+        <template v-if="checkPermission(['admin'])">
+          <el-button type="danger" size="mini" @click="handleMultipleDelete">批量删除</el-button>
+        </template>
+      </el-form-item>
+    </el-form>
+
     <el-table
       v-loading="listLoading"
       :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
       style="width: 100%"
       highlight-current-row
+      @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"/>
 
       <el-table-column label="部门名称" prop="name"/>
       <el-table-column label="详细信息" prop="remark"/>
 
-      <el-table-column align="right">
-        <template slot="header">
-          <el-input v-model="search" size="mini" placeholder="输入关键字搜索">
-            <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
-          </el-input>
-        </template>
+      <el-table-column align="right" label="操作">
+<!--        <template slot="header">-->
+<!--          <el-input v-model="search" size="mini" placeholder="输入关键字搜索">-->
+<!--            <el-button slot="append" icon="el-icon-search" @click="handleSearch" />-->
+<!--          </el-input>-->
+<!--        </template>-->
         <template slot-scope="scope">
 
           <template v-if="checkPermission(['admin'])">
@@ -54,7 +70,7 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 
-import { fetchList, fetchListItem, updateListItem, deleteListItem } from '@/api/dept_manage'
+import { fetchList, deleteList, fetchListItem, updateListItem, deleteListItem } from '@/api/dept_manage'
 import Pagination from '@/components/Pagination'
 
 export default {
@@ -80,7 +96,8 @@ export default {
       dialogFormVisible: false,
       // dialogPvVisible: false,
       dialogStatus: '',
-      downloadLoading: false
+      downloadLoading: false,
+      multipleSelection: []
     }
   },
   created() {
@@ -136,33 +153,51 @@ export default {
     },
 
     handleDelete(index, row) {
-      deleteListItem(row).then(() => {
-        this.$notify({
-          title: 'Success',
-          message: 'Delete Successfully',
-          type: 'success',
-          duration: 2000
+      this.$confirm('是否确定删除该部门?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const rowList = [row]
+        deleteList(rowList).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Delete Successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.list.splice(index, 1)
         })
-        this.list.splice(index, 1)
       })
     },
-    // createData() {
-    //   this.$refs['dataForm'].validate((valid) => {
-    //     if (valid) {
-    //       // this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
-    //       createListItem(this.temp).then(() => {
-    //         this.list.unshift(this.temp)
-    //         this.dialogFormVisible = false
-    //         this.$notify({
-    //           title: 'Success',
-    //           message: 'Created Successfully',
-    //           type: 'success',
-    //           duration: 2000
-    //         })
-    //       })
-    //     }
-    //   })
-    // },
+
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
+
+    handleMultipleDelete() {
+      this.$confirm('是否确定删除所选部门?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteList(this.multipleSelection).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Delete Successfully',
+            type: 'success',
+            duration: 2000
+          })
+          let arr1 = this.list
+          const arr2 = this.multipleSelection
+          const idList = arr2.map(item => item.id)
+          arr1 = arr1.filter(item => {
+            return !idList.includes(item.id)
+          })
+          this.list = arr1
+        })
+      })
+    },
 
     updateData() {
       this.$refs['dataForm'].validate((valid) => {

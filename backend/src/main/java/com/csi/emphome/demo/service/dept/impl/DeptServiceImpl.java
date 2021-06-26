@@ -1,12 +1,15 @@
 package com.csi.emphome.demo.service.dept.impl;
 
 import com.csi.emphome.demo.domain.dept.DeptItem;
+import com.csi.emphome.demo.domain.download.DownloadItem;
 import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.repository.dept.DeptRepository;
 import com.csi.emphome.demo.service.dept.DeptService;
 import com.csi.emphome.demo.service.dept.dto.DeptListQuery;
 import com.csi.emphome.demo.service.dept.dto.DeptSearchData;
 import com.csi.emphome.demo.service.dept.dto.DeptTemp;
+import com.csi.emphome.demo.service.download.dto.DownloadTemp;
+import com.csi.emphome.demo.utils.FileUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -134,19 +137,21 @@ public class DeptServiceImpl implements DeptService {
     }
 
     @Override
-    public HashMap<String, Object> deleteListItemFunc(DeptTemp data) {
-        int resCode = 20001;
-        String resData = "failed";
-        DeptItem tag_item = deptRepository.findById(data.getId());
-
-        if (tag_item != null){
-            deptRepository.delete(tag_item);
-            resCode = 20000;
-            resData = "success";
-        }
+    public HashMap<String, Object> deleteListItemFunc(List<DeptTemp> data) {
         HashMap<String, Object> response = new HashMap<>();
-        response.put("code",resCode);
-        response.put("data",resData);
+
+        for (DeptTemp datum : data) {
+            DeptItem tag_item = deptRepository.findById(datum.getId());
+            if (tag_item != null) {
+                deptRepository.delete(tag_item);
+            } else {
+                response.put("code", 20001);
+                response.put("data", "failed");
+                return response;
+            }
+        }
+        response.put("code", 20000);
+        response.put("data", "success");
         return response;
     }
 
@@ -166,6 +171,25 @@ public class DeptServiceImpl implements DeptService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);
         response.put("data",resData);
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> checkSameNameFunc(DeptTemp data) {
+        int resCode;
+        String resData;
+        HashMap<String, Object> response = new HashMap<>();
+        List<DeptItem> item = deptRepository.findAllByName(data.getName());
+        if(item.size() == 0){
+            resCode = 20000;
+            resData = "success";
+        }else {
+            resCode = 20000;
+            resData = "failed";
+        }
+        response.put("code",resCode);
+        response.put("data",resData);
+        System.out.println(response);
         return response;
     }
 }

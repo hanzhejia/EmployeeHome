@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { createListItem } from '@/api/dept_manage'
+import { checkSameName, createListItem } from '@/api/dept_manage'
 
 export default {
   data() {
@@ -51,15 +51,24 @@ export default {
     onSubmit() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          // this.form.id = parseInt(Math.random() * 100) + 1024
-          console.log(this.form)
-          createListItem(this.form).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
-              type: 'success',
-              duration: 2000
-            })
+          checkSameName(this.form).then(response => {
+            if (response.data === 'success') {
+              createListItem(this.form).then(() => {
+                this.$notify({
+                  title: 'Success',
+                  message: 'Created Successfully',
+                  type: 'success',
+                  duration: 2000
+                })
+              })
+            } else {
+              this.$notify({
+                title: 'failed',
+                message: 'Created failed',
+                type: 'failed',
+                duration: 2000
+              })
+            }
           })
         }
       })

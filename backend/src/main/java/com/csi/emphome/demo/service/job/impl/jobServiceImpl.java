@@ -48,6 +48,9 @@ public class jobServiceImpl implements jobService {
         System.out.println(data);
         job tag_item = jobRepository.findById(data.getID());
         System.out.println(tag_item);
+        job tag_NAME = jobRepository.findByNAME(data.getNAME());
+        System.out.println(tag_NAME);
+        System.out.println("SDASD");
         if (tag_item == null){
             System.out.println(data);
             job temp_item = new job(data.getID(),data.getNAME(),data.getREMAKE());
