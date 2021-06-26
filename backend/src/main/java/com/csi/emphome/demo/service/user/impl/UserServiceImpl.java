@@ -82,7 +82,7 @@ public class UserServiceImpl implements UserService {
     public HashMap<String, Object> createListItemFunc(UserTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        int new_id = 1;
+        int new_id = 0;
         Date createdate = getDate();
         int count = userRepository.findAll().size();
         if (count != 0){
