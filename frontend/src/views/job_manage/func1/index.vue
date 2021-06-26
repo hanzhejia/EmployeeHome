@@ -34,8 +34,8 @@
         </template>
 
         <template slot-scope="scope">
-          <el-button v-if="buttonid==3" size="mini" type="danger"  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button v-if="buttonid==3" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button v-if="buttonid=='admin'" size="mini" type="danger"  @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-button v-if="buttonid=='admin'" size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,7 +84,7 @@ export default {
   directives: { permission },
   data() {
     return {
-      buttonid:1,
+      buttonid:'admin',
       textarea1: '',
       textarea2: '',
       superDatasize:0,
@@ -157,7 +157,7 @@ export default {
 
     },
     getList() {
-      this.buttonid=3
+      this.buttonid=this.$store.getters.roles
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.temp = response.data.items

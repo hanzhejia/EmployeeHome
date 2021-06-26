@@ -86,7 +86,7 @@
                 <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
               </span>
             </el-dialog>
-            <el-button v-if=" buttonid==2 " type="text" size="small" @click="edit(scope.row)">编辑</el-button>
+            <el-button v-if=" buttonid=='admin'" type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-dialog
               :title="neww"
               :modal-append-to-body="false"
@@ -135,7 +135,7 @@ export default {
   },
   data() {
     return {
-      buttonid:1,
+      buttonid:'admin',
       list: null,
       listLoading: true,
       tempid:'',
@@ -174,7 +174,8 @@ export default {
       this.curData = this.midData.slice(0,this.size)
     },
     getList() {
-      this.buttonid=2
+    this.buttonid=this.$store.getters.roles
+      // this.buttonid=2
       console.log('sbsssssssssssssddd')
       this.listLoading = true
       console.log(this.listQuery)

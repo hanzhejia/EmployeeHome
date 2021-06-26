@@ -179,7 +179,7 @@ export const asyncRoutes = [
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/job_manage/func2/index'),
-        meta: { title: '添加职位', icon: 'el-icon-plus' }
+        meta: { title: '添加职位', icon: 'el-icon-plus' , roles: ['admin'] }
       }
     ]
   },
@@ -233,7 +233,7 @@ export const asyncRoutes = [
         path: 'func2',
         name: 'Func2',
         component: () => import('@/views/notice_manage/func2/index'),
-        meta: { title: '添加公告', icon: 'el-icon-plus' }
+        meta: { title: '添加公告', icon: 'el-icon-plus', roles: ['admin'] }
       }
     ]
   },
