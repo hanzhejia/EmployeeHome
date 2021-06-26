@@ -65,7 +65,7 @@
         <el-button type="primary" @click="dialogVisibleDel = false;delNowFace();">确定</el-button>
       </el-dialog>
       <el-dialog
-        title="请正对屏幕"
+        title="请等待摄像头开启,保持人脸在捕捉范围中央"
         :visible.sync="dialogVisible"
         width="50%"
         @opened="opening"

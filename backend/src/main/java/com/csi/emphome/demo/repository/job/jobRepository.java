@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface jobRepository extends JpaRepository<job,Integer>, JpaSpecificationExecutor<job> {
     job findById(int id);
+   job findByNAME(String name);
     List<job> findAllByNAME(String info);
     job findByNAME(String name);
 }
