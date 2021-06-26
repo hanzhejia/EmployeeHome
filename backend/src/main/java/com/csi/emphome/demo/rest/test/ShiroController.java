@@ -32,7 +32,7 @@ public class ShiroController {
         String token = JwtUtil.sign("editor", "111111");
         redisTemplate.opsForValue().set(token,token, expireTime*2/100, TimeUnit.SECONDS);
         HashMap<String, Object> response = new HashMap<>();
-        response.put("code", 1);
+        response.put("code", token);
         response.put("data", "OK");
         return response;
     }

@@ -37,4 +37,7 @@ public interface TestService {
      * @return /
      */
     HashMap<String, Object> deleteListItemFunc(TestTemp data);
+
+    HashMap<String, Object> apiTestNormalFunc();
+    HashMap<String, Object> apiTestAdminFunc();
 }

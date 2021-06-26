@@ -7,6 +7,7 @@ import com.csi.emphome.demo.service.test.dto.TestListQuery;
 import com.csi.emphome.demo.service.test.dto.TestSearchData;
 import com.csi.emphome.demo.service.test.dto.TestTemp;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -146,6 +147,23 @@ public class TestServiceImpl implements TestService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);
         response.put("data",resData);
+        return response;
+    }
+
+
+    @Override
+    public HashMap<String, Object> apiTestNormalFunc() {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","OK");
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> apiTestAdminFunc() {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",20000);
+        response.put("data","OK");
         return response;
     }
 }

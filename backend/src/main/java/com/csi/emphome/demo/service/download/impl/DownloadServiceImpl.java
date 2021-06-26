@@ -79,8 +79,22 @@ public class DownloadServiceImpl implements DownloadService {
         if(data.getSearch().equals("")){
             return fetchListFunc(data.getListQuery());
         }
-
-        List<DownloadItem> listAll = downloadRepository.findAllByName(data.getSearch());
+        List<DownloadItem> listAll;
+        System.out.println(data.getSelect());
+        switch (data.getSelect()) {
+            case "2": {
+                listAll = downloadRepository.findAllByCreateBy(data.getSearch());
+                break;
+            }
+            case "3": {
+                listAll = downloadRepository.findAllByDetail(data.getSearch());
+                break;
+            }
+            default: {
+                listAll = downloadRepository.findAllByRealName(data.getSearch());
+                break;
+            }
+        }
         List<DownloadItem> list;
         if(listAll.size()>0){
             list = splicePage(listAll, data.getListQuery().getPage(), data.getListQuery().getLimit());
@@ -147,28 +161,28 @@ public class DownloadServiceImpl implements DownloadService {
     }
 
     @Override
-    public HashMap<String, Object> deleteListItemFunc(DownloadTemp data) {
-        int resCode = 20001;
-        String resData = "failed";
-
-        DownloadItem tag_item = downloadRepository.findByStorageId(data.getStorageId());
-        if (tag_item != null){
-            FileUtil.del(tag_item.getPath());
-            downloadRepository.delete(tag_item);
-            resCode = 20000;
-            resData = "success";
-        }
-
+    public HashMap<String, Object> deleteListFunc(List<DownloadTemp> data) {
         HashMap<String, Object> response = new HashMap<>();
-        response.put("code",resCode);
-        response.put("data",resData);
+
+        for(int i=0; i<data.size(); i++){
+            DownloadItem tag_item = downloadRepository.findByStorageId(data.get(i).getStorageId());
+            if (tag_item != null){
+                FileUtil.del(tag_item.getPath());
+                downloadRepository.delete(tag_item);
+            }else {
+                response.put("code", 20001);
+                response.put("data", "failed");
+                return response;
+            }
+        }
+        response.put("code", 20000);
+        response.put("data", "success");
         return response;
     }
 
     @Override
     public HashMap<String, Object> uploadFileFunc(DownloadTemp data, MultipartFile multipartFile) {
-        int resCode = 20001;
-        String resData = "failed";
+        HashMap<String, Object> response = new HashMap<>();
 
         FileUtil.checkSize(properties.getMaxSize(), multipartFile.getSize());
         String suffix = FileUtil.getExtensionName(multipartFile.getOriginalFilename());
@@ -190,13 +204,12 @@ public class DownloadServiceImpl implements DownloadService {
             temp_item.setDetail(data.getDetail());
             System.out.println(temp_item);
             downloadRepository.save(temp_item);
-            resCode = 20000;
-            resData = "success";
+            response.put("code",20000);
+            response.put("data",temp_item);
+        }else {
+            response.put("code",20001);
+            response.put("data","failed");
         }
-
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("code",resCode);
-        response.put("data",resData);
         return response;
     }
 }

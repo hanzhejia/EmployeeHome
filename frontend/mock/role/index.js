@@ -12,9 +12,9 @@ const roles = [
     routes: routes
   },
   {
-    key: 'editor',
-    name: 'editor',
-    description: 'Normal Editor. Can see all pages except permission page',
+    key: 'normal',
+    name: 'normal',
+    description: 'Normal normal. Can see all pages except permission page',
     routes: routes.filter(i => i.path !== '/permission')// just a mock
   },
   {

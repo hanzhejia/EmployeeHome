@@ -67,6 +67,7 @@
         <el-col :span="4">
           <el-form-item>
             <el-button type="primary" @click="search()">搜索</el-button>
+            <el-button v-if="checkPermission(['admin'])"  type="primary" @click="deleteFileOrDirectory(sels)" :disabled="this.sels.length === 0"> 删除</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -75,6 +76,7 @@
     <el-table
       :data="list"
       style="width: 100%"
+      @selection-change="selsChange"
     >
       <el-table-column
         type="selection"
@@ -216,6 +218,7 @@ export default {
   // },
   components: { Pagination },
   directives: { permission },
+  inject: ['reload'],
   data() {
     var validateCard = (rule, value, callback) => {
       if (value !== '') {
@@ -230,19 +233,6 @@ export default {
       }
       callback()
     }
-    // var validatePhone = (rule, value, callback) => {
-    //   if (value !== '') {
-    //     if ((value.length !== 11)) {
-    //       callback(new Error('手机号码长度为11个字符'))
-    //     } else if (value !== '') {
-    //       var reg = /(^\d{11}$)/
-    //       if (!reg.test(value)) {
-    //         callback(new Error('请输入有效手机号码'))
-    //       }
-    //     }
-    //   }
-    //   callback()
-    // }
     var validateEmail = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入邮箱'))
@@ -270,7 +260,7 @@ export default {
       callback()
     }
     return {
-
+      sels: [],
       temp: {
         name: '',
         sex: '',
@@ -350,6 +340,9 @@ export default {
     handleRolesChange() {
       this.key++
     },
+    selsChange(sels) {
+      this.sels = sels
+    },
     getdept() {
       this.listLoading = true
       fetchDept().then(response => {
@@ -373,31 +366,72 @@ export default {
       })
     },
     handleDelete(index, row) {
-      // const tempData = Object.assign({}, row)
-      
-      this.options.forEach((vul) => {
-        if (row.jobid === vul.label) {
-          row.jobid = vul.value
-        }
-      })
-      this.optionsdept.forEach((vul) => {
-        if (row.deptid === vul.name) {
-          row.deptid = vul.id
-        }
-      })
-      if (row.sex === '男') {
-        row.sex = 1
-      } else if (row.sex === '女') {
-        row.sex = 2
-      }
-      deleteListItem(row).then(() => {
-        this.$notify({
-          title: 'Success',
-          message: 'Delete Successfully',
-          type: 'success',
-          duration: 2000
+      this.$confirm('此操作将永久删除该员工信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const tempData = Object.assign({}, row)
+        this.options.forEach((vul) => {
+          if (tempData.jobid === vul.name) {
+            tempData.jobid = vul.id
+          }
         })
-        this.list.splice(index, 1)
+        this.optionsdept.forEach((vul) => {
+          if (tempData.deptid === vul.name) {
+            tempData.deptid = vul.id
+          }
+        })
+        if (tempData.sex === '男') {
+          tempData.sex = 1
+        } else if (tempData.sex === '女') {
+          tempData.sex = 2
+        }
+        deleteListItem(tempData).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Delete Successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.list.splice(index, 1)
+        })
+      })
+    },
+    deleteFileOrDirectory() {
+      this.$confirm('此操作将永久删除该员工信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.sels.forEach((vau) => {
+          this.options.forEach((vul) => {
+            if (vau.jobid === vul.name) {
+              vau.jobid = vul.id
+            }
+          })
+          this.optionsdept.forEach((vul) => {
+            if (vau.deptid === vul.name) {
+              vau.deptid = vul.id
+            }
+          })
+          if (vau.sex === '男') {
+            vau.sex = 1
+          } else if (vau.sex === '女') {
+            vau.sex = 2
+          }
+          deleteListItem(vau).then(() => {
+            this.$notify({
+              title: 'Success',
+              message: 'Delete Successfully',
+              type: 'success',
+              duration: 2000
+            })
+            // this.list.splice(index, 1)
+          })
+        })
+        this.reload()
+        console.log('删除成功')
       })
     },
     getList() {

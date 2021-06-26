@@ -51,4 +51,19 @@ public class TestController {
     public HashMap<String, Object> deleteListItem(@RequestBody TestTemp data) {
         return testService.deleteListItemFunc(data);
     }
+
+    @CrossOrigin
+    @PostMapping(value = "/apiTestNormal")
+    @ResponseBody
+    public HashMap<String, Object> apiTestNormal() {
+        return testService.apiTestNormalFunc();
+    }
+
+    @RequiresPermissions("user:admin")
+    @CrossOrigin
+    @PostMapping(value = "/apiTestAdmin")
+    @ResponseBody
+    public HashMap<String, Object> apiTestAdmin() {
+        return testService.apiTestAdminFunc();
+    }
 }

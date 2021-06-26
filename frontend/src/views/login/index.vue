@@ -43,10 +43,6 @@
         <el-checkbox v-model="checked" class="remeberPwd">记住密码</el-checkbox><p></p>
         <el-button :loading="loading" type="primary" style="width:48%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
         <el-button :loading="loading" type="primary" style="width:48%;margin-bottom:30px;" @click="dialogVisible = true">刷脸</el-button>
-        <div class="tips">
-          <span style="margin-right:20px;">username: admin</span>
-          <span> password: 111111</span>
-        </div>
       </el-form>
     </div>
     <el-dialog
@@ -71,7 +67,6 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import { faceLogin } from '@/api/face'
 
 export default {
   name: 'Login',
@@ -100,9 +95,10 @@ export default {
         id: 0,
         base64: ''
       },
+
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -215,15 +211,8 @@ export default {
       // eslint-disable-next-line no-unused-vars
       const convas = document.querySelector('#canvas') //
       const video = document.querySelector('#video')
-      // const audio = document.querySelector('audio')
-      const img = document.querySelector('#img')
-      const btn = document.querySelector('button')
-      const context = canvas.getContext('2d')
-      const width = 320 // 视频和canvas的宽度
-      const height = 0 //
-      const streaming = false // 是否开始捕获媒体
       // 老的浏览器可能根本没有实现 mediaDevices，所以我们可以先设置一个空的对象
-      if (navigator.mediaDevices == undefined) {
+      if (navigator.mediaDevices === undefined) {
         navigator.mediaDevices = {}
       }
       // 获取用户媒体,包含视频和音频

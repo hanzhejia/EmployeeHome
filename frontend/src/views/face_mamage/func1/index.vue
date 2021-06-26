@@ -1,15 +1,5 @@
 <template>
   <div class="func1-container">
-    <article>
-      <template>
-        <div>
-          摄像头启动需要权限(有延时)，
-          未注册的扫脸注册，
-          已注册的扫脸更新。
-        </div>
-      </template>
-    </article>
-
     <div>
       <el-table
         v-if="this.$store.getters.roles[0] === 'admin'"
@@ -136,7 +126,7 @@ export default {
       findface: [],
       total: 0,
       listQuery: {
-        page: 5,
+        page: 1,
         limit: 10
       },
       input1: '',
@@ -197,7 +187,7 @@ export default {
         this.tableData = this.list
         this.curData = this.tableData.slice(0, 10)
         // eslint-disable-next-line eqeqeq
-        if (this.$store.getters.roles[0] === 'editor') {
+        if (this.$store.getters.roles[0] === 'normal') {
           for (var i in this.tableData) {
             if (this.tableData[i].username === this.$store.getters.name) {
               this.userData.push(this.tableData[i])
@@ -251,7 +241,7 @@ export default {
       const width = 320
       const height = 0 //
       const streaming = false
-      if (navigator.mediaDevices == undefined) {
+      if (navigator.mediaDevices === undefined) {
         navigator.mediaDevices = {}
       }
       // 获取用户媒体,包含视频和音频
