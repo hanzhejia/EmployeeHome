@@ -366,30 +366,36 @@ export default {
       })
     },
     handleDelete(index, row) {
-      const tempData = Object.assign({}, row)
-      this.options.forEach((vul) => {
-        if (tempData.jobid === vul.name) {
-          tempData.jobid = vul.id
-        }
-      })
-      this.optionsdept.forEach((vul) => {
-        if (tempData.deptid === vul.name) {
-          tempData.deptid = vul.id
-        }
-      })
-      if (tempData.sex === '男') {
-        tempData.sex = 1
-      } else if (tempData.sex === '女') {
-        tempData.sex = 2
-      }
-      deleteListItem(tempData).then(() => {
-        this.$notify({
-          title: 'Success',
-          message: 'Delete Successfully',
-          type: 'success',
-          duration: 2000
+      this.$confirm('此操作将永久删除该员工信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        const tempData = Object.assign({}, row)
+        this.options.forEach((vul) => {
+          if (tempData.jobid === vul.name) {
+            tempData.jobid = vul.id
+          }
         })
-        this.list.splice(index, 1)
+        this.optionsdept.forEach((vul) => {
+          if (tempData.deptid === vul.name) {
+            tempData.deptid = vul.id
+          }
+        })
+        if (tempData.sex === '男') {
+          tempData.sex = 1
+        } else if (tempData.sex === '女') {
+          tempData.sex = 2
+        }
+        deleteListItem(tempData).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Delete Successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.list.splice(index, 1)
+        })
       })
     },
     deleteFileOrDirectory() {
