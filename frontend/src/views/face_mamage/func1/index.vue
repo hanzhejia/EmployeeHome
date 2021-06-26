@@ -1,15 +1,5 @@
 <template>
   <div class="func1-container">
-    <article>
-      <template>
-        <div>
-          摄像头启动需要权限(有延时)，
-          未注册的扫脸注册，
-          已注册的扫脸更新。
-        </div>
-      </template>
-    </article>
-
     <div>
       <el-table
         v-if="this.$store.getters.roles[0] === 'admin'"
