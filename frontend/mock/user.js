@@ -36,7 +36,7 @@ module.exports = [
       if (!token) {
         return {
           code: 60204,
-          message: 'Account and password are incorrect.'
+          message: 'Account and password are incorrect.mock'
         }
       }
 

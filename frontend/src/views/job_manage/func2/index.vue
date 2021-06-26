@@ -64,13 +64,23 @@ export default {
       this.temp.ID = parseInt(Math.random() * 100) + 1024 // mock a id
       this.temp.NAME = this.textarea2
       this.temp.REMAKE = this.textarea1
-      createListItem(this.temp).then(() => {
-        this.$notify({
-          title: 'Success',
-          message: 'Created Successfully',
-          type: 'success',
-          duration: 2000
-        })
+      createListItem(this.temp).then(response => {
+        if(response.data=='sb'){
+          this.$notify({
+            title: 'Success',
+            message: 'Created Successfully',
+            type: 'success',
+            duration: 2000
+          })}
+        else {
+          this.$notify({
+            title: 'Success',
+            message: '职位重复无法创建',
+            type: 'success',
+            duration: 2000
+          })
+        }
+        console.log(response.data)
         this.textarea1=''
         this.textarea2=''
       })

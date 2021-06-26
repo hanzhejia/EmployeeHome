@@ -40,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         response.put("code",60204);
-        response.put("message","Account and password are incorrect.");
+        //response.put("message","Account and password are incorrect.1");
         return response;
     }
 
@@ -80,7 +80,7 @@ public class LoginServiceImpl implements LoginService {
             response.put("data","success");
             return response;
         }
-        response.put("code",10000);
+        response.put("code",20001);
         response.put("data","failse");
         return response;
 
