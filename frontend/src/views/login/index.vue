@@ -46,7 +46,7 @@
       </el-form>
     </div>
     <el-dialog
-      title="请正对屏幕"
+      title="请等待摄像头开启,保持人脸在捕捉范围中央"
       :visible.sync="dialogVisible"
       width="50%"
       @opened="opening"
@@ -59,7 +59,7 @@
         <canvas v-show="false" id="canvas" />
       </section>
       <section><img v-show="false" id="img" src="" alt=""></section>
-      <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;tackcapture()">登录</el-button>
+      <el-button type="primary" class="func1-facelog" @click="tackcapture();dialogVisible = false;">登录</el-button>
       <!--        </span>-->
     </el-dialog>
   </div>

@@ -91,8 +91,8 @@ public class FaceServiceImpl implements FaceService {
 
         System.out.println("local i");
         System.out.println(i);
-        UserItem uitem =userRepository.findById(listItems.get(i).getId());
-        if(uitem!=null && i<listItems.size()){
+        if(i<listItems.size()){
+            UserItem uitem =userRepository.findById(listItems.get(i).getId());
             HashMap<String, Object> token = new HashMap<>();
             String token_str = JwtUtil.sign(uitem.getLoginname(), uitem.getPassword());
             redisTemplate.opsForValue().set(token_str,token_str, expireTime*2/100, TimeUnit.SECONDS);
@@ -101,9 +101,11 @@ public class FaceServiceImpl implements FaceService {
             response.put("data",token);
             return response;
         }
-        response.put("code",60204);
-        response.put("message","Account and password are incorrect.");
-        return response;
+        else {
+            response.put("code",60204);
+            response.put("message", "抱歉，人脸未识别");
+            return response;
+        }
     }
     @Override
     public HashMap<String, Object> addFace(Face nowbase64) throws JSONException {
