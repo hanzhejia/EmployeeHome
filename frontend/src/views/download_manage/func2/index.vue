@@ -44,13 +44,14 @@
 </template>
 
 <script>
-import { httphost } from '@/utils/global'
+import { httphost_baseURL, httphost_upload } from '@/utils/global'
 
 export default {
   name: 'Func2',
   data() {
     return {
-      uploadUrl: httphost,
+      uploadUrl: httphost_upload,
+      baseURL: httphost_baseURL,
       loading: false,
       fileList: [],
       form: {

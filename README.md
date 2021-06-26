@@ -1,5 +1,10 @@
 # EmployeeHome
 hahaha
+
+![avatar](./Image/dashboard.jpg)
+
+![avatar](./Image/dashboard2.jpg)
+# 一、Git流程备份（开发中...）
 ## 0、管理者
 - `git branch develop`
 - `git push -u origin develop`

@@ -1,7 +1,7 @@
 <template>
   <div class="func1-container">
     <el-form :inline="true" class="demo-form-inline">
-      <el-form-item>
+      <el-form-item label="搜索">
         <template>
           <el-input v-model="search" placeholder="请输入内容" class="input-with-select">
             <el-select slot="prepend" v-model="select" placeholder="请选择">
@@ -20,7 +20,7 @@
       </el-form-item>
       <el-form-item style="float: right">
         <template v-if="checkPermission(['admin'])">
-          <el-button type="danger" @click="dialogFormVisible2 = true">上传文档</el-button>
+          <el-button type="primary" @click="dialogFormVisible2 = true">上传文档<i class="el-icon-upload el-icon--right" /></el-button>
         </template>
       </el-form-item>
     </el-form>
@@ -45,7 +45,7 @@
           >
             <a
               slot="reference"
-              :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName"
+              :href="baseURL + '/file/' + scope.row.type + '/' + scope.row.realName"
               class="el-link--primary"
               style="word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color: #1890ff;font-size: 13px;"
               target="_blank"
@@ -65,7 +65,11 @@
 
       <el-table-column align="right" label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" :href="'http://localhost:8088' + '/file/' + scope.row.type + '/' + scope.row.realName">下载</el-button>
+          <template>
+            <el-link target="_blank" :href="baseURL + '/file/' + scope.row.type + '/' + scope.row.realName" :underline="false" style="right: 10px;bottom: 1px">
+              <el-button size="mini" type="warning">下载</el-button>
+            </el-link>
+          </template>
           <template v-if="checkPermission(['admin'])">
             <el-button size="mini" type="danger" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           </template>
@@ -78,13 +82,13 @@
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
-    <el-dialog title="编辑" :visible.sync="dialogFormVisible">
+    <el-dialog title="编辑" :visible.sync="dialogFormVisible" width="550px">
       <el-form ref="dataForm" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
         <el-form-item label="文件名" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
         <el-form-item label="创建时间" prop="createTime">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="Please pick a date" />
+          <el-date-picker v-model="temp.createTime" style="width:330px" type="datetime" placeholder="Please pick a date" />
         </el-form-item>
         <el-form-item label="创建人" prop="createBy">
           <el-input v-model="temp.createBy" />
@@ -92,19 +96,20 @@
         <el-form-item label="描述" prop="detail">
           <el-input v-model="temp.detail" />
         </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">提交</el-button>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+        </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">提交</el-button>
-      </div>
     </el-dialog>
-    <el-dialog title="添加" :visible.sync="dialogFormVisible2">
+    <el-dialog title="上传文档" :visible.sync="dialogFormVisible2" width="550px">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="文档标题">
           <el-input
             v-model="form.name"
             maxlength="10"
             show-word-limit
+            style="width:360px"
           />
         </el-form-item>
         <el-form-item label="文档描述">
@@ -114,6 +119,7 @@
             show-word-limit
             type="textarea"
             :autosize="{ minRows: 6, maxRows: 9}"
+            style="width:360px"
           />
         </el-form-item>
         <el-form-item label="文档选择">
@@ -136,7 +142,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="loading" @click="onSubmit">提交</el-button>
-          <el-button @click="onReset">重置</el-button>
+          <el-button type="danger" @click="onReset">重置</el-button>
         </el-form-item>
       </el-form>
     </el-dialog>
@@ -149,7 +155,7 @@ import checkPermission from '@/utils/permission' // 权限判断函数
 
 import { fetchList, fetchListItem, createListItem, updateListItem, deleteList } from '@/api/download_manage'
 import Pagination from '@/components/Pagination'
-import { httphost } from '@/utils/global'
+import { httphost_baseURL, httphost_upload } from '@/utils/global'
 
 export default {
   name: 'Func1',
@@ -202,7 +208,8 @@ export default {
 
       multipleSelection: [],
 
-      uploadUrl: httphost,
+      uploadUrl: httphost_upload,
+      baseURL: httphost_baseURL,
       loading: false,
       fileList: [],
       form: {
@@ -349,13 +356,14 @@ export default {
 
     beforeUpload(file) {
       let isLt2M = true
-      isLt2M = file.size / 1024 / 1024 < 1
+      isLt2M = file.size / 1024 / 1024 < 20
       if (!isLt2M) {
-        this.$message.error('上传文件大小不能超过 1MB!')
+        this.$message.error('上传文件大小不能超过 20MB!')
       }
       return isLt2M
     },
     handleSuccess(response, file, fileList) {
+      console.log(response.data)
       this.list.unshift(response.data)
       this.onReset()
       this.dialogFormVisible2 = false

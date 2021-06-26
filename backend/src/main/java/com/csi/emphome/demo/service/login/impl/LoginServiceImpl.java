@@ -58,7 +58,7 @@ public class LoginServiceImpl implements LoginService {
         }
         user.put("roles", roles);
         user.put("introduction", "I am NB");
-        user.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        user.put("avatar", "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png");
         user.put("name", loginTemp.getUsername());
 
         HashMap<String, Object> response=new HashMap<>();
