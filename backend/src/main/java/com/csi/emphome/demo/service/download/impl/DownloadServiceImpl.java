@@ -164,12 +164,12 @@ public class DownloadServiceImpl implements DownloadService {
     public HashMap<String, Object> deleteListFunc(List<DownloadTemp> data) {
         HashMap<String, Object> response = new HashMap<>();
 
-        for(int i=0; i<data.size(); i++){
-            DownloadItem tag_item = downloadRepository.findByStorageId(data.get(i).getStorageId());
-            if (tag_item != null){
+        for (DownloadTemp datum : data) {
+            DownloadItem tag_item = downloadRepository.findByStorageId(datum.getStorageId());
+            if (tag_item != null) {
                 FileUtil.del(tag_item.getPath());
                 downloadRepository.delete(tag_item);
-            }else {
+            } else {
                 response.put("code", 20001);
                 response.put("data", "failed");
                 return response;
