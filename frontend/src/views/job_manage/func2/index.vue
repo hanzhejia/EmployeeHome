@@ -68,7 +68,7 @@ export default {
         if(response.data=='sb'){
           this.$notify({
             title: 'Success',
-            message: 'Created Successfully',
+            message: '创建成功',
             type: 'success',
             duration: 2000
           })}

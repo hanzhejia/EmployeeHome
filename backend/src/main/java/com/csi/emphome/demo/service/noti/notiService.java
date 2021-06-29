@@ -13,4 +13,5 @@ HashMap<String, Object> fetchListFunc(TestListQuery data);
     HashMap<String, Object> createListItemFunc(noti data);
     HashMap<String, Object> updateListItemFunc(noti data);
     HashMap<String, Object> deleteListItemFunc(noti data);
+    HashMap<String, Object> deleteallListItemFunc(noti[] data);
 }

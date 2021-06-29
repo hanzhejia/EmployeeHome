@@ -33,13 +33,13 @@
           data=>!input1 || data.tiitle.toLowerCase().includes(input1.toLowerCase()))"
         border
         style="top: 0px"
+        @selection-change="selsChange"
       >
-<!--        <el-table-column-->
-<!--          fixed-->
-<!--          prop="careTime"-->
-<!--          label="日期"-->
-<!--          width="150"-->
-<!--        />-->
+        <el-table-column
+          type="selection"
+          width="55"
+          v-model="picked"
+        />
         <el-table-column
           prop="tiitle"
           label="公告名称"
@@ -122,12 +122,17 @@
         </div>
 
       </div>
+    <div style="margin-top: 20px">
+      <el-button @click="deletall()">删除选中的所有数据</el-button>
     </div>
+    </div>
+
 </template>
 <script>
 import axios from 'axios'
 import Nav from './sb.vue'
-import { fetchList } from '@/api/notice_manage'
+import { fetchList , deleteallListItem } from '@/api/notice_manage'
+
 
 export default {
   components: {
@@ -168,13 +173,31 @@ export default {
     this.getList()
   },
   methods: {
+    selsChange(val) {
+      this.sels = val;
+      console.log(this.sels)
+    },
+    deletall() {
+      console.log(this.sels)
+      deleteallListItem(this.sels).then(() => {
+        console.log('sdsdd')
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.getList()
+      })
+      // this.handleDelete(0,this.sels[i])
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val
       this.curData = this.midData.slice(0,this.size)
     },
     getList() {
-    this.buttonid=this.$store.getters.roles
+    this.buttonid = this.$store.getters.roles
       // this.buttonid=2
       console.log('sbsssssssssssssddd')
       this.listLoading = true
@@ -183,10 +206,12 @@ export default {
         console.log(response)
         this.list = response.data.items
         this.total = response.data.total
+
         this.tableDatasize = this.total
         this.tableData = this.list
         for(var i=0;i<this.tableData.length;i++){
           this.tableData[i].careTime=this.datetimeFormat(this.tableData[i].careTime)
+          this.tableData[i].userid='admin'
         }
         this.midData = this.tableData
         console.log(this.tableData)

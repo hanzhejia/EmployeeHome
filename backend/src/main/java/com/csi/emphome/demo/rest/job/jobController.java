@@ -61,4 +61,14 @@ public class jobController {
     public HashMap<String, Object> deleteListItem(@RequestBody job data) {
         return jobService.deleteListItemFunc(data);
     }
+
+    @CrossOrigin
+    @PostMapping(value = "/deletell")
+    @ResponseBody
+    public HashMap<String, Object> deleteListItem(@RequestBody job[] data) {
+        System.out.println("sb");
+        System.out.println(data[0].toString());
+        return jobService.deleteallListItemFunc(data);
+    }
+
 }

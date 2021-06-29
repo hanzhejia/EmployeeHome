@@ -47,3 +47,11 @@ export function fetchListItem(date) {
     params: { id }
   })
 }
+export function deleteallListItem(data) {
+  console.log('popop')
+  return request({
+    url: `/vue-admin-template/noti/deleteall`,
+    method: 'post',
+    data
+  })
+}
