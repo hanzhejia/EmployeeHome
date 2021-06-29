@@ -219,8 +219,9 @@ export default {
     },
     delNowFace() {
       faceDel(this.delFace)
-      window.location.reload(true)
-      location.reload(true)
+      setTimeout(() => {
+        window.location.reload()
+      }, 800)
     },
     overFlod() {
       window.location.reload(true)
@@ -277,8 +278,7 @@ export default {
       }
       setTimeout(() => {
         this.listLoading = false
-        window.location.reload(true)
-        location.reload(true)
+        window.location.reload()
       }, 800)
     },
     close() {
