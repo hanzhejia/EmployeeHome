@@ -279,7 +279,7 @@ export default {
         this.listLoading = false
         window.location.reload(true)
         location.reload(true)
-      }, 500)
+      }, 800)
     },
     close() {
       const video = document.querySelector('#video')
