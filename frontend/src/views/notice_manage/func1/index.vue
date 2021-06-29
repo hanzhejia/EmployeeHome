@@ -1,5 +1,5 @@
 
-<template>
+<template >
   <div style="width: 100%">
     <el-row style="width: 100%">
       <p style="top: 10px ;font-size: 18px ;color:#303133;position: absolute">公告标题</p>
@@ -25,20 +25,20 @@
     </el-row>
     <el-row style="position: relative;left: 850px;top: -13px">
       <el-button size="small" type="primary" @click="searchs('sb')" >搜索</el-button>
-      <el-button size="small" type="success">删除</el-button>
+
     </el-row>
     <div>
       <el-table
         :data="curData.filter(
-          data=>!input1 || data.content.toLowerCase().includes(input1.toLowerCase()))"
+          data=>!input1 || data.tiitle.toLowerCase().includes(input1.toLowerCase()))"
         border
         style="top: 0px"
+        @selection-change="selsChange"
       >
         <el-table-column
-          fixed
-          prop="careTime"
-          label="日期"
-          width="150"
+          type="selection"
+          width="55"
+          v-model="picked"
         />
         <el-table-column
           prop="tiitle"
@@ -73,6 +73,7 @@
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="sb(scope.row)">查看</el-button>
             <el-dialog
+              @closeDialog="close"
               :modal-append-to-body="false"
               :title="sbs"
               :visible.sync="centerDialogVisible"
@@ -85,13 +86,14 @@
                 <el-button type="primary" @click="centerDialogVisible = false">确 定</el-button>
               </span>
             </el-dialog>
-            <el-button v-if=" buttonid==2 " type="text" size="small" @click="edit(scope.row)">编辑</el-button>
+            <el-button v-if=" buttonid=='admin'" type="text" size="small" @click="edit(scope.row)">编辑</el-button>
             <el-dialog
               :title="neww"
               :modal-append-to-body="false"
               :visible.sync="dialogVisible"
               width="50%"
               center
+              :before-close="handleClose"
             >
               <Nav :text="''+infos" :tittle="''+info" :tempid="''+tempid" />
             </el-dialog>
@@ -118,22 +120,19 @@
           </el-pagination>
 
         </div>
-<!--        <el-pagination-->
-<!--          @size-change="handleSizeChange"-->
-<!--          @current-change="handleCurrentChange"-->
-<!--          :current-page="currentPage4"-->
-<!--          :page-sizes="[100, 200, 300, 400]"-->
-<!--          :page-size="100"-->
-<!--          layout="total, sizes, prev, pager, next, jumper"-->
-<!--          :total="400">-->
-<!--        </el-pagination>-->
+
       </div>
+    <div style="margin-top: 20px">
+      <el-button @click="deletall()">删除选中的所有数据</el-button>
     </div>
+    </div>
+
 </template>
 <script>
 import axios from 'axios'
 import Nav from './sb.vue'
-import { fetchList } from '@/api/notice_manage'
+import { fetchList , deleteallListItem } from '@/api/notice_manage'
+
 
 export default {
   components: {
@@ -141,7 +140,7 @@ export default {
   },
   data() {
     return {
-      buttonid:1,
+      buttonid:'admin',
       list: null,
       listLoading: true,
       tempid:'',
@@ -174,13 +173,32 @@ export default {
     this.getList()
   },
   methods: {
+    selsChange(val) {
+      this.sels = val;
+      console.log(this.sels)
+    },
+    deletall() {
+      console.log(this.sels)
+      deleteallListItem(this.sels).then(() => {
+        console.log('sdsdd')
+        this.$notify({
+          title: '成功',
+          message: '删除成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.getList()
+      })
+      // this.handleDelete(0,this.sels[i])
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.size = val
       this.curData = this.midData.slice(0,this.size)
     },
     getList() {
-      this.buttonid=2
+    this.buttonid = this.$store.getters.roles
+      // this.buttonid=2
       console.log('sbsssssssssssssddd')
       this.listLoading = true
       console.log(this.listQuery)
@@ -188,11 +206,12 @@ export default {
         console.log(response)
         this.list = response.data.items
         this.total = response.data.total
-        console.log('sssssssssssssssssssssssssssssssssssssssssda1111111111111111111111')
+
         this.tableDatasize = this.total
         this.tableData = this.list
         for(var i=0;i<this.tableData.length;i++){
           this.tableData[i].careTime=this.datetimeFormat(this.tableData[i].careTime)
+          this.tableData[i].userid='admin'
         }
         this.midData = this.tableData
         console.log(this.tableData)
@@ -250,13 +269,15 @@ export default {
       this.info = po.content
     },
     edit(po) {
-      console.log(po)
-      console.log('sp')
       this.info = po.content
       this.infos = po.tiitle
       this.tempid = po.id
       console.log( this.tempid)
       this.dialogVisible = true
+    },
+    handleClose(done) {
+          done()
+      this.getList()
     },
     changePage(page){
       this.curData = this.midData.slice((page-1)*this.size,(page-1)*this.size+this.size)

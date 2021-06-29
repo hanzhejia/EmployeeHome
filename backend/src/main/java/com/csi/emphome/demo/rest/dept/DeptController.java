@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/vue-admin-template/department")
@@ -52,7 +53,7 @@ public class DeptController {
     @CrossOrigin
     @PostMapping(value = "/delete")
     @ResponseBody
-    public HashMap<String, Object> deleteListItem(@RequestBody DeptTemp data) {
+    public HashMap<String, Object> deleteListItem(@RequestBody List<DeptTemp> data) {
         return deptService.deleteListItemFunc(data);
     }
 
@@ -61,5 +62,12 @@ public class DeptController {
     @ResponseBody
     public HashMap<String, Object> updateListItem(@RequestBody DeptTemp data) {
         return deptService.updateListItemFunc(data);
+    }
+
+    @CrossOrigin
+    @PostMapping(value = "/check")
+    @ResponseBody
+    public HashMap<String, Object> checkSameName(@RequestBody DeptTemp data) {
+        return deptService.checkSameNameFunc(data);
     }
 }

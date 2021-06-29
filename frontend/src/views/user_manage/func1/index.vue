@@ -29,6 +29,7 @@
         :model="temp"
       >
 
+        <el-table-column label="ID" prop="id"/>
         <el-table-column label="登录名" prop="loginname"/>
         <el-table-column v-if="checkPermission(['admin'])" label="密码" prop="password"/>
         <el-table-column label="用户名" prop="username"/>
@@ -88,12 +89,12 @@ import {
   deleteListItem,
   fetchList,
   updateListItem,
-  fetchListItem, createListItem
+  fetchListItem,
 } from '@/api/user_manage'
 import Pagination from '@/components/Pagination'// secondary package based on el-pagination
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission'
-/*import { fetchListItem } from '@/api/user_manage'*/
+
 
 export default {
   name: 'Func1',
@@ -132,14 +133,6 @@ export default {
       dialogFormVisible: false, // 弹窗默认关闭
       dialogStatus: '',
       downloadLoading: false,
-      // 弹出层的表单
-     /* temp: {
-        username: '',
-        loginname: '',
-        password: '',
-        status: '管理员'
-      },*/
-
       formLabelWidth: '50px',
       /*搜索栏*/
     /*  searchform: {
@@ -218,24 +211,6 @@ export default {
             })
           }})
       },
-
-      /*搜索用户*/
-      /* search(){
-       /!* this.$refs['searcheform'].validate((valid) => {
-          if (valid) {*!/
-            const tempData = Object.assign({}, this.searcheform)
-            if (tempData.status === '') { tempData.status = 0 }
-            searchdateListItem(tempData, this.listQuery).then(response => {
-              this.list = response.data.items
-              this.list.forEach((val) => {
-                if(val.status === 1)
-                { val.status = '管理员'}
-                else if(val.status === 2){
-                  val.status = '普通用户'
-                }
-              })
-      })
-      },*/
       handleSearch(index, row) {
         this.listLoading = true
         this.searchData = {
@@ -253,16 +228,22 @@ export default {
       },
       /*删除用户*/
       handleDelete(index, row) {
-        console.log("delete"),
-          deleteListItem(row).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: 'Delete Successfully',
-              type: 'success',
-              duration: 2000
+        this.$confirm('此操作将永久删除该用户信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          console.log("delete"),
+            deleteListItem(row).then(() => {
+              this.$notify({
+                title: 'Success',
+                message: 'Delete Successfully',
+                type: 'success',
+                duration: 2000
+              })
+              this.list.splice(index, 1)
             })
-            this.list.splice(index, 1)
-          })
+        })
       },
     }
 
@@ -275,10 +256,10 @@ export default {
   &-container {
     margin: 30px;
   }
-/*  &-text {
+  &-text {
     font-size: 30px;
     line-height: 46px;
-  }*/
+  }
 
 }
 </style>

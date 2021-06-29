@@ -471,38 +471,44 @@ export default {
       })
     },
     updateData() {
-      this.$refs['temp'].validate((valid) => {
-        if (valid) {
-          const tempData = Object.assign({}, this.temp)
-          console.log(tempData)
-          this.options.forEach((vul) => {
-            if (tempData.jobid === vul.name) {
-              tempData.jobid = vul.id
-            }
-          })
-          this.optionsdept.forEach((vul) => {
-            if (tempData.deptid === vul.name) {
-              tempData.deptid = vul.id
-            }
-          })
-          if (tempData.sex === '男') {
-            tempData.sex = 1
-          } else if (tempData.sex === '女') {
-            tempData.sex = 2
-          }
-          tempData.sex = parseInt(tempData.sex)
-          updateListItem(tempData).then(() => {
-            const index = this.list.findIndex(v => v.card === this.temp.card)
-            this.list.splice(index, 1, this.temp)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: 'Success',
-              message: 'Update Successfully',
-              type: 'success',
-              duration: 2000
+      this.$confirm('此操作将永久修改该员工信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$refs['temp'].validate((valid) => {
+          if (valid) {
+            const tempData = Object.assign({}, this.temp)
+            console.log(tempData)
+            this.options.forEach((vul) => {
+              if (tempData.jobid === vul.name) {
+                tempData.jobid = vul.id
+              }
             })
-          })
-        }
+            this.optionsdept.forEach((vul) => {
+              if (tempData.deptid === vul.name) {
+                tempData.deptid = vul.id
+              }
+            })
+            if (tempData.sex === '男') {
+              tempData.sex = 1
+            } else if (tempData.sex === '女') {
+              tempData.sex = 2
+            }
+            tempData.sex = parseInt(tempData.sex)
+            updateListItem(tempData).then(() => {
+              const index = this.list.findIndex(v => v.card === this.temp.card)
+              this.list.splice(index, 1, this.temp)
+              this.dialogFormVisible = false
+              this.$notify({
+                title: 'Success',
+                message: 'Update Successfully',
+                type: 'success',
+                duration: 2000
+              })
+            })
+          }
+        })
       })
     },
 

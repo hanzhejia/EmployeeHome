@@ -47,17 +47,24 @@ public class jobServiceImpl implements jobService {
         String resData = "failed";
         System.out.println(data);
         job tag_item = jobRepository.findById(data.getID());
+        job tag_name = jobRepository.findByNAME(data.getNAME());
+        System.out.println(tag_name);
+        System.out.println("sdasd");
         System.out.println(tag_item);
-        if (tag_item == null){
+        HashMap<String, Object> response = new HashMap<>();
+        if (tag_item == null && tag_name == null){
             System.out.println(data);
             job temp_item = new job(data.getID(),data.getNAME(),data.getREMAKE());
             jobRepository.save(temp_item);
             resCode = 20000;
             resData = "success";
+            response.put("code",20000);
+            response.put("data","sb");
+            return response;
         }
-        HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
-        response.put("data","sb");
+        response.put("data","sbs");
+        System.out.println("1");
         return response;
     }
 //    @Override
@@ -112,6 +119,26 @@ public class jobServiceImpl implements jobService {
             jobRepository.delete(tag_item);
             resCode = 20000;
             resData = "success";
+        }
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",resCode);
+        response.put("data",resData);
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> deleteallListItemFunc(job[] data) {
+        System.out.println("sddddddddddddadsadsadsa");
+        int resCode = 20001;
+        String resData = "failed";
+        for(int i=0;i<data.length;i++){
+        job tag_item = jobRepository.findById(data[i].getID());
+        System.out.println(data[i].getID());
+        if (tag_item != null){
+            jobRepository.delete(tag_item);
+            resCode = 20000;
+            resData = "success";
+        }
         }
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);
