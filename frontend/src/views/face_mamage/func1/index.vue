@@ -235,15 +235,8 @@ export default {
     },
     opening() {
       // eslint-disable-next-line no-unused-vars
-      const convas = document.querySelector('#canvas') //
       const video = document.querySelector('#video')
       // const audio = document.querySelector('audio')
-      const img = document.querySelector('#img')
-      const btn = document.querySelector('button')
-      const context = canvas.getContext('2d')
-      const width = 320
-      const height = 0 //
-      const streaming = false
       if (navigator.mediaDevices === undefined) {
         navigator.mediaDevices = {}
       }
@@ -253,21 +246,15 @@ export default {
         .then((stream) => {
           video.srcObject = stream
           video.play()
-          // audio.srcObject = stream
-          // audio.play()
         })
     },
     tackcapture() {
       this.loading = true
       // 需要判断媒体流是否就绪
-      const convas = document.querySelector('#canvas') //
+      const canvas = document.querySelector('#canvas') //
       const video = document.querySelector('#video')
-      // const audio = document.querySelector('audio')
       const img = document.querySelector('#img')
-      const btn = document.querySelector('button')
       const context = canvas.getContext('2d')
-      const width = 320
-      const height = 0 //
       const streaming = true
       if (streaming) {
         context.drawImage(video, 0, 0, 350, 200)
@@ -293,10 +280,6 @@ export default {
         window.location.reload(true)
         location.reload(true)
       }, 500)
-    },
-    handleClose(done) {
-      close()
-      done()
     },
     close() {
       const video = document.querySelector('#video')
