@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     getList() {
-      console.log('sb11111111111')
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         console.log('sbppppp')
@@ -81,21 +80,14 @@ export default {
       console.log(this.temp)
       createListItem(this.temp).then(() => {
         this.$notify({
-          title: 'Success',
-          message: 'Created Successfully',
+          title: '成功',
+          message: '创建成功',
           type: 'success',
           duration: 2000
         })
       })
-      this.$alert('公告发布成功', '标题', {
-        confirmButtonText: '确定',
-        callback: action => {
-          this.$message({
-            type: 'info',
-            message: `action: ${action}`
-          })
-        }
-      })
+      this.textarea1=''
+      this.textarea2=''
     },
     kong(sb){
       this.textarea1=''

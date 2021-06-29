@@ -1,7 +1,7 @@
 <template>
   <div class="func2-container">
   <el-form ref="form" :rules="rules" :model="form" label-width="80px">
-    <el-form-item label="姓 名：" prop="username">
+    <el-form-item label="用户名：" prop="username">
       <el-col :span="8">
       <el-input width="200px" v-model="form.username" placeholder="请输入用户姓名"></el-input>
       </el-col>

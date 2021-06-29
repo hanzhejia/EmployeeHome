@@ -47,7 +47,7 @@
         </el-table-column>
         <el-table-column label="人脸操作">
           <template slot-scope="data2">
-            <el-button @click="dialogVisible = true; clickid=data2.row.id">扫脸</el-button>
+            <el-button @click="dialogVisible = true; clickid=data2.row.id;onClick()">扫脸</el-button>
           </template>
         </el-table-column>
         <el-table-column label="注销人脸">
@@ -62,10 +62,10 @@
         width="30%"
       >
         <el-button @click="dialogVisibleDel = false;">取消</el-button>
-        <el-button type="primary" @click="dialogVisibleDel = false;delNowFace();overFlod();">确定</el-button>
+        <el-button type="primary" @click="dialogVisibleDel = false;delNowFace();">确定</el-button>
       </el-dialog>
       <el-dialog
-        title="请正对屏幕"
+        title="请等待摄像头开启,保持人脸在捕捉范围中央"
         :visible.sync="dialogVisible"
         width="50%"
         @opened="opening"
@@ -78,7 +78,7 @@
           <canvas v-show="false" id="canvas" />
         </section>
         <section><img v-show="false" id="img" src="" alt=""></section>
-        <el-button type="primary" class="func1-facelog" @click="dialogVisible = false;tackcapture()">提交</el-button>
+        <el-button :loading="loading" type="primary" class="func1-facelog" @click="tackcapture();dialogVisible = false;">提交</el-button>
       </el-dialog>
     </div>
     <div>
@@ -121,6 +121,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       nowrole: null,
       list: [],
       findface: [],
@@ -199,7 +200,7 @@ export default {
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
-        }, 100)
+        }, 1)
       })
     },
     getFace() {
@@ -213,14 +214,16 @@ export default {
         console.log(this.findface)
         setTimeout(() => {
           this.listLoading = false
-        }, 1000)
+        }, 1)
       })
     },
     delNowFace() {
       faceDel(this.delFace)
+      window.location.reload(true)
+      location.reload(true)
     },
     overFlod() {
-      location.reload()
+      window.location.reload(true)
     },
     ifFace(data) {
       for (var i in this.findface) {
@@ -255,6 +258,7 @@ export default {
         })
     },
     tackcapture() {
+      this.loading = true
       // 需要判断媒体流是否就绪
       const convas = document.querySelector('#canvas') //
       const video = document.querySelector('#video')
@@ -263,8 +267,8 @@ export default {
       const btn = document.querySelector('button')
       const context = canvas.getContext('2d')
       const width = 320
-      let height = 0 //
-      let streaming = true
+      const height = 0 //
+      const streaming = true
       if (streaming) {
         context.drawImage(video, 0, 0, 350, 200)
         // eslint-disable-next-line no-undef
@@ -278,28 +282,17 @@ export default {
         addFace(this.nowface).then(response => {
           console.log('finish')
           const faceresult = JSON.parse(JSON.stringify(response))
-          console.log(faceresult)
-          setTimeout(() => {
-            this.listLoading = false
-          }, 5000)
+          console.log(faceresult.message)
+          if (faceresult.message === 'fail') {
+            alert('未识别到人脸，请重试')
+          }
         })
       }
-      video.addEventListener(
-        'canplay',
-        function(ev) {
-          if (!streaming) {
-            height = video.videoHeight / (video.videoWidth / width)
-
-            video.setAttribute('width', width)
-            video.setAttribute('height', height)
-            canvas.setAttribute('width', width)
-            canvas.setAttribute('height', height)
-            streaming = true
-          }
-        },
-        false
-      )
-      location.reload()
+      setTimeout(() => {
+        this.listLoading = false
+        window.location.reload(true)
+        location.reload(true)
+      }, 500)
     },
     handleClose(done) {
       close()

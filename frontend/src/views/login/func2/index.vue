@@ -71,12 +71,16 @@ export default {
         if (valid) {
           this.resetForm.username = this.$store.getters.name
           updatePwd(this.resetForm).then(response => {
-            console.log('update', response)
-            window.alert('ok')
-            this.logout()
+            console.log('updateok', response)
+            if (response.data === 'success') {
+              window.alert('ok')
+              this.logout()
+            } else {
+              window.alert('password error')
+            }
           }).catch(response => {
-            console.log('update', response)
-            window.alert('reset some thing!!')
+            console.log('updatenotok', response)
+            window.alert('error')
           })
         }
       })

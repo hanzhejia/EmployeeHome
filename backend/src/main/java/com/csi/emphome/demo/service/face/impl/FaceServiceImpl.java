@@ -91,8 +91,8 @@ public class FaceServiceImpl implements FaceService {
 
         System.out.println("local i");
         System.out.println(i);
-        UserItem uitem =userRepository.findById(listItems.get(i).getId());
-        if(uitem!=null && i<listItems.size()){
+        if(i<listItems.size()){
+            UserItem uitem =userRepository.findById(listItems.get(i).getId());
             HashMap<String, Object> token = new HashMap<>();
             String token_str = JwtUtil.sign(uitem.getLoginname(), uitem.getPassword());
             redisTemplate.opsForValue().set(token_str,token_str, expireTime*2/100, TimeUnit.SECONDS);
@@ -101,18 +101,40 @@ public class FaceServiceImpl implements FaceService {
             response.put("data",token);
             return response;
         }
-        response.put("code",60204);
-        response.put("message","Account and password are incorrect.");
-        return response;
+        else {
+            response.put("code",60204);
+            response.put("message", "抱歉，人脸未识别");
+            return response;
+        }
     }
     @Override
-    public HashMap<String, Object> addFace(Face nowbase64) {
-        faceRepository.save(nowbase64);
-        HashMap<String, Object> response = new HashMap<>();
-        response.put("code",20000);
-        response.put("message","success");
-        response.put("data","add face");
-        return response;
+    public HashMap<String, Object> addFace(Face nowbase64) throws JSONException {
+        AipFace client = new AipFace(BaiduAIPCommon.APP_FACE_ID, BaiduAIPCommon.API_FACE_KEY, BaiduAIPCommon.SECRET_FACE_KEY);
+        String imgStr = nowbase64.getBase64();
+        String imgStr2 = nowbase64.getBase64();
+        MatchRequest req1 = new MatchRequest(imgStr, "BASE64");
+        MatchRequest req2 = new MatchRequest(imgStr2, "BASE64");
+        ArrayList<MatchRequest> reqs = new ArrayList<>();
+        reqs.add(req1);
+        reqs.add(req2);
+        JSONObject res = client.match(reqs);
+        System.out.println("faceres");
+        if(res.get("result") == JSONObject.NULL||res.get("result") == null || res.get("result").toString().equals(""))
+        {
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("code", 20000);
+            response.put("message", "fail");
+            response.put("data", "no face");
+            return response;
+        }
+        else {
+            faceRepository.save(nowbase64);
+            HashMap<String, Object> response = new HashMap<>();
+            response.put("code", 20000);
+            response.put("message", "success");
+            response.put("data", "add face");
+            return response;
+        }
     }
 }
 
