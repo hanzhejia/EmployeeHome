@@ -221,7 +221,7 @@ export default {
       faceDel(this.delFace)
       setTimeout(() => {
         window.location.reload()
-      }, 800)
+      }, 500)
     },
     overFlod() {
       window.location.reload(true)
