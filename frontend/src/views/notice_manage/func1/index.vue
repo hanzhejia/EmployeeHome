@@ -123,7 +123,7 @@
 
       </div>
     <div style="margin-top: 20px">
-      <el-button @click="deletall()">删除选中的所有数据</el-button>
+      <el-button v-if=" buttonid=='admin'" @click="deletall()">删除选中的所有数据</el-button>
     </div>
     </div>
 
@@ -211,7 +211,7 @@ export default {
         this.tableData = this.list
         for(var i=0;i<this.tableData.length;i++){
           this.tableData[i].careTime=this.datetimeFormat(this.tableData[i].careTime)
-          this.tableData[i].userid='admin'
+          // this.tableData[i].userid='admin'
         }
         this.midData = this.tableData
         console.log(this.tableData)
