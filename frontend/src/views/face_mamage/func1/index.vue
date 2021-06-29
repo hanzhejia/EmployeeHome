@@ -220,7 +220,8 @@ export default {
     delNowFace() {
       faceDel(this.delFace)
       setTimeout(() => {
-        window.location.reload()
+        window.location.href = 'http://localhost:8081/face_mamage/func1'
+        // window.location.reload()
       }, 500)
     },
     overFlod() {
@@ -278,7 +279,8 @@ export default {
       }
       setTimeout(() => {
         this.listLoading = false
-        window.location.reload()
+        window.location.href = 'http://localhost:8081/face_mamage/func1'
+        // window.location.reload()
       }, 800)
     },
     close() {
