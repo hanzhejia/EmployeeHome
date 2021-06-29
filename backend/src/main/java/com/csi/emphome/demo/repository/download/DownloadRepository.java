@@ -12,6 +12,7 @@ public interface DownloadRepository extends JpaRepository<DownloadItem,Integer>,
     DownloadItem findByStorageId(int storageId);
     DownloadItem findByRealName(String RealName);
     List<DownloadItem> findAllByRealName(String realName);
+    List<DownloadItem> findAllByName(String Name);
     List<DownloadItem> findAllByCreateBy(String createBy);
     List<DownloadItem> findAllByDetail(String detail);
 }
