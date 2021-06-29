@@ -80,8 +80,8 @@ public class LoginServiceImpl implements LoginService {
             response.put("data","success");
             return response;
         }
-        response.put("code",20001);
-        response.put("data","failse");
+        response.put("code",20000);
+        response.put("data","false");
         return response;
 
     }
