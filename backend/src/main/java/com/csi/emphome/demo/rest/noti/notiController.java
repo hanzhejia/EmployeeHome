@@ -111,4 +111,15 @@ public class notiController {
         System.out.println("Sssssssssssssssssssssssss");
         return notiService.deleteListItemFunc(data);
     }
+    @CrossOrigin
+    @PostMapping(value = "/deleteall")
+    @ResponseBody
+    public HashMap<String, Object> deleteallListItem(@RequestBody noti[] data) {
+        System.out.println(data[0].toString());
+        for(int i=0;i<data.length;i++){
+        LocalDate date = LocalDate.now();
+        data[i].setCaredate(Date.valueOf(date));}
+        System.out.println("Sssssssssssssssssssssssss");
+        return notiService.deleteallListItemFunc(data);
+    }
 }

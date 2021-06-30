@@ -44,9 +44,19 @@ export function updateListItem(data) {
   })
 }
 export function deleteListItem(data) {
+  console.log(data)
   return request({
     url: `/vue-admin-template/job/delete`,
     method: 'post',
     data
   })
 }
+export function deleteallListItem(data) {
+  console.log('popop')
+  return request({
+    url: `/vue-admin-template/job/deletell`,
+    method: 'post',
+    data
+  })
+}
+

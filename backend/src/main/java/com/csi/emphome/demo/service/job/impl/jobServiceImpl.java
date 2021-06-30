@@ -67,25 +67,7 @@ public class jobServiceImpl implements jobService {
         System.out.println("1");
         return response;
     }
-//    @Override
-//    public HashMap<String, Object> createListItemFunc(job data) {
-//        int resCode = 20001;
-//        String resData = "failed";
-//        System.out.println(data);
-//        job tag_item = jobRepository.findById(data.getId());
-//        System.out.println(tag_item);
-//        if (tag_item == null){
-//            System.out.println(data);
-//            job temp_item = new job(data.getId(),data.getNAME(),data.getREMAKE());
-//            jobRepository.save(temp_item);
-//            resCode = 20000;
-//            resData = "success";
-//        }
-//        HashMap<String, Object> response = new HashMap<>();
-//        response.put("code",20000);
-//        response.put("data","sb");
-//        return response;
-//    }
+
 
     @Override
     public HashMap<String, Object> updateListItemFunc(job data) {
@@ -119,6 +101,26 @@ public class jobServiceImpl implements jobService {
             jobRepository.delete(tag_item);
             resCode = 20000;
             resData = "success";
+        }
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",resCode);
+        response.put("data",resData);
+        return response;
+    }
+
+    @Override
+    public HashMap<String, Object> deleteallListItemFunc(job[] data) {
+        System.out.println("sddddddddddddadsadsadsa");
+        int resCode = 20001;
+        String resData = "failed";
+        for(int i=0;i<data.length;i++){
+        job tag_item = jobRepository.findById(data[i].getID());
+        System.out.println(data[i].getID());
+        if (tag_item != null){
+            jobRepository.delete(tag_item);
+            resCode = 20000;
+            resData = "success";
+        }
         }
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",resCode);

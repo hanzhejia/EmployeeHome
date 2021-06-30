@@ -27,7 +27,7 @@
 
     <el-table
       v-loading="listLoading"
-      :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="list"
       style="width: 100%"
       highlight-current-row
       @selection-change="handleSelectionChange"
@@ -286,33 +286,54 @@ export default {
 
     handleDelete(index, row) {
       const rowList = [row]
-      deleteList(rowList).then(() => {
-        this.$notify({
-          title: 'Success',
-          message: 'Delete Successfully',
-          type: 'success',
-          duration: 2000
+      this.$confirm('确认删除', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteList(rowList).then(() => {
+          this.$notify({
+            title: 'Success',
+            message: 'Delete Successfully',
+            type: 'success',
+            duration: 2000
+          })
+          this.list.splice(index, 1)
         })
-        this.list.splice(index, 1)
       })
     },
 
     handleMultipleDelete() {
-      deleteList(this.multipleSelection).then(() => {
+      if (this.multipleSelection.length === 0) {
         this.$notify({
-          title: 'Success',
-          message: 'Delete Successfully',
-          type: 'success',
+          title: 'Failed',
+          message: 'No Select',
+          type: 'error',
           duration: 2000
         })
-        let arr1 = this.list
-        const arr2 = this.multipleSelection
-        const idList = arr2.map(item => item.storageId)
-        arr1 = arr1.filter(item => {
-          return !idList.includes(item.storageId)
+      } else {
+        this.$confirm('确认删除', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteList(this.multipleSelection).then(() => {
+            this.$notify({
+              title: 'Success',
+              message: 'Delete Successfully',
+              type: 'success',
+              duration: 2000
+            })
+            let arr1 = this.list
+            const arr2 = this.multipleSelection
+            const idList = arr2.map(item => item.storageId)
+            arr1 = arr1.filter(item => {
+              return !idList.includes(item.storageId)
+            })
+            this.list = arr1
+          })
         })
-        this.list = arr1
-      })
+      }
     },
 
     createData() {

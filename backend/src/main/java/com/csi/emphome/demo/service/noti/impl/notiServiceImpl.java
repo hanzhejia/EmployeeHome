@@ -1,5 +1,6 @@
 package com.csi.emphome.demo.service.noti.impl;
 
+import com.csi.emphome.demo.domain.job.job;
 import com.csi.emphome.demo.domain.notice.noti;
 import com.csi.emphome.demo.repository.noti.notiRepository;
 import com.csi.emphome.demo.service.noti.notiService;
@@ -100,4 +101,25 @@ public class notiServiceImpl implements notiService {
         response.put("data",resData);
         return response;
     }
+
+    @Override
+    public HashMap<String, Object> deleteallListItemFunc( noti[] data) {
+        System.out.println("sddddddddddddadsadsadsa");
+        int resCode = 20001;
+        String resData = "failed";
+        for(int i=0;i<data.length;i++){
+            noti tag_item = notiRepository.findById(data[i].getId());
+            System.out.println(data[i].getId());
+            if (tag_item != null){
+                notiRepository.delete(tag_item);
+                resCode = 20000;
+                resData = "success";
+            }
+        }
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",resCode);
+        response.put("data",resData);
+        return response;
+    }
+
 }

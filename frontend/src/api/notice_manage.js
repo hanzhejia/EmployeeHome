@@ -40,10 +40,13 @@ export function deleteListItem(data) {
     data
   })
 }
-export function fetchListItem(date) {
+
+export function deleteallListItem(data) {
+  console.log('sbssssssssssssssssssss')
   return request({
-    url: '/vue-admin-template/noti/detail',
-    method: 'get',
-    params: { id }
+    url: `/vue-admin-template/noti/deleteall`,
+    method: 'post',
+    data
   })
 }
+
