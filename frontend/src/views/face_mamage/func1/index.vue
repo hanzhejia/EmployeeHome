@@ -4,6 +4,7 @@
       <el-table
         v-if="this.$store.getters.roles[0] === 'admin'"
         ref="multipleTable"
+        v-loading="loading"
         :data="curData"
         style="width: 100%"
         tooltip-effect="dark"
@@ -28,10 +29,11 @@
           </template>
         </el-table-column>
       </el-table>
-
+      <!--用户人脸管理，管理员可管理所有人，用户则只能对自己操作-->
       <el-table
         v-else
         ref="multipleTable"
+        v-loading="loading"
         :data="userData"
         style="width: 100%"
         tooltip-effect="dark"
@@ -56,6 +58,7 @@
           </template>
         </el-table-column>
       </el-table>
+      <!--注销弹出窗口-->
       <el-dialog
         title="确定要注销吗"
         :visible.sync="dialogVisibleDel"
@@ -64,6 +67,7 @@
         <el-button @click="dialogVisibleDel = false;">取消</el-button>
         <el-button type="primary" @click="dialogVisibleDel = false;delNowFace();">确定</el-button>
       </el-dialog>
+      <!--人脸增改弹出窗口-->
       <el-dialog
         title="请等待摄像头开启,保持人脸在捕捉范围中央"
         :visible.sync="dialogVisible"
@@ -73,10 +77,12 @@
       >
         <section>
           <video id="video" style="position:relative;left: 50%;top: 50%;transform: translateX(-50%) ;" />
-        </section>
+        </section>.
+        <!--视频-->
         <section>
           <canvas v-show="false" id="canvas" />
         </section>
+        <!--画布-->
         <section><img v-show="false" id="img" src="" alt=""></section>
         <el-button :loading="loading" type="primary" class="func1-facelog" @click="tackcapture();dialogVisible = false;">提交</el-button>
       </el-dialog>
@@ -95,7 +101,7 @@
   </div>
 </template>
 <script>
-// eslint-disable-next-line no-unused-vars
+
 import { faceList, addFace, faceDel } from '@/api/face'
 import { fetchList } from '@/api/user_manage'
 export default {
@@ -180,7 +186,7 @@ export default {
       this.curData = this.tableData.slice((page - 1) * 10, (page - 1) * 10 + 10)
     },
     getList() {
-      this.listLoading = true
+      this.loading = true
       console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
@@ -197,14 +203,13 @@ export default {
           }
         }
         console.log(this.userData)
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1)
+        this.loading = false
       })
     },
     getFace() {
+      this.loading = true
       faceList().then(response => {
+        this.loading = false
         this.facedatalist = response.data.items
         const basedata = JSON.parse(JSON.stringify(this.facedatalist))
         console.log('allface')
@@ -212,22 +217,20 @@ export default {
           this.findface.push(basedata[i].id)
         }
         console.log(this.findface)
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1)
       })
     },
     delNowFace() {
-      faceDel(this.delFace)
-      setTimeout(() => {
+      this.loading = true
+      faceDel(this.delFace).then(response => {
+        this.loading = false
         window.location.href = 'http://localhost:8081/face_mamage/func1'
-        // window.location.reload()
-      }, 500)
+      })
     },
     overFlod() {
       window.location.reload(true)
     },
     ifFace(data) {
+      // 判断人脸是否已注册
       for (var i in this.findface) {
         if (this.findface[i] === data) {
           return true
@@ -252,36 +255,34 @@ export default {
     },
     tackcapture() {
       this.loading = true
-      // 需要判断媒体流是否就绪
       const canvas = document.querySelector('#canvas') //
       const video = document.querySelector('#video')
       const img = document.querySelector('#img')
       const context = canvas.getContext('2d')
       const streaming = true
       if (streaming) {
+        // 画面显示
         context.drawImage(video, 0, 0, 350, 200)
         // eslint-disable-next-line no-undef
         img.src = canvas.toDataURL('image/png')
         // eslint-disable-next-line no-undef
         const temp = canvas.toDataURL('image/png').slice(22)
         // eslint-disable-next-line no-const-assign,no-undef
+        // 获取人脸数据
         this.nowface.base64 = temp
         this.nowface.id = this.clickid
         // console.log(this.nowface.base64)
         addFace(this.nowface).then(response => {
+          this.loading = false
           console.log('finish')
           const faceresult = JSON.parse(JSON.stringify(response))
           console.log(faceresult.message)
           if (faceresult.message === 'fail') {
             alert('未识别到人脸，请重试')
           }
+          window.location.href = 'http://localhost:8081/face_mamage/func1'
         })
       }
-      setTimeout(() => {
-        this.listLoading = false
-        window.location.href = 'http://localhost:8081/face_mamage/func1'
-        // window.location.reload()
-      }, 800)
     },
     close() {
       const video = document.querySelector('#video')

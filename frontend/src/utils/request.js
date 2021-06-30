@@ -46,8 +46,16 @@ service.interceptors.response.use(
     const res = response.data
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
+      let str = ''
+      if (res.code === 20001) {
+        str = 'Account and password are incorrect.'
+      } else if (res.code === 20002) {
+        str = 'No permission.'
+      } else {
+        str = 'Other error.'
+      }
       Message({
-        message: res.message || 'name or password Error',
+        message: res.message || str,
         // message: 'name or password Error',
         type: 'error',
         duration: 5 * 1000

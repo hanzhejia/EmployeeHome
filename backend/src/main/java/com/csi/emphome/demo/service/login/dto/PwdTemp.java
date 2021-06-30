@@ -6,16 +6,16 @@ public class PwdTemp implements Serializable {
     private String password;
     private String newpwd;
     private String newpassword1;
-    private String username;
+    private String token;
 
     public PwdTemp() {
     }
 
-    public PwdTemp(String password, String newpwd, String newpassword1, String username) {
+    public PwdTemp(String password, String newpwd, String newpassword1, String token) {
         this.password = password;
         this.newpwd = newpwd;
         this.newpassword1 = newpassword1;
-        this.username = username;
+        this.token = token;
     }
 
     public String getPassword() {
@@ -42,12 +42,12 @@ public class PwdTemp implements Serializable {
         this.newpassword1 = newpassword1;
     }
 
-    public String getUsername() {
-        return username;
+    public String getToken() {
+        return token;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PwdTemp implements Serializable {
                 "password='" + password + '\'' +
                 ", newpwd='" + newpwd + '\'' +
                 ", newpassword1='" + newpassword1 + '\'' +
-                ", username='" + username + '\'' +
+                ", username='" + token + '\'' +
                 '}';
     }
 }

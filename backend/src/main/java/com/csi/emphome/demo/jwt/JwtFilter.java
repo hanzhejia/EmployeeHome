@@ -92,7 +92,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter implements Filter {
     public HashMap<String, Object> AuthorizationException(Exception ex) {
         System.out.println("权限认证失败");
         HashMap<String, Object> response = new HashMap<>();
-        response.put("code", 20002);
+        response.put("code", 20003);
         response.put("data", "权限认证失败");
         return response;
     }
