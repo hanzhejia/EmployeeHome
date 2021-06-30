@@ -122,7 +122,9 @@
         </div>
 
       </div>
+
     <div style="margin-top: 60px">
+
       <el-button v-if=" buttonid=='admin'" @click="deletall()">删除选中的所有数据</el-button>
     </div>
     </div>

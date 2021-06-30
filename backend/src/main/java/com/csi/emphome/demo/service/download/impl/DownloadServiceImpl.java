@@ -80,7 +80,6 @@ public class DownloadServiceImpl implements DownloadService {
             return fetchListFunc(data.getListQuery());
         }
         List<DownloadItem> listAll;
-        System.out.println(data.getSelect());
         switch (data.getSelect()) {
             case "2": {
                 listAll = downloadRepository.findAllByCreateBy(data.getSearch());
@@ -91,7 +90,7 @@ public class DownloadServiceImpl implements DownloadService {
                 break;
             }
             default: {
-                listAll = downloadRepository.findAllByRealName(data.getSearch());
+                listAll = downloadRepository.findAllByName(data.getSearch());
                 break;
             }
         }

@@ -219,8 +219,10 @@ export default {
     },
     delNowFace() {
       faceDel(this.delFace)
-      window.location.reload(true)
-      location.reload(true)
+      setTimeout(() => {
+        window.location.href = 'http://localhost:8081/face_mamage/func1'
+        // window.location.reload()
+      }, 500)
     },
     overFlod() {
       window.location.reload(true)
@@ -277,9 +279,9 @@ export default {
       }
       setTimeout(() => {
         this.listLoading = false
-        window.location.reload(true)
-        location.reload(true)
-      }, 500)
+        window.location.href = 'http://localhost:8081/face_mamage/func1'
+        // window.location.reload()
+      }, 800)
     },
     close() {
       const video = document.querySelector('#video')
