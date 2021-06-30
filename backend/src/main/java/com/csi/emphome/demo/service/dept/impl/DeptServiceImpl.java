@@ -16,6 +16,12 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 部门管理后台
+ *
+ * @author jhzzz
+ * @date 2021/6/18
+ */
 @Service
 public class DeptServiceImpl implements DeptService {
     private final DeptRepository deptRepository;
@@ -24,6 +30,11 @@ public class DeptServiceImpl implements DeptService {
         this.deptRepository = deptRepository;
     }
 
+    /**
+     * 初始化分页
+     * @param data 查询部门项
+     * @return 单页列表
+     */
     @Override
     public HashMap<String, Object> fetchListFunc(DeptListQuery data) {
         HashMap<String, Object> responseData = new HashMap<>();
@@ -37,6 +48,10 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    /**
+     * 查询所有部门
+     * @return 所有部门列表
+     */
     @Override
     public HashMap<String, Object> fetchDeptList() {
         HashMap<String, Object> responseData = new HashMap<>();
@@ -50,7 +65,13 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
-
+    /**
+     * 处理分页
+     * @param list 部门列表
+     * @param pageNum 页面坐标
+     * @param pageSize 页面大小
+     * @return 分页后的部门列表
+     */
     public static List<DeptItem> splicePage(List<DeptItem> list, Integer pageNum, Integer pageSize) {
         if(list == null){
             return null;
@@ -84,6 +105,11 @@ public class DeptServiceImpl implements DeptService {
         return list.subList(fromIndex, toIndex);
     }
 
+    /**
+     * 查询搜索列表
+     * @param data 所选部门搜索项
+     * @return 模糊查询的部门列表
+     */
     @Override
     public HashMap<String, Object> fetchListItemFunc(DeptSearchData data) {
         System.out.println(data);
@@ -110,11 +136,21 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    /**
+     * 获取最大部门id
+     * @return 最大id
+     */
     public int getMaxId(){
         DeptItem tag_item = deptRepository.findTopByOrderByIdDesc();
         int max_id = tag_item.getId();
         return max_id;
     }
+
+    /**
+     * 增加部门
+     * @param data 所选部门项
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> createListItemFunc(DeptTemp data) {
         int resCode = 20001;
@@ -136,6 +172,11 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    /**
+     * 删除部门列表
+     * @param data 所选中的部门项
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> deleteListItemFunc(List<DeptTemp> data) {
         HashMap<String, Object> response = new HashMap<>();
@@ -155,6 +196,11 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    /**
+     * 更新部门列表
+     * @param data 所选部门项
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> updateListItemFunc(DeptTemp data) {
         int resCode = 20001;
@@ -174,6 +220,11 @@ public class DeptServiceImpl implements DeptService {
         return response;
     }
 
+    /**
+     * 部门名称查重
+     * @param data 所选部门项
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> checkSameNameFunc(DeptTemp data) {
         int resCode;
