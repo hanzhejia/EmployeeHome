@@ -123,6 +123,7 @@
         prop="createdate"
       />
       <el-table-column
+        v-if="checkPermission(['admin'])"
         label="操作"
         prop="operation"
       >
@@ -421,14 +422,15 @@ export default {
             vau.sex = 2
           }
           deleteListItem(vau).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: 'Delete Successfully',
-              type: 'success',
-              duration: 2000
-            })
+
             // this.list.splice(index, 1)
           })
+        })
+        this.$notify({
+          title: 'Success',
+          message: 'Delete Successfully',
+          type: 'success',
+          duration: 2000
         })
         this.reload()
         console.log('删除成功')
