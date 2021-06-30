@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 人脸识别
+ */
 @Service
 public class FaceServiceImpl implements FaceService {
     private RedisTemplate redisTemplate;
@@ -41,6 +44,8 @@ public class FaceServiceImpl implements FaceService {
     }
     /**
      * 从数据库中删除
+     * @param nowface 人脸数据
+     * @return 删除成功
      */
     @Override
     public HashMap<String, Object> delFace(Face nowface){
@@ -53,6 +58,7 @@ public class FaceServiceImpl implements FaceService {
     };
     /**
      * 从数据库中获取所有人脸数据
+     * @return 人脸数据列表
      */
     @Override
     public HashMap<String, Object> faceListFunc() {
@@ -65,10 +71,12 @@ public class FaceServiceImpl implements FaceService {
         response.put("data",responseData);
         return response;
     }
-
     /**
      * 人脸比对
      * 用的是自己的百度账号接入
+     * @param nowbase64 前端返回的人脸
+     * @return 比对结果
+     * @throws JSONException
      */
     @Override
     public HashMap<String, Object> serchFace(Face nowbase64) throws JSONException {
@@ -124,6 +132,9 @@ public class FaceServiceImpl implements FaceService {
     }
     /**
      * 从数据库中增加、修改
+     * @param nowbase64 人脸数据
+     * @return 添加是否成功
+     * @throws JSONException
      */
     @Override
     public HashMap<String, Object> addFace(Face nowbase64) throws JSONException {
