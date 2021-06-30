@@ -39,7 +39,9 @@ public class FaceServiceImpl implements FaceService {
         this.faceRepository = faceRepository;
         this.userRepository = userRepository;
     }
-
+    /**
+     * 从数据库中删除
+     */
     @Override
     public HashMap<String, Object> delFace(Face nowface){
         faceRepository.delete(nowface);
@@ -49,6 +51,9 @@ public class FaceServiceImpl implements FaceService {
         response.put("data","successdel");
         return response;
     };
+    /**
+     * 从数据库中获取所有人脸数据
+     */
     @Override
     public HashMap<String, Object> faceListFunc() {
         HashMap<String, Object> response = new HashMap<>();
@@ -60,6 +65,11 @@ public class FaceServiceImpl implements FaceService {
         response.put("data",responseData);
         return response;
     }
+
+    /**
+     * 人脸比对
+     * 用的是自己的百度账号接入
+     */
     @Override
     public HashMap<String, Object> serchFace(Face nowbase64) throws JSONException {
         HashMap<String, Object> response = new HashMap<>();
@@ -69,6 +79,9 @@ public class FaceServiceImpl implements FaceService {
         String imgStr = nowbase64.getBase64();
         int i = 0;
         String imgStr2;
+        /**
+         * 将传回的现在的base64数据同数据库里相比对
+         */
         for (i=0;i<listItems.size();i++){
             imgStr2 = listItems.get(i).getBase64();
             MatchRequest req1 = new MatchRequest(imgStr, "BASE64");
@@ -77,7 +90,9 @@ public class FaceServiceImpl implements FaceService {
             reqs.add(req1);
             reqs.add(req2);
             JSONObject res = client.match(reqs);
-            System.out.println(res);
+            /**
+             * 获取人脸比对结果
+             */
             if(res != null && !res.toString().equals("")){
                 if(res.get("result") != JSONObject.NULL&&res.get("result") != null && !res.get("result").toString().equals("")){
                     JSONObject result = (JSONObject) res.get("result");
@@ -88,9 +103,9 @@ public class FaceServiceImpl implements FaceService {
                 }
             }
         }
-
-        System.out.println("local i");
-        System.out.println(i);
+        /**
+         * 判断是否在人脸数据库中
+         */
         if(i<listItems.size()){
             UserItem uitem =userRepository.findById(listItems.get(i).getId());
             HashMap<String, Object> token = new HashMap<>();
@@ -107,6 +122,9 @@ public class FaceServiceImpl implements FaceService {
             return response;
         }
     }
+    /**
+     * 从数据库中增加、修改
+     */
     @Override
     public HashMap<String, Object> addFace(Face nowbase64) throws JSONException {
         AipFace client = new AipFace(BaiduAIPCommon.APP_FACE_ID, BaiduAIPCommon.API_FACE_KEY, BaiduAIPCommon.SECRET_FACE_KEY);
@@ -119,6 +137,9 @@ public class FaceServiceImpl implements FaceService {
         reqs.add(req2);
         JSONObject res = client.match(reqs);
         System.out.println("faceres");
+        /**
+         * 判断是否识别到人脸，未识别到则返回未识别信息
+         */
         if(res.get("result") == JSONObject.NULL||res.get("result") == null || res.get("result").toString().equals(""))
         {
             HashMap<String, Object> response = new HashMap<>();
