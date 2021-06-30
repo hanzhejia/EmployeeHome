@@ -16,9 +16,22 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 下载中心server层实现
+ *
+ * @author hhc
+ * @date 2021/06/30
+ */
 @Service
 public class DownloadServiceImpl implements DownloadService {
+    /**
+     * 数据库jpa操作
+     */
     private final DownloadRepository downloadRepository;
+
+    /**
+     * 文件操作参数
+     */
     private final FileProperties properties;
 
     public DownloadServiceImpl(DownloadRepository downloadRepository, FileProperties properties) {
@@ -26,6 +39,12 @@ public class DownloadServiceImpl implements DownloadService {
         this.properties = properties;
     }
 
+    /**
+     * 拉取数据库表
+     *
+     * @param data DTO：DownloadListQuery
+     * @return response
+     */
     @Override
     public HashMap<String, Object> fetchListFunc(DownloadListQuery data) {
         HashMap<String, Object> responseData = new HashMap<>();
@@ -39,6 +58,14 @@ public class DownloadServiceImpl implements DownloadService {
         return response;
     }
 
+    /**
+     * 分页函数实现
+     *
+     * @param list 列表
+     * @param pageNum 当前页数>0
+     * @param pageSize 总页数
+     * @return 被分页处理后的表
+     */
     public static List<DownloadItem> splicePage(List<DownloadItem> list, Integer pageNum, Integer pageSize) {
         if(list == null){
             return null;
@@ -72,6 +99,12 @@ public class DownloadServiceImpl implements DownloadService {
         return list.subList(fromIndex, toIndex);
     }
 
+    /**
+     * 分页查询
+     *
+     * @param data DTO：DownloadSearchData
+     * @return response
+     */
     @Override
     public HashMap<String, Object> fetchListItemFunc(DownloadSearchData data) {
         HashMap<String, Object> responseData = new HashMap<>();
@@ -110,6 +143,12 @@ public class DownloadServiceImpl implements DownloadService {
         return response;
     }
 
+    /**
+     * 新建条目
+     *
+     * @param data DTO：DownloadTemp
+     * @return response
+     */
     @Override
     public HashMap<String, Object> createListItemFunc(DownloadTemp data) {
         int resCode = 20001;
@@ -135,6 +174,12 @@ public class DownloadServiceImpl implements DownloadService {
         return response;
     }
 
+    /**
+     * 修改条目
+     *
+     * @param data DTO：DownloadTemp
+     * @return response
+     */
     @Override
     public HashMap<String, Object> updateListItemFunc(DownloadTemp data) {
         int resCode = 20001;
@@ -159,6 +204,12 @@ public class DownloadServiceImpl implements DownloadService {
         return response;
     }
 
+    /**
+     * 删除多个条目
+     *
+     * @param data DTO：List<DownloadTemp>
+     * @return response
+     */
     @Override
     public HashMap<String, Object> deleteListFunc(List<DownloadTemp> data) {
         HashMap<String, Object> response = new HashMap<>();
@@ -179,6 +230,13 @@ public class DownloadServiceImpl implements DownloadService {
         return response;
     }
 
+    /**
+     * 上传文件
+     *
+     * @param data DTO：DownloadTemp
+     * @param multipartFile 文件数据
+     * @return response
+     */
     @Override
     public HashMap<String, Object> uploadFileFunc(DownloadTemp data, MultipartFile multipartFile) {
         HashMap<String, Object> response = new HashMap<>();
