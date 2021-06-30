@@ -44,6 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<EmployeeItem> list = employeeRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
         responseData.put("total",employeeRepository.count());
         responseData.put("items",list);
+        System.out.println(list);
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data",responseData);
