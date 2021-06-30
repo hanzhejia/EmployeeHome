@@ -15,6 +15,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * LoginServiceImpl:用户登录
+ *
+ * @author LJ
+ * @date 2021/06/18
+ *
+ * */
 @Service
 public class LoginServiceImpl implements LoginService {
     @Autowired
@@ -24,7 +31,12 @@ public class LoginServiceImpl implements LoginService {
     private final LoginRepo loginRepo;
     private static final HashMap<String, Object> response=new HashMap<>();
     public LoginServiceImpl(LoginRepo loginRepo){this.loginRepo=loginRepo;}
-
+    /**
+     * 判断账号密码是否正确
+     *
+     * @param data 账号和密码
+     * @return 正确信息或错误信息
+     * */
     @Override
     public HashMap<String, Object> createLoginItemFunc(LoginTemp data) {
         UserItem loginTemp= loginRepo.findByLoginname(data.getUsername());
@@ -43,7 +55,12 @@ public class LoginServiceImpl implements LoginService {
         response.put("message","Account and password are incorrect.");
         return response;
     }
-
+    /**
+     * 获取用户信息
+     *
+     * @param data 用户账号和密码
+     * @return 用户基本信息，权限，介绍，用户名等
+     * */
     @Override
     public HashMap<String, Object> getLoginInfoFunc(String data) {
         String username = JwtUtil.getUsername(data);
@@ -67,6 +84,12 @@ public class LoginServiceImpl implements LoginService {
         return response;
     }
 
+    /**
+     * 修改密码
+     *
+     * @param data 账号，原密码和新密码
+     * @return 修改成功或失败
+     * */
     @Override
     public HashMap<String, Object> updateLoginPwdFunc(PwdTemp data) {
         System.out.println("updateLoginPwdFunc"+data);
