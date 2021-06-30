@@ -38,3 +38,17 @@ export function deleteListItem(data) {
     data
   })
 }
+/*export function deleteList(data) {
+  return request({
+    url: '/vue-admin-template/user/delete',
+    method: 'post',
+    data
+  })
+}*/
+export function checkSameName(data) {
+  return request({
+    url: '/vue-admin-template/user/check',
+    method: 'post',
+    data
+  })
+}

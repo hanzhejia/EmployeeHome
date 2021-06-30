@@ -1,34 +1,21 @@
 <template>
   <div>
-<!--    <div class="func1-container">
-      <el-form :inline="true" ref="searchfrom" :model="searchform" class="demo-form-inline">
-        <el-form-item label="用户名：" prop="username">
-          <el-input v-model="searchform.username" placeholder="请输入用户名搜索" />
-        </el-form-item>
-        <el-form-item label="用户状态：" prop="status">
-          <el-select v-model="searchform.status" placeholder="用户状态">
-            <el-option label="管理员" value="1" />
-            <el-option label="普通用户" value="2" />
-          </el-select>
-        </el-form-item>
+    <div>
+      <!--批量删除    -->
+      <el-form :inline="true" class="demo-form-inline">
         <el-form-item>
-          <el-button type="primary" @click="search(scope.$index,scope.row)">搜索</el-button>
+          <template v-if="checkPermission(['admin'])">
+            <el-button type="danger" size="mini" @click="handleMultipleDelete">批量删除</el-button>
+          </template>
         </el-form-item>
       </el-form>
-    </div>-->
-    <div>
-      <el-table
-        ref="temp"
-        :data="list.filter(data => !search ||
-        (data.username.toLowerCase().includes(search.toLowerCase()))
-       /* &&
-        data.status.toLowerCase().includes(search.toLowerCase()))*/
-         )"
-        style="width: 100%"
-        tooltip-effect="dark"
-        :model="temp"
-      >
 
+      <el-table
+        v-loading="listLoading"
+        :data="list.filter(data => !search || (data.username.toLowerCase().includes(search.toLowerCase())))"
+        style="width: 100%"
+        @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55"/>
         <el-table-column label="ID" prop="id"/>
         <el-table-column label="登录名" prop="loginname"/>
         <el-table-column v-if="checkPermission(['admin'])" label="密码" prop="password"/>
@@ -50,7 +37,7 @@
             <!--跳转至用户修改页面-->
             <el-button size="mini" @click="handleEdit(scope.$index,scope.row)">编辑</el-button>
 
-            <el-dialog  :visible.sync="dialogFormVisible" title="修改用户" top="20px" width="300px">
+            <el-dialog  :visible.sync="dialogFormVisible" top="20px" width="300px">
               <el-form ref="temp" :model="temp" :rules="rules">
                 <el-form-item :label-width="formLabeWidth" label="用户名:" prop="username">
                   <el-input v-model="temp.username" auto-complete="off"/>
@@ -78,7 +65,7 @@
       </el-table>
     </div>
     <div>
-<!--分页     -->
+      <!--分页     -->
       <pagination v-show="total>0" :limit.sync="listQuery.limit" :page.sync="listQuery.page" :total="total" @pagination="getList" />
     </div>
   </div>
@@ -128,12 +115,12 @@ export default {
       listQuery: {
         page: 1,
         limit: 10,
-        /*multipleSelection: []*/
       },
       dialogFormVisible: false, // 弹窗默认关闭
       dialogStatus: '',
       downloadLoading: false,
       formLabelWidth: '50px',
+      multipleSelection: [],
       /*搜索栏*/
     /*  searchform: {
         username: ' ',
@@ -233,8 +220,8 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          console.log("delete"),
-            deleteListItem(row).then(() => {
+            const rowList = [row]
+          deleteListItem(rowList).then(() => {
               this.$notify({
                 title: 'Success',
                 message: 'Delete Successfully',
@@ -245,8 +232,34 @@ export default {
             })
         })
       },
+      /*选择删除*/
+      handleSelectionChange(val) {
+        this.multipleSelection = val
+      },
+      handleMultipleDelete() {
+        this.$confirm('是否确定删除所选用户?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteListItem(this.multipleSelection).then(() => {
+            this.$notify({
+              title: 'Success',
+              message: 'Delete Successfully',
+              type: 'success',
+              duration: 2000
+            })
+            let arr1 = this.list
+            const arr2 = this.multipleSelection
+            const idList = arr2.map(item => item.id)
+            arr1 = arr1.filter(item => {
+              return !idList.includes(item.id)
+            })
+            this.list = arr1
+          })
+        })
+      },
     }
-
 }
 
 </script>

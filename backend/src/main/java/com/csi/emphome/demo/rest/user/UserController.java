@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/vue-admin-template/user")
@@ -44,7 +45,7 @@ public class UserController {
     @CrossOrigin
     @PostMapping(value = "/delete")
     @ResponseBody
-    public HashMap<String, Object>deleteListItem(@RequestBody UserTemp data) {
+    public HashMap<String, Object> deleteListItem(@RequestBody List<UserTemp> data) {
         return userService.deleteListItemFunc(data);
     }
     /*搜索*/
@@ -53,5 +54,12 @@ public class UserController {
     @ResponseBody
     public HashMap<String, Object> fetchList(@RequestBody UserSearchData data) {
         return userService.fetchListItemFunc(data);
+    }
+    /*添加时检查用户名是否重复*/
+    @CrossOrigin
+    @PostMapping(value = "/check")
+    @ResponseBody
+    public HashMap<String, Object> checkSameName(@RequestBody UserTemp data) {
+        return userService.checkSameNameFunc(data);
     }
 }

@@ -30,7 +30,10 @@
   </div>
 </template>
 <script>
-import { createListItem } from '@/api/user_manage'
+import {
+  createListItem,
+  checkSameName,}
+  from '@/api/user_manage'
 
 export default {
   data() {
@@ -54,20 +57,32 @@ export default {
     methods: {
       /*添加用户*/
       add() {
-        this.$refs['form'].validate((valid)=>{
+        this.$refs['form'].validate((valid) => {
           if (valid) {
-          // this.form.id = parseInt(Math.random() * 100) + 1024
-          console.log(this.form)
-          createListItem(this.form).then(() => {
-            this.$notify({
-              title: 'Success',
-              message: 'Update Successfully',
-              type: 'success',
-              duration: 2000
+            // this.form.id = parseInt(Math.random() * 100) + 1024
+            console.log(this.form)
+            checkSameName(this.form).then(response => {
+              if (response.data === 'success') {
+                createListItem(this.form).then(() => {
+                  this.$notify({
+                    title: 'Success',
+                    message: 'Update Successfully',
+                    type: 'success',
+                    duration: 2000
+                  })
+                })
+              } else {
+                this.$notify({
+                  title: '无法添加',
+                  message: '用户名重复',
+                  type: 'failed',
+                  duration: 2000
+                })
+              }
             })
-          })
-        }})
-    },
+          }
+        })
+      },
       cancel() {
         this.form = {
           username: '',
