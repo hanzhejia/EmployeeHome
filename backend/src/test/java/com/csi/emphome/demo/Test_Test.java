@@ -13,7 +13,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TestTest {
+public class Test_Test {
     @Autowired
     TestService testService;
 
