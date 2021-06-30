@@ -78,6 +78,14 @@ export default {
       this.temp.tiitle = this.textarea1
       this.temp.careTime = systemDate
       console.log(this.temp)
+      if( this.temp.tiitle==''|| this.temp.content==''){
+        this.$notify.error({
+          title: 'Fail',
+          message: '公告名称或内容未填写',
+          duration: 2000
+        })
+      }
+      else{
       createListItem(this.temp).then(() => {
         this.$notify({
           title: '成功',
@@ -88,7 +96,7 @@ export default {
       })
       this.textarea1=''
       this.textarea2=''
-    },
+    }},
     kong(sb){
       this.textarea1=''
       this.textarea2=''

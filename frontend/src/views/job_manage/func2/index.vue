@@ -64,34 +64,42 @@ export default {
       this.temp.ID = parseInt(Math.random() * 100) + 1024 // mock a id
       this.temp.NAME = this.textarea2
       this.temp.REMAKE = this.textarea1
+      if( this.temp.NAME==''|| this.temp.REMAKE==''){
+        this.$notify.error({
+          title: 'Fail',
+          message: '职位名称或内容未填写',
+          duration: 2000
+        })
+      }
+      else {
       createListItem(this.temp).then(response => {
-        if(response.data=='sb'){
+        // eslint-disable-next-line eqeqeq
+        if (response.data == 'sb') {
           this.$notify({
             title: 'Success',
             message: '创建成功',
             type: 'success',
             duration: 2000
-          })}
-        else {
-          this.$notify({
-            title: 'Success',
+          })
+        } else {
+          this.$notify.error({
+            title: 'fail',
             message: '职位重复无法创建',
-            type: 'success',
             duration: 2000
           })
         }
         console.log(response.data)
-        this.textarea1=''
-        this.textarea2=''
-      })
+        this.textarea1 = ''
+        this.textarea2 = ''
+      })}
     },
-    kong(sb){
-      this.textarea1=''
-      this.textarea2=''
+    kong(sb) {
+      this.textarea1 = ''
+      this.textarea2 = ''
       console.log('sdsd')
     }
-  },
-};
+  }
+}
 </script>
 
 <style lang="scss" scoped>
