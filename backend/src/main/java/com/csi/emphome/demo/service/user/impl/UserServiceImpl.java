@@ -3,6 +3,7 @@ package com.csi.emphome.demo.service.user.impl;
 import com.csi.emphome.demo.domain.dept.DeptItem;
 import com.csi.emphome.demo.domain.user.UserItem;
 import com.csi.emphome.demo.repository.user.UserRepository;
+import com.csi.emphome.demo.service.dept.dto.DeptTemp;
 import com.csi.emphome.demo.service.user.UserService;
 import com.csi.emphome.demo.service.user.dto.UserListQuery;
 import com.csi.emphome.demo.service.user.dto.UserSearchData;
@@ -104,20 +105,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public HashMap<String, Object> deleteListItemFunc(UserTemp data) {
-
-        int resCode = 20001;
-        String resData = "deletefailed";
-        UserItem uitem = userRepository.findById(data.getId());
-
-        if (uitem != null){
-            userRepository.delete(uitem);
-            resCode = 20000;
-            resData = "success";
-        }
+    public HashMap<String, Object> deleteListItemFunc(List<UserTemp> data) {
         HashMap<String, Object> response = new HashMap<>();
-        response.put("code",resCode);
-        response.put("data",resData);
+
+        for (UserTemp datum : data) {
+            UserItem tag_item = userRepository.findById(datum.getId());
+            if (tag_item != null) {
+                userRepository.delete(tag_item);
+            } else {
+                response.put("code", 20001);
+                response.put("data", "failed");
+                return response;
+            }
+        }
+        response.put("code", 20000);
+        response.put("data", "success");
         return response;
     }
 
@@ -168,6 +170,24 @@ public class UserServiceImpl implements UserService {
         HashMap<String, Object> response = new HashMap<>();
         response.put("code",20000);
         response.put("data",responseData);
+        return response;
+    }
+    @Override
+    public HashMap<String, Object> checkSameNameFunc(UserTemp data) {
+        int resCode;
+        String resData;
+        HashMap<String, Object> response = new HashMap<>();
+        List<UserItem> item = userRepository.findAllByUsernameLike(data.getUsername());
+        if(item.size() == 0){
+            resCode = 20000;
+            resData = "success";
+        }else {
+            resCode = 20000;
+            resData = "failed";
+        }
+        response.put("code",resCode);
+        response.put("data",resData);
+        System.out.println(response);
         return response;
     }
 
