@@ -69,7 +69,7 @@ export default {
     toAmend() {
       this.$refs.resetForm.validate(valid => {
         if (valid) {
-          this.resetForm.username = this.$store.getters.name
+          this.resetForm.token = this.$store.getters.token
           updatePwd(this.resetForm).then(response => {
             console.log('updateok', response)
             if (response.data === 'success') {
