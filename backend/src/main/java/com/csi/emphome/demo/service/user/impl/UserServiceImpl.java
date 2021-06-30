@@ -226,7 +226,8 @@ public class UserServiceImpl implements UserService {
         int resCode;
         String resData;
         HashMap<String, Object> response = new HashMap<>();
-        List<UserItem> item = userRepository.findAllByUsernameLike(data.getUsername());
+//        List<UserItem> item = userRepository.findAllByUsernameLike(data.getUsername());
+        List<UserItem> item = userRepository.findAllByLoginname(data.getUsername());
         if(item.size() == 0){
             resCode = 20000;
             resData = "success";

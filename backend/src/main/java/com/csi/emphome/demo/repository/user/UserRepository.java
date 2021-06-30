@@ -10,6 +10,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<UserItem,Integer> , JpaSpecificationExecutor<UserItem> {
     UserItem findById(int id);
     List< UserItem> findAllByUsernameLike(String username);
+    List< UserItem> findAllByLoginname(String username);
     UserItem findTopByOrderByIdDesc();
   /*  List<UserItem> findAllByUsername(String username);*/
   /*  List< UserItem> findAll(Specification spec);*/
