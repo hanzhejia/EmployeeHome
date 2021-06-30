@@ -73,7 +73,7 @@
       </div>
     </el-dialog>
     <div style="margin-top: 20px">
-      <el-button @click="deletall()">删除选中的所有数据</el-button>
+      <el-button v-if=" buttonid=='admin'" @click="deletall()">删除选中的所有数据</el-button>
 
     </div>
   </div>
@@ -244,6 +244,14 @@ export default {
           this.faData.id = this.ts
           this.faData.name = this.textarea1
           this.faData.remake = this.textarea2
+          if( this.faData.name==''|| this.temp.remake==''){
+            this.$notify.error({
+              title: 'Fail',
+              message: '职位名称或内容未填写',
+              duration: 2000
+            })
+          }
+          else{
           updateListItem(this.faData).then(() => {
             const index = this.list.findIndex(v => v.id === this.temp.id)
             this.list.splice(index, 1, this.temp)
@@ -255,7 +263,7 @@ export default {
               type: 'success',
               duration: 2000
             })
-          })
+          })}
         }
       })
     }

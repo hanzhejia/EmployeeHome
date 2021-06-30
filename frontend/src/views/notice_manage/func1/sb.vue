@@ -31,16 +31,18 @@
 import axios from "axios";
 import { fetchList, createListItem ,updateListItem,deleteListItem} from '@/api/notice_manage'
 export default {
+  inject: ['reload'],
   props: {
     text: String,
-    tittle:String,
-    tempid: Number
+    tittle: String,
+    tempid: Number,
+    re:Number
   },
   data() {
     return {
       textarea1: this.text,
       textarea2: this.tittle,
-      ts:this.tempid,
+      ts: this.tempid,
       temp:{
         careTime: '',
         content: '',
@@ -51,13 +53,14 @@ export default {
     };
   },
   watch: {
-    tittle:function (to,from){
+    tittle: function (to,from){
       if (to) {
         this.textarea2 = to
       }
     },
     text: function(to, from) {
       if (to) {
+
         this.textarea1 = to
       }
     },
@@ -65,18 +68,34 @@ export default {
       if (to) {
         this.ts = to
       }
+    },
+    re: function(to, from) {
+      if (to) {
+        // console.log(to)
+        // console.log('sdasdsa')
+        //  console.log(this.text)
+        this.textarea1 = this.text
+        this.textarea2 = this.tittle
+      }
     }
   },
   methods: {
     edit(detailInfo) {
-      // console.log(this.textarea1);
-      // console.log(this.textarea1)
+      alert(this.re)
       this.temp.tiitle=this.textarea1
       this.temp.content=this.textarea2
       const tempData = Object.assign({}, this.temp)
       this.temp.careTime = +new Date(tempData.time)
       this.temp.id = this.ts
       console.log(this.temp)
+      if( this.temp.tiitle==''|| this.temp.content==''){
+        this.$notify.error({
+          title: 'Fail',
+          message: '公告名称或内容未填写',
+          duration: 2000
+        })
+      }
+      else{
       updateListItem(this.temp).then(() => {
         this.$notify({
           title: '成功',
@@ -85,7 +104,7 @@ export default {
           duration: 2000
         })
       })
-    },
+    }},
     kong(sb) {
       this.temp.tiitle=this.textarea1
       this.temp.content=this.textarea2

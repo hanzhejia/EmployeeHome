@@ -70,7 +70,8 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public HashMap<String, Object> updateLoginPwdFunc(PwdTemp data) {
         System.out.println("updateLoginPwdFunc"+data);
-        UserItem login= loginRepo.findByLoginname(data.getUsername());
+        String username = JwtUtil.getUsername(data.getToken());
+        UserItem login= loginRepo.findByLoginname(username);
         if (login.getPassword().equals(data.getPassword())){
             login.setPassword(data.getNewpassword1());
             loginRepo.save(login);

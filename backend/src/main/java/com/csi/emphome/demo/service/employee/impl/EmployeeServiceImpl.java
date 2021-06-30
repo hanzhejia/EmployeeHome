@@ -19,6 +19,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * 员工管理后台处理
+ * @author 老实敦厚的小刘
+ * @date 2021/6/18
+ */
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
@@ -27,6 +33,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    /**
+     *初始化分页，仅在页面最初生成时使用
+     * @param data 表单页号和限制行数
+     * @return 单页列表
+     */
     @Override
     public HashMap<String, Object> fetchListFunc(EmployeeListQuery data) {
         HashMap<String, Object> responseData = new HashMap<>();
@@ -39,6 +50,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return response;
     }
 
+    /**
+     * 增加用户
+     * @param data 前端页面增加用户功能传入数据
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> createListItemFunc(EmployeeTemp data) {
         int resCode = 20001;
@@ -61,6 +77,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return response;
     }
 
+    /**
+     * 删除用户
+     * @param data 前端页面删除用户功能传入数据
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> deleteListItemFunc(EmployeeTemp data) {
         int resCode = 20001;
@@ -80,6 +101,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return response;
     }
 
+    /**
+     * 更新用户数据
+     * @param data 前端页面编辑用户功能传入数据
+     * @return 成功或失败参数
+     */
     @Override
     public HashMap<String, Object> updateListItemFunc(EmployeeTemp data) {
         int resCode = 20001;
@@ -109,6 +135,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return response;
     }
 
+    /**
+     * 查询用户，初始化后分页功能
+     * @param data 前端页面查询用户功能传入数据
+     * @param query 表单页号和限制行数
+     * @return 符合条件的单页用户列表
+     */
     @Override
     public HashMap<String, Object> searchListItemFunc(EmployeeTemp data,EmployeeListQuery query) {
         HashMap<String, Object> responseData = new HashMap<>();
@@ -137,6 +169,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return response;
     }
 
+    /**
+     * JPA联合查询函数
+     * @param test 查询数据
+     * @param data 表单页号和限制行数
+     * @return 符合条件的单页用户列表
+     */
     public Page<EmployeeItem> getDataIllustrationList(EmployeeItem test,EmployeeListQuery data) {
         Page<EmployeeItem> test2 = employeeRepository.findAll(new Specification<EmployeeItem>(){
             @Override
