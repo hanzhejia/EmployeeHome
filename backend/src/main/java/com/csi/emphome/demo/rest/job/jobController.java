@@ -43,9 +43,9 @@ public class jobController {
     @GetMapping(value = "/create")
     @ResponseBody
     public HashMap<String, Object> createListItem(job data) {
-        System.out.println("sddddddddddddddddddd");
-        System.out.println(data);
-        System.out.println("sddddddddddddddddddd");
+//        System.out.println("sddddddddddddddddddd");
+//        System.out.println(data);
+//        System.out.println("sddddddddddddddddddd");
         return jobService.createListItemFunc(data);
     }
     @CrossOrigin
@@ -66,8 +66,8 @@ public class jobController {
     @PostMapping(value = "/deletell")
     @ResponseBody
     public HashMap<String, Object> deleteListItem(@RequestBody job[] data) {
-        System.out.println("sb");
-        System.out.println(data[0].toString());
+//        System.out.println("sb");
+//        System.out.println(data[0].toString());
         return jobService.deleteallListItemFunc(data);
     }
 
