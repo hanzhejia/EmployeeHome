@@ -9,7 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * jobServiceImpl:公告管理
+ * @author lzh
+ * @date 2021/06/30 15:51:40
+ */
 @Service
 public class notiServiceImpl implements notiService {
     private final notiRepository notiRepository;
@@ -17,7 +21,11 @@ public class notiServiceImpl implements notiService {
     public notiServiceImpl(notiRepository notiRepository) {
         this.notiRepository = notiRepository;
     }
-
+    /**
+     * 获取数据库里的职位信息发送给前端
+     * @param data 表格格式
+     * @return  正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> fetchListFunc(TestListQuery data) {
         HashMap<String, Object> response = new HashMap<>();
@@ -25,22 +33,16 @@ public class notiServiceImpl implements notiService {
         List listItems = notiRepository.findAll();
         responseData.put("total",listItems.size());
         responseData.put("items",listItems);
-
         response.put("code",20000);
         response.put("data",responseData);
         return response;
-//        TestListQuery data
-//        HashMap<String, Object> responseData = new HashMap<>();
-//        List<noti> list = notiRepository.findAll(PageRequest.of(data.getPage()-1, data.getLimit())).toList();
-//        System.out.println(notiRepository.count());
-//        responseData.put("total",notiRepository.count());
-//        responseData.put("items",list);
-//        HashMap<String, Object> response = new HashMap<>();
-//        response.put("code",20000);
-//        response.put("data",responseData);
-//        return response;
-    }
 
+    }
+    /**
+     * 创建一个公告
+     * @param data 公告名、内容、id、发布人、时间
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> createListItemFunc(noti data) {
         int resCode = 20001;
@@ -60,7 +62,11 @@ public class notiServiceImpl implements notiService {
         response.put("data","sb");
         return response;
     }
-
+    /**
+     * 修改一个公告
+     * @param data 公告名、内容、id、发布人、时间
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> updateListItemFunc(noti data) {
         //        testRepository.save(data);
@@ -83,7 +89,11 @@ public class notiServiceImpl implements notiService {
         response.put("data","success");
         return response;
     }
-
+    /**
+     * 删除一个公告
+     * @param data 公告名、内容、id、操作人、时间
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> deleteListItemFunc(noti data) {
         System.out.println("sddddddddddddadsadsadsa");
@@ -101,7 +111,11 @@ public class notiServiceImpl implements notiService {
         response.put("data",resData);
         return response;
     }
-
+    /**
+     * 批量公告
+     * @param data 公告信息数组
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> deleteallListItemFunc( noti[] data) {
         System.out.println("sddddddddddddadsadsadsa");
