@@ -27,7 +27,7 @@ public class DeptTest {
     @Test
     void fetchListItemFuncTest() {
         DeptSearchData data = new DeptSearchData();
-        data.setSearch("123");
+        data.setSearch("技术");
         data.setListQuery(new DeptListQuery(1, 10));
         HashMap<String, Object> res = deptService.fetchListItemFunc(data);
         System.out.println(res);
@@ -36,8 +36,7 @@ public class DeptTest {
     @Test
     void createListItemFuncTest() {
         DeptTemp data = new DeptTemp();
-        data.setId(999);
-        data.setName("技术部");
+        data.setName("市场部");
         data.setRemark("123213123123");
         HashMap<String, Object> res = deptService.createListItemFunc(data);
         System.out.println(res);
@@ -46,9 +45,9 @@ public class DeptTest {
     @Test
     void updateListItemFuncTest() {
         DeptTemp data = new DeptTemp();
-        data.setId(999);
+        data.setId(3);
         data.setName("技术部");
-        data.setRemark("123213123123");
+        data.setRemark("7777777");
         HashMap<String, Object> res = deptService.updateListItemFunc(data);
         System.out.println(res);
     }
@@ -56,12 +55,8 @@ public class DeptTest {
     @Test
     void deleteListItemFuncTest() {
         List<DeptTemp> data = new ArrayList<>();
-        data.get(0).setId(111);
-        data.get(0).setName("技术部");
-        data.get(0).setRemark("123123123");
-        data.get(1).setId(222);
-        data.get(2).setName("财务部");
-        data.get(3).setRemark("123123123");
+        data.add(new DeptTemp(2,"",""));
+        data.add(new DeptTemp(3,"",""));
         HashMap<String, Object> res = deptService.deleteListItemFunc(data);
         System.out.println(res);
     }
@@ -69,6 +64,7 @@ public class DeptTest {
     @Test
     void checkSameNameFuncTest() {
         DeptTemp data = new DeptTemp();
+        data.setName("技术部");
         HashMap<String, Object> res = deptService.checkSameNameFunc(data);
         System.out.println(res);
     }
