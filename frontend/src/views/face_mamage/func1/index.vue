@@ -7,6 +7,7 @@
         :data="curData"
         style="width: 100%"
         tooltip-effect="dark"
+        v-loading="loading"
       >
         <el-table-column label="UID" prop="id" />
         <el-table-column label="登录名" prop="loginname" />
@@ -28,13 +29,13 @@
           </template>
         </el-table-column>
       </el-table>
-
       <el-table
         v-else
         ref="multipleTable"
         :data="userData"
         style="width: 100%"
         tooltip-effect="dark"
+        v-loading="loading"
       >
         <el-table-column label="UID" prop="id" />
         <el-table-column label="登录名" prop="loginname" />
@@ -56,6 +57,7 @@
           </template>
         </el-table-column>
       </el-table>
+
       <el-dialog
         title="确定要注销吗"
         :visible.sync="dialogVisibleDel"
@@ -180,7 +182,7 @@ export default {
       this.curData = this.tableData.slice((page - 1) * 10, (page - 1) * 10 + 10)
     },
     getList() {
-      this.listLoading = true
+      this.loading = true
       console.log(this.listQuery)
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
@@ -197,14 +199,13 @@ export default {
           }
         }
         console.log(this.userData)
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1)
+        this.loading = false
       })
     },
     getFace() {
+      this.loading = true
       faceList().then(response => {
+        this.loading = false
         this.facedatalist = response.data.items
         const basedata = JSON.parse(JSON.stringify(this.facedatalist))
         console.log('allface')
@@ -212,17 +213,14 @@ export default {
           this.findface.push(basedata[i].id)
         }
         console.log(this.findface)
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1)
       })
     },
     delNowFace() {
-      faceDel(this.delFace)
-      setTimeout(() => {
+      this.loading = true
+      faceDel(this.delFace).then(response => {
+        this.loading = false
         window.location.href = 'http://localhost:8081/face_mamage/func1'
-        // window.location.reload()
-      }, 500)
+      })
     },
     overFlod() {
       window.location.reload(true)
@@ -269,19 +267,16 @@ export default {
         this.nowface.id = this.clickid
         // console.log(this.nowface.base64)
         addFace(this.nowface).then(response => {
+          this.loading = false
           console.log('finish')
           const faceresult = JSON.parse(JSON.stringify(response))
           console.log(faceresult.message)
           if (faceresult.message === 'fail') {
             alert('未识别到人脸，请重试')
           }
+          window.location.href = 'http://localhost:8081/face_mamage/func1'
         })
       }
-      setTimeout(() => {
-        this.listLoading = false
-        window.location.href = 'http://localhost:8081/face_mamage/func1'
-        // window.location.reload()
-      }, 800)
     },
     close() {
       const video = document.querySelector('#video')
