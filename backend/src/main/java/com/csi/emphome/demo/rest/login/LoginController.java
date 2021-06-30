@@ -26,7 +26,7 @@ public class LoginController {
     @PostMapping(value = "/updatePwd")
     @ResponseBody
     public  HashMap<String, Object> updatePwd(@RequestBody PwdTemp data){
-        System.out.println("pwddata:"+data);
+        //System.out.println("pwddata:"+data);
         return loginService.updateLoginPwdFunc(data);
     }
 

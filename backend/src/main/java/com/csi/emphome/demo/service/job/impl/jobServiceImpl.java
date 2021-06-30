@@ -9,13 +9,23 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * jobServiceImpl:职位管理
+ * @author lzh
+ * @date 2021/06/30 15:41:32
+ */
 @Service
 public class jobServiceImpl implements jobService {
     private final jobRepository jobRepository;
-
     public jobServiceImpl(jobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
+
+    /**
+     * 构建表格
+     * @param data 表格格式
+     * @return  正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> fetchListFunc(TestListQuery data) {
         HashMap<String, Object> response = new HashMap<>();
@@ -28,6 +38,12 @@ public class jobServiceImpl implements jobService {
         return response;
     }
 
+
+    /**
+     *获取数据库里的职位信息
+     * @param
+     * @return  正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> fetchJobList() {
         HashMap<String, Object> response = new HashMap<>();
@@ -41,6 +57,11 @@ public class jobServiceImpl implements jobService {
         return response;
     }
 
+    /**
+     * 创建一个职位
+     * @param data 职位名、备注、id
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String,Object> createListItemFunc(job data){
         int resCode = 20001;
@@ -68,7 +89,11 @@ public class jobServiceImpl implements jobService {
         return response;
     }
 
-
+    /**
+     * 修改一个职位
+     * @param data 职位名、备注、id
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> updateListItemFunc(job data) {
         //        testRepository.save(data);
@@ -90,6 +115,11 @@ public class jobServiceImpl implements jobService {
         return response;
     }
 
+    /**
+     * 删除一个职位
+     * @param data 职位id、职位名、备注
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> deleteListItemFunc(job data) {
         System.out.println("sddddddddddddadsadsadsa");
@@ -108,6 +138,11 @@ public class jobServiceImpl implements jobService {
         return response;
     }
 
+    /**
+     * 批量删除
+     * @param data 职位信息的数组
+     * @return 正确信息或错误信息
+     */
     @Override
     public HashMap<String, Object> deleteallListItemFunc(job[] data) {
         System.out.println("sddddddddddddadsadsadsa");

@@ -78,8 +78,8 @@ public class notiController {
     @GetMapping(value = "/list")
     @ResponseBody
     public HashMap<String, Object> fetchList(TestListQuery data) {
-        System.out.println("噢噢噢噢噢噢噢噢");
-        System.out.println(notiService.fetchListFunc(data));
+//        System.out.println("噢噢噢噢噢噢噢噢");
+//        System.out.println(notiService.fetchListFunc(data));
         return notiService.fetchListFunc(data);
     }
     @CrossOrigin
@@ -108,18 +108,18 @@ public class notiController {
     public HashMap<String, Object> deleteListItem(@RequestBody noti data) {
         LocalDate date = LocalDate.now();
         data.setCaredate(Date.valueOf(date));
-        System.out.println("Sssssssssssssssssssssssss");
+//        System.out.println("Sssssssssssssssssssssssss");
         return notiService.deleteListItemFunc(data);
     }
     @CrossOrigin
     @PostMapping(value = "/deleteall")
     @ResponseBody
     public HashMap<String, Object> deleteallListItem(@RequestBody noti[] data) {
-        System.out.println(data[0].toString());
+//        System.out.println(data[0].toString());
         for(int i=0;i<data.length;i++){
         LocalDate date = LocalDate.now();
         data[i].setCaredate(Date.valueOf(date));}
-        System.out.println("Sssssssssssssssssssssssss");
+//        System.out.println("Sssssssssssssssssssssssss");
         return notiService.deleteallListItemFunc(data);
     }
 }
