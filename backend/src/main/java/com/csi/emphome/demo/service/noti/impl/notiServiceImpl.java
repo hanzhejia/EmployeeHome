@@ -47,9 +47,9 @@ public class notiServiceImpl implements notiService {
     public HashMap<String, Object> createListItemFunc(noti data) {
         int resCode = 20001;
         String resData = "failed";
-        System.out.println(data);
+//        System.out.println(data);
         noti tag_item = notiRepository.findById(data.getId());
-        System.out.println(tag_item);
+//        System.out.println(tag_item);
         if (tag_item == null){
             System.out.println(data);
             noti temp_item = new noti(data.getId(),data.getTiitle(),data.getContent(),data.getCareTime(),data.getUserid());
@@ -96,7 +96,7 @@ public class notiServiceImpl implements notiService {
      */
     @Override
     public HashMap<String, Object> deleteListItemFunc(noti data) {
-        System.out.println("sddddddddddddadsadsadsa");
+//        System.out.println("sddddddddddddadsadsadsa");
         int resCode = 20001;
         String resData = "failed";
         noti tag_item = notiRepository.findById(data.getId());
