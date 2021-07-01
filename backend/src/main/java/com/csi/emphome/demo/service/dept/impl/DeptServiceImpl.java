@@ -1,7 +1,9 @@
 package com.csi.emphome.demo.service.dept.impl;
 
 import com.csi.emphome.demo.domain.dept.DeptItem;
+import com.csi.emphome.demo.domain.employee.EmployeeItem;
 import com.csi.emphome.demo.repository.dept.DeptRepository;
+import com.csi.emphome.demo.repository.employee.EmployeeRepository;
 import com.csi.emphome.demo.service.dept.DeptService;
 import com.csi.emphome.demo.service.dept.dto.DeptListQuery;
 import com.csi.emphome.demo.service.dept.dto.DeptSearchData;
@@ -21,9 +23,11 @@ import java.util.List;
 @Service
 public class DeptServiceImpl implements DeptService {
     private final DeptRepository deptRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public DeptServiceImpl(DeptRepository deptRepository) {
+    public DeptServiceImpl(DeptRepository deptRepository, EmployeeRepository employeeRepository) {
         this.deptRepository = deptRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -181,6 +185,13 @@ public class DeptServiceImpl implements DeptService {
             DeptItem tag_item = deptRepository.findById(datum.getId());
             if (tag_item != null) {
                 deptRepository.delete(tag_item);
+                List<EmployeeItem> employeeList = employeeRepository.findAllBydeptid(tag_item.getId());
+                if (employeeList.size() != 0) {
+                    for(EmployeeItem empItem : employeeList) {
+                        empItem.setDeptid(0);
+                        employeeRepository.save(empItem);
+                    }
+                }
             } else {
                 response.put("code", 20001);
                 response.put("data", "failed");
