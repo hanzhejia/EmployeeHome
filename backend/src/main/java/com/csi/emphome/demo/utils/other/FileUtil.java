@@ -1,12 +1,10 @@
-package com.csi.emphome.demo.utils;
+package com.csi.emphome.demo.utils.other;
 
 import cn.hutool.core.util.IdUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;

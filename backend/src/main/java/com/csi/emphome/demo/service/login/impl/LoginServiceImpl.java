@@ -1,7 +1,7 @@
 package com.csi.emphome.demo.service.login.impl;
 
 import com.csi.emphome.demo.domain.user.UserItem;
-import com.csi.emphome.demo.jwt.JwtUtil;
+import com.csi.emphome.demo.utils.jwt.JwtUtil;
 import com.csi.emphome.demo.repository.login.LoginRepo;
 import com.csi.emphome.demo.service.login.LoginService;
 import com.csi.emphome.demo.service.login.dto.LoginTemp;

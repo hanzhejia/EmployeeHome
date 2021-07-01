@@ -1,6 +1,6 @@
-package com.csi.emphome.demo.shiro;
+package com.csi.emphome.demo.utils.shiro;
 
-import com.csi.emphome.demo.jwt.JwtFilter;
+import com.csi.emphome.demo.utils.jwt.JwtFilter;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
 import org.apache.shiro.mgt.SecurityManager;
