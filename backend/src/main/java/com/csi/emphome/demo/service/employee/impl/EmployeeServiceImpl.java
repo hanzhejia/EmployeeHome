@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -52,6 +53,36 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
+     * 身份证号查重
+     * @param data 前端页面增加用户功能传入数据
+     * @return 查重成功或失败参数
+     */
+    @Override
+    public HashMap<String, Object> hadcardListItemFunc(EmployeeTemp data) {
+        int resCode = 20000;
+        String resData = "success";
+        String resName = "None";
+        int resId = 0;
+
+        EmployeeItem tag_item = employeeRepository.findBycard(data.getCard());
+        if (tag_item != null){
+            System.out.println(tag_item.toString());
+            resCode = 20000;
+            resData = "failed";
+            resName = tag_item.getName();
+            resId = tag_item.getId();
+        }
+
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("code",resCode);
+        response.put("data",resData);
+        response.put("name",resName);
+        response.put("id",resId);
+        return response;
+
+    }
+
+    /**
      * 增加用户
      * @param data 前端页面增加用户功能传入数据
      * @return 成功或失败参数
@@ -60,14 +91,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     public HashMap<String, Object> createListItemFunc(EmployeeTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        System.out.println(data.toString());
+        String tempId = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+data.getDeptid()+data.getCard().substring(12,17);
+        data.setId(Integer.parseInt(tempId));
         EmployeeItem tag_item = employeeRepository.findByid(data.getId());
         if (tag_item == null){
             EmployeeItem temp_item = new EmployeeItem(data.getId(),data.getName(),data.getCard(),data.getSex(),data.getJobid(),data.getEducation(),data.getEmail(),data.getTel(),data.getPhone(),
                     data.getParty(),data.getQqnum(),data.getAddress(),data.getPost(),data.getBirthday(),data.getRace(),data.getSpeciality(),data.getHobby(),data.getRemark(),data.getDeptid());
             employeeRepository.save(temp_item);
-            System.out.println(temp_item.toString());
-            System.out.println("hello");
             resCode = 20000;
             resData = "success";
         }

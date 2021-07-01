@@ -38,6 +38,14 @@ export function fetchPv(pv) {
   })
 }
 
+export function hadcardListItem(data) {
+  return request({
+    url: '/vue-admin-template/employee/hadcard',
+    method: 'post',
+    data
+  })
+}
+
 export function createListItem(data) {
   return request({
     url: '/vue-admin-template/employee/create',

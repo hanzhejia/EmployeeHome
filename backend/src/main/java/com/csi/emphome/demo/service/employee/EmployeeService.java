@@ -11,4 +11,5 @@ public interface EmployeeService {
     HashMap<String, Object> deleteListItemFunc(EmployeeTemp data);
     HashMap<String, Object> updateListItemFunc(EmployeeTemp data);
     HashMap<String, Object> searchListItemFunc(EmployeeTemp data,EmployeeListQuery query);
+    HashMap<String, Object> hadcardListItemFunc(EmployeeTemp data);
 }

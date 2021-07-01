@@ -164,7 +164,7 @@
 <script>
 // import { mapGetters } from 'vuex'
 
-import { createListItem, fetchDept, fetchJob } from '@/api/employee_manage'
+import { createListItem, fetchDept, fetchJob, hadcardListItem } from '@/api/employee_manage'
 
 export default {
   name: 'Func2',
@@ -370,7 +370,6 @@ export default {
       fetchJob().then(response => {
         this.options = response.data.items
         response.data.total
-        console.log(response.data.items)
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
@@ -381,19 +380,33 @@ export default {
       this.$refs['ruleForm'].validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.ruleForm)
-          tempData.id = parseInt(Math.random() * 100) + 1024 // mock a id
+          // tempData.id = parseInt(Math.random() * 100) + 1024 // mock a id
           tempData.tel = tempData.tel1 + tempData.tel2
           tempData.sex = parseInt(tempData.sex)
-          console.log(tempData)
-          createListItem(tempData).then(() => {
-            // this.list.unshift(this.ruleForm)
-            this.dialogFormVisible = false
-            this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
-              type: 'success',
-              duration: 2000
-            })
+          hadcardListItem(tempData).then(response => {
+            if (response.data === 'success') {
+              createListItem(tempData).then(() => {
+                this.dialogFormVisible = false
+                this.$notify({
+                  title: 'Success',
+                  message: 'Created Successfully',
+                  type: 'success',
+                  duration: 2000
+                })
+              })
+            } else {
+              const h = this.$createElement
+              this.$confirm('警告', {
+                title: '警告',
+                message: h('div', [
+                  h('p', '已有员工：' + response.name + ',  员工号：' + response.id),
+                  h('p', '身份证号一致，请查证后再输入！')
+                ]),
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+              })
+            }
           })
         }
       })

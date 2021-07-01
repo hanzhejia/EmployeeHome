@@ -49,7 +49,6 @@ public class jobServiceImpl implements jobService {
         HashMap<String, Object> response = new HashMap<>();
         HashMap<String, Object> responseData = new HashMap<>();
         List listItems = jobRepository.findAll();
-        System.out.println(listItems);
         responseData.put("total",listItems.size());
         responseData.put("items",listItems);
         response.put("code",20000);

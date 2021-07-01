@@ -5,7 +5,7 @@
       <el-row>
         <el-col :span="4">
           <el-form-item label="职位" prop="jobid">
-            <el-select v-model="searcheForm.jobid"  clearable  placeholder="选择职位搜索">
+            <el-select v-model="searcheForm.jobid"  clearable  size="mini" placeholder="选择职位搜索">
               <el-option
                 v-for="item in options"
                 :key="item.id"
@@ -37,7 +37,7 @@
       <el-row>
         <el-col :span="4">
           <el-form-item label="性别" prop="sex">
-            <el-select v-model="searcheForm.sex"  clearable  placeholder="选择性别搜索">
+            <el-select v-model="searcheForm.sex"  size="mini" clearable  placeholder="选择性别搜索">
               <el-option label="男" value=1 />
               <el-option label="女" value=2 />
             </el-select>
@@ -54,7 +54,7 @@
         </el-col>
         <el-col :span="6" :offset="2">
           <el-form-item label="所属部门" prop="deptid">
-            <el-select v-model="searcheForm.deptid"  clearable  placeholder="选择部门搜索">
+            <el-select v-model="searcheForm.deptid"  size="mini" clearable  placeholder="选择部门搜索">
               <el-option
                 v-for="item in optionsdept"
                 :key="item.id"
@@ -73,39 +73,87 @@
       </el-row>
     </el-form>
 
+    <el-divider class="divider_cp" content-position="left" ><i class="el-icon-s-order"></i><span class="midText">表单信息</span></el-divider>
+
     <el-table
       :data="list"
+      :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       style="width: 100%"
       @selection-change="selsChange"
     >
       <el-table-column
+        v-if="checkPermission(['admin'])"
         type="selection"
         width="55"
       />
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="姓名">
+              <span>{{ props.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="员工号">
+              <span>{{ props.row.id }}</span>
+            </el-form-item>
+            <el-form-item label="性别">
+              <span>{{ props.row.sex }}</span>
+            </el-form-item>
+            <el-form-item label="手机号">
+              <span>{{ props.row.phone }}</span>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <span>{{ props.row.email }}</span>
+            </el-form-item>
+            <el-form-item label="职位">
+              <span>{{ props.row.jobid }}</span>
+            </el-form-item>
+            <el-form-item label="学历">
+              <span>{{ props.row.education }}</span>
+            </el-form-item>
+            <el-form-item label="身份证号码">
+              <span>{{ props.row.card }}</span>
+            </el-form-item>
+            <el-form-item label="部门">
+              <span>{{ props.row.deptid }}</span>
+            </el-form-item>
+            <el-form-item label="地址">
+              <span>{{ props.row.address }}</span>
+            </el-form-item>
+            <el-form-item label="建档日期">
+              <span>{{ props.row.createdate }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+
       <el-table-column
         label="姓名"
         prop="name"
       />
       <el-table-column
+        label="员工号"
+        prop="id"
+      />
+      <el-table-column
         label="性别"
         prop="sex"
       />
-      <el-table-column
-        label="手机号"
-        prop="phone"
-      />
-      <el-table-column
-        label="邮箱"
-        prop="email"
-      />
+<!--      <el-table-column-->
+<!--        label="手机号"-->
+<!--        prop="phone"-->
+<!--      />-->
+<!--      <el-table-column-->
+<!--        label="邮箱"-->
+<!--        prop="email"-->
+<!--      />-->
       <el-table-column
         label="职位"
         prop="jobid"
       />
-      <el-table-column
-        label="学历"
-        prop="education"
-      />
+<!--      <el-table-column-->
+<!--        label="学历"-->
+<!--        prop="education"-->
+<!--      />-->
       <el-table-column
         label="身份证号码"
         prop="card"
@@ -114,14 +162,14 @@
         label="部门"
         prop="deptid"
       />
-      <el-table-column
-        label="联系地址"
-        prop="address"
-      />
-      <el-table-column
-        label="建档日期"
-        prop="createdate"
-      />
+<!--      <el-table-column-->
+<!--        label="联系地址"-->
+<!--        prop="address"-->
+<!--      />-->
+<!--      <el-table-column-->
+<!--        label="建档日期"-->
+<!--        prop="createdate"-->
+<!--      />-->
       <el-table-column
         v-if="checkPermission(['admin'])"
         label="操作"
@@ -195,6 +243,40 @@
 
   </div>
 </template>
+
+<style>
+.demo-table-expand {
+  font-size: 0;
+}
+.demo-table-expand label {
+  width: 90px;
+  color: #99a9bf;
+}
+.demo-table-expand .el-form-item {
+  margin-right: 0;
+  margin-bottom: 0;
+  width: 50%;
+}
+.divider_cp {
+  position: relative;
+  margin: 2% auto;
+  width: 1550px;
+  height: 1px;
+  background-color: #d4d4d4;
+  text-align: center;
+  font-size: 16px;
+  color: rgba(101, 101, 101, 1);
+}
+.midText {
+  font-family: "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+  /*font-weight:bold;*/
+  font-size:16px;
+  left: 20%;
+  background-color: #ffffff;
+  padding: 0 15px;
+
+}
+</style>
 
 <script>
 
@@ -439,7 +521,6 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        console.log(response.data.items)
         this.list = response.data.items
         this.list.forEach((val) => {
           this.options.forEach((vul) => {
