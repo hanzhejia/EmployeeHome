@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '社畜の家',
+  title: '员工の家',
 
   /**
    * @type {boolean} true | false
