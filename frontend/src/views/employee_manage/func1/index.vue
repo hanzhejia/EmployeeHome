@@ -77,7 +77,8 @@
 
     <el-table
       :data="list"
-      :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+      :header-cell-style="{background:'#eef1f6',color:'#606266','text-align':'center'}"
+      :cell-style="rowStyle"
       style="width: 100%"
       @selection-change="selsChange"
     >
@@ -130,18 +131,18 @@
         label="姓名"
         prop="name"
       />
-      <el-table-column
-        label="员工号"
-        prop="id"
-      />
+<!--      <el-table-column-->
+<!--        label="员工号"-->
+<!--        prop="id"-->
+<!--      />-->
       <el-table-column
         label="性别"
         prop="sex"
       />
-<!--      <el-table-column-->
-<!--        label="手机号"-->
-<!--        prop="phone"-->
-<!--      />-->
+      <el-table-column
+        label="手机号"
+        prop="phone"
+      />
 <!--      <el-table-column-->
 <!--        label="邮箱"-->
 <!--        prop="email"-->
@@ -419,6 +420,9 @@ export default {
     this.getList()
   },
   methods: {
+    rowStyle() {
+      return 'text-align:center'
+    },
     checkPermission,
     handleRolesChange() {
       this.key++
