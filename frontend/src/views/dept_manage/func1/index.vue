@@ -4,7 +4,7 @@
       <el-form-item>
         <template>
           <el-input v-model="search" placeholder="请输入内容" autosize class="input-with-select">
-            <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
+            <el-button slot="append" icon="el-icon-search" @click="handleSearch"/>
           </el-input>
         </template>
       </el-form-item>
@@ -70,7 +70,7 @@
 import permission from '@/directive/permission/index.js' // 权限判断指令
 import checkPermission from '@/utils/permission' // 权限判断函数
 
-import { fetchList, deleteList, fetchListItem, updateListItem, deleteListItem } from '@/api/dept_manage'
+import { fetchList, deleteList, fetchListItem, updateListItem } from '@/api/dept_manage'
 import Pagination from '@/components/Pagination'
 
 export default {

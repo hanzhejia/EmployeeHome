@@ -11,9 +11,12 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 public interface EmployeeRepository extends JpaRepository<EmployeeItem,Integer>, JpaSpecificationExecutor<EmployeeItem> {
     EmployeeItem findBycard(String card);
     EmployeeItem findByid(int id);
     Page<EmployeeItem> findAll(Specification<EmployeeItem> specification, Pageable var2);   //传入Specification对象
+    List<EmployeeItem> findAllBydeptid(int deptid);
 }
