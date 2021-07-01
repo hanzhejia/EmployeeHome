@@ -213,7 +213,7 @@ export default {
       if (navigator.mediaDevices === undefined) {
         navigator.mediaDevices = {}
       }
-      // 获取用户媒体,包含视频和音频
+      // 获取用户媒体
       navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {

@@ -67,7 +67,7 @@
         <el-col :span="4">
           <el-form-item>
             <el-button type="primary" @click="search()">搜索</el-button>
-            <el-button v-if="checkPermission(['admin'])"  type="primary" @click="deleteFileOrDirectory(sels)" :disabled="this.sels.length === 0"> 删除</el-button>
+            <el-button v-if="checkPermission(['admin'])"  type="danger" @click="deleteFileOrDirectory(sels)" :disabled="this.sels.length === 0"> 删除</el-button>
           </el-form-item>
         </el-col>
       </el-row>
@@ -80,6 +80,7 @@
       :header-cell-style="{background:'#eef1f6',color:'#606266','text-align':'center'}"
       :cell-style="rowStyle"
       style="width: 100%"
+      max-height="600"
       @selection-change="selsChange"
     >
       <el-table-column
