@@ -593,10 +593,11 @@ export default {
       }).then(() => {
         this.$refs['temp'].validate((valid) => {
           if (valid) {
+            console.log(this.temp)
             const tempData = Object.assign({}, this.temp)
             let flag = 0
             this.options.forEach((vul) => {
-              if (tempData.jobid === vul.name) {
+              if (tempData.jobid === vul.name || tempData.jobid === vul.id) {
                 tempData.jobid = vul.id
                 flag = 1
               }
@@ -606,7 +607,7 @@ export default {
             }
             flag = 0
             this.optionsdept.forEach((vul) => {
-              if (tempData.deptid === vul.name) {
+              if (tempData.deptid === vul.name || tempData.deptid === vul.id) {
                 tempData.deptid = vul.id
                 flag = 1
               }
@@ -614,6 +615,7 @@ export default {
             if (flag === 0 || tempData.deptid === 'NULL') {
               tempData.deptid = 0
             }
+            console.log(tempData.deptid)
             if (tempData.sex === '男') {
               tempData.sex = 1
             } else if (tempData.sex === '女') {
@@ -639,6 +641,7 @@ export default {
               if (this.temp.deptid === 0) {
                 this.temp.deptid = 'NULL'
               }
+              console.log(this.temp.deptid)
               if (this.temp.sex === 1) {
                 this.temp.sex = '男'
               } else if (this.temp.sex === 2) {
@@ -652,6 +655,7 @@ export default {
                 type: 'success',
                 duration: 2000
               })
+              this.reload()
             })
           }
         })
