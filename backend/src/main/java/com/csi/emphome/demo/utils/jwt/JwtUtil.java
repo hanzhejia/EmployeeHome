@@ -1,4 +1,4 @@
-package com.csi.emphome.demo.jwt;
+package com.csi.emphome.demo.utils.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

@@ -1,6 +1,6 @@
-package com.csi.emphome.demo.config;
+package com.csi.emphome.demo.utils.config;
 
-import com.csi.emphome.demo.utils.EHConstant;
+import com.csi.emphome.demo.utils.other.EHConstant;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

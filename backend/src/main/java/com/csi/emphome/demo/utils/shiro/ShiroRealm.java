@@ -1,8 +1,8 @@
-package com.csi.emphome.demo.shiro;
+package com.csi.emphome.demo.utils.shiro;
 
 import com.csi.emphome.demo.domain.user.UserItem;
-import com.csi.emphome.demo.jwt.JwtToken;
-import com.csi.emphome.demo.jwt.JwtUtil;
+import com.csi.emphome.demo.utils.jwt.JwtToken;
+import com.csi.emphome.demo.utils.jwt.JwtUtil;
 import com.csi.emphome.demo.repository.login.LoginRepo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

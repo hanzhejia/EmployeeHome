@@ -145,10 +145,14 @@ public class UserServiceImpl implements UserService {
 
         for (UserTemp datum : data) {
             UserItem tag_item = userRepository.findById(datum.getId());
-            if (tag_item != null) {
+            if(tag_item != null && tag_item.getId() == 1){
+                response.put("code", 20010);
+                response.put("data", "failed");
+                return response;
+            } else if (tag_item != null) {
                 userRepository.delete(tag_item);
             } else {
-                response.put("code", 20001);
+                response.put("code", 20010);
                 response.put("data", "failed");
                 return response;
             }

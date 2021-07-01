@@ -1,6 +1,6 @@
 package com.csi.emphome.demo.rest.test;
 
-import com.csi.emphome.demo.jwt.JwtUtil;
+import com.csi.emphome.demo.utils.jwt.JwtUtil;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +29,7 @@ public class ShiroController {
 
     @RequestMapping("/getToken")
     public HashMap<String, Object> getToken() {
-        String token = JwtUtil.sign("editor", "111111");
+        String token = JwtUtil.sign("admin", "111111");
         redisTemplate.opsForValue().set(token,token, expireTime*2/100, TimeUnit.SECONDS);
         HashMap<String, Object> response = new HashMap<>();
         response.put("code", token);

@@ -1,4 +1,4 @@
-package com.csi.emphome.demo.utils;
+package com.csi.emphome.demo.utils.other;
 
 public class EHConstant {
 

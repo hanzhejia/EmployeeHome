@@ -1,13 +1,13 @@
 package com.csi.emphome.demo.service.download.impl;
 
-import com.csi.emphome.demo.config.FileProperties;
+import com.csi.emphome.demo.utils.config.FileProperties;
 import com.csi.emphome.demo.domain.download.DownloadItem;
 import com.csi.emphome.demo.repository.download.DownloadRepository;
 import com.csi.emphome.demo.service.download.DownloadService;
 import com.csi.emphome.demo.service.download.dto.DownloadListQuery;
 import com.csi.emphome.demo.service.download.dto.DownloadSearchData;
 import com.csi.emphome.demo.service.download.dto.DownloadTemp;
-import com.csi.emphome.demo.utils.FileUtil;
+import com.csi.emphome.demo.utils.other.FileUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

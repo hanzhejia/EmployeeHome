@@ -1,4 +1,4 @@
-package com.csi.emphome.demo.utils;
+package com.csi.emphome.demo.utils.other;
 
 import java.io.Closeable;
 

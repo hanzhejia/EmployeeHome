@@ -1,15 +1,11 @@
 package com.csi.emphome.demo.service.dept.impl;
 
 import com.csi.emphome.demo.domain.dept.DeptItem;
-import com.csi.emphome.demo.domain.download.DownloadItem;
-import com.csi.emphome.demo.domain.test.TestItem;
 import com.csi.emphome.demo.repository.dept.DeptRepository;
 import com.csi.emphome.demo.service.dept.DeptService;
 import com.csi.emphome.demo.service.dept.dto.DeptListQuery;
 import com.csi.emphome.demo.service.dept.dto.DeptSearchData;
 import com.csi.emphome.demo.service.dept.dto.DeptTemp;
-import com.csi.emphome.demo.service.download.dto.DownloadTemp;
-import com.csi.emphome.demo.utils.FileUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.csi.emphome.demo.jwt;
+package com.csi.emphome.demo.utils.jwt;
 
 import org.apache.shiro.authc.AuthenticationToken;
 
