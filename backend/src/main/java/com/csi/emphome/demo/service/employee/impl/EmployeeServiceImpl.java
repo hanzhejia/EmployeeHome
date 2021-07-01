@@ -91,8 +91,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public HashMap<String, Object> createListItemFunc(EmployeeTemp data) {
         int resCode = 20001;
         String resData = "failed";
-        String tempId = String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+data.getDeptid()+data.getCard().substring(12,17);
-        data.setId(Integer.parseInt(tempId));
+        //使用入职年份+入职部门代码+身份证13-17位规则创建员工号
+//        int tempId = Integer.parseInt(String.valueOf(Calendar.getInstance().get(Calendar.YEAR))+data.getDeptid()+data.getCard().substring(12,17));
+        //使用自增序列创建员工号
+        List<EmployeeItem> tempList = employeeRepository.findAll();
+        int tempId = tempList.size()+1;
+        data.setId(tempId);
         EmployeeItem tag_item = employeeRepository.findByid(data.getId());
         if (tag_item == null){
             EmployeeItem temp_item = new EmployeeItem(data.getId(),data.getName(),data.getCard(),data.getSex(),data.getJobid(),data.getEducation(),data.getEmail(),data.getTel(),data.getPhone(),
