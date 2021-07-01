@@ -1,5 +1,6 @@
 package com.csi.emphome.demo.service.job.impl;
-
+import com.csi.emphome.demo.repository.employee.EmployeeRepository;
+import com.csi.emphome.demo.domain.employee.EmployeeItem;
 import com.csi.emphome.demo.domain.job.job;
 import com.csi.emphome.demo.repository.job.jobRepository;
 import com.csi.emphome.demo.service.job.jobService;
@@ -17,8 +18,10 @@ import java.util.List;
 @Service
 public class jobServiceImpl implements jobService {
     private final jobRepository jobRepository;
-    public jobServiceImpl(jobRepository jobRepository) {
+    private final EmployeeRepository employeeRepository;
+    public jobServiceImpl(jobRepository jobRepository, EmployeeRepository employeeRepository) {
         this.jobRepository = jobRepository;
+        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -128,6 +131,13 @@ public class jobServiceImpl implements jobService {
         System.out.println(data.getID());
         if (tag_item != null){
             jobRepository.delete(tag_item);
+            List<EmployeeItem> employeeList = employeeRepository.findAllByjobid(tag_item.getID());
+            if (employeeList.size() != 0) {
+                for(EmployeeItem empItem : employeeList) {
+                    empItem.setJobid(0);
+                    employeeRepository.save(empItem);
+                }
+            }
             resCode = 20000;
             resData = "success";
         }
@@ -152,6 +162,13 @@ public class jobServiceImpl implements jobService {
         System.out.println(data[i].getID());
         if (tag_item != null){
             jobRepository.delete(tag_item);
+            List<EmployeeItem> employeeList = employeeRepository.findAllByjobid(tag_item.getID());
+            if (employeeList.size() != 0) {
+                for(EmployeeItem empItem : employeeList) {
+                    empItem.setJobid(0);
+                    employeeRepository.save(empItem);
+                }
+            }
             resCode = 20000;
             resData = "success";
         }

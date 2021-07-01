@@ -19,4 +19,5 @@ public interface EmployeeRepository extends JpaRepository<EmployeeItem,Integer>,
     EmployeeItem findByid(int id);
     Page<EmployeeItem> findAll(Specification<EmployeeItem> specification, Pageable var2);   //传入Specification对象
     List<EmployeeItem> findAllBydeptid(int deptid);
+    List<EmployeeItem> findAllByjobid(int jobid);
 }
