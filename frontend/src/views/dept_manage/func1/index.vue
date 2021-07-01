@@ -3,21 +3,21 @@
     <el-form :inline="true" class="demo-form-inline">
       <el-form-item>
         <template>
-          <el-input v-model="search" placeholder="请输入内容" class="input-with-select">
+          <el-input v-model="search" placeholder="请输入内容" autosize class="input-with-select">
             <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
           </el-input>
         </template>
       </el-form-item>
-      <el-form-item>
+      <el-form-item style="float: right">
         <template v-if="checkPermission(['admin'])">
-          <el-button type="danger" size="mini" @click="handleMultipleDelete">批量删除</el-button>
+          <el-button type="danger" @click="handleMultipleDelete">批量删除</el-button>
         </template>
       </el-form-item>
     </el-form>
 
     <el-table
       v-loading="listLoading"
-      :data="list.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+      :data="list"
       style="width: 100%"
       highlight-current-row
       @selection-change="handleSelectionChange"
@@ -176,27 +176,36 @@ export default {
     },
 
     handleMultipleDelete() {
-      this.$confirm('是否确定删除所选部门?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        deleteList(this.multipleSelection).then(() => {
-          this.$notify({
-            title: 'Success',
-            message: 'Delete Successfully',
-            type: 'success',
-            duration: 2000
-          })
-          let arr1 = this.list
-          const arr2 = this.multipleSelection
-          const idList = arr2.map(item => item.id)
-          arr1 = arr1.filter(item => {
-            return !idList.includes(item.id)
-          })
-          this.list = arr1
+      if (this.multipleSelection.length === 0) {
+        this.$notify({
+          title: 'Failed',
+          message: 'No Select',
+          type: 'error',
+          duration: 2000
         })
-      })
+      } else {
+        this.$confirm('是否确定删除所选部门?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteList(this.multipleSelection).then(() => {
+            this.$notify({
+              title: 'Success',
+              message: 'Delete Successfully',
+              type: 'success',
+              duration: 2000
+            })
+            let arr1 = this.list
+            const arr2 = this.multipleSelection
+            const idList = arr2.map(item => item.id)
+            arr1 = arr1.filter(item => {
+              return !idList.includes(item.id)
+            })
+            this.list = arr1
+          })
+        })
+      }
     },
 
     updateData() {
