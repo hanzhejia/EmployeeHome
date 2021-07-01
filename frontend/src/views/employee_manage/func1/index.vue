@@ -459,17 +459,27 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
+        let flag = 0
         const tempData = Object.assign({}, row)
         this.options.forEach((vul) => {
           if (tempData.jobid === vul.name) {
             tempData.jobid = vul.id
+            flag = 1
           }
         })
+        if (flag === 0 || tempData.jobid === 'NULL') {
+          tempData.jobid = 0
+        }
+        flag = 0
         this.optionsdept.forEach((vul) => {
           if (tempData.deptid === vul.name) {
             tempData.deptid = vul.id
+            flag = 1
           }
         })
+        if (flag === 0 || tempData.deptid === 'NULL') {
+          tempData.deptid = 0
+        }
         if (tempData.sex === '男') {
           tempData.sex = 1
         } else if (tempData.sex === '女') {
@@ -493,16 +503,26 @@ export default {
         type: 'warning'
       }).then(() => {
         this.sels.forEach((vau) => {
+          let flag = 0
           this.options.forEach((vul) => {
             if (vau.jobid === vul.name) {
               vau.jobid = vul.id
+              flag = 1
             }
           })
+          if (flag === 0 || vau.jobid === 'NULL') {
+            vau.jobid = 0
+          }
+          flag = 0
           this.optionsdept.forEach((vul) => {
             if (vau.deptid === vul.name) {
               vau.deptid = vul.id
+              flag = 1
             }
           })
+          if (flag === 0 || vau.deptid === 'NULL') {
+            vau.deptid = 0
+          }
           if (vau.sex === '男') {
             vau.sex = 1
           } else if (vau.sex === '女') {
@@ -533,11 +553,17 @@ export default {
               val.jobid = vul.name
             }
           })
+          if (val.jobid === 0) {
+            val.jobid = 'NULL'
+          }
           this.optionsdept.forEach((vul) => {
             if (val.deptid === vul.id) {
               val.deptid = vul.name
             }
           })
+          if (val.deptid === 0) {
+            val.deptid = 'NULL'
+          }
           if (val.sex === 1) {
             val.sex = '男'
           } else if (val.sex === 2) {
@@ -568,23 +594,33 @@ export default {
         this.$refs['temp'].validate((valid) => {
           if (valid) {
             const tempData = Object.assign({}, this.temp)
-            console.log(tempData)
+            let flag = 0
             this.options.forEach((vul) => {
               if (tempData.jobid === vul.name) {
                 tempData.jobid = vul.id
+                flag = 1
               }
             })
+            if (flag === 0 || tempData.jobid === 'NULL') {
+              tempData.jobid = 0
+            }
+            flag = 0
             this.optionsdept.forEach((vul) => {
               if (tempData.deptid === vul.name) {
                 tempData.deptid = vul.id
+                flag = 1
               }
             })
+            if (flag === 0 || tempData.deptid === 'NULL') {
+              tempData.deptid = 0
+            }
             if (tempData.sex === '男') {
               tempData.sex = 1
             } else if (tempData.sex === '女') {
               tempData.sex = 2
             }
             tempData.sex = parseInt(tempData.sex)
+            console.log(tempData)
             updateListItem(tempData).then(() => {
               const index = this.list.findIndex(v => v.card === this.temp.card)
               this.options.forEach((vul) => {
@@ -592,11 +628,17 @@ export default {
                   this.temp.jobid = vul.name
                 }
               })
+              if (this.temp.jobid === 0) {
+                this.temp.jobid = 'NULL'
+              }
               this.optionsdept.forEach((vul) => {
                 if (this.temp.deptid === vul.id) {
                   this.temp.deptid = vul.name
                 }
               })
+              if (this.temp.deptid === 0) {
+                this.temp.deptid = 'NULL'
+              }
               if (this.temp.sex === 1) {
                 this.temp.sex = '男'
               } else if (this.temp.sex === 2) {
@@ -634,11 +676,17 @@ export default {
                   val.jobid = vul.name
                 }
               })
+              if (val.jobid === 0) {
+                val.jobid = 'NULL'
+              }
               this.optionsdept.forEach((vul) => {
                 if (val.deptid === vul.id) {
                   val.deptid = vul.name
                 }
               })
+              if (val.deptid === 0) {
+                val.deptid = 'NULL'
+              }
               if (val.sex === 1) {
                 val.sex = '男'
               } else if (val.sex === 2) {
