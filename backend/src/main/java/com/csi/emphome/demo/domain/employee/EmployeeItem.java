@@ -1,5 +1,7 @@
 package com.csi.emphome.demo.domain.employee;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -38,6 +40,7 @@ public class EmployeeItem {
     @Column(name = "PARTY")
     private String party;
     @Column(name = "BIRTHDAY")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date birthday;
     @Column(name = "RACE")
     private String race;
@@ -50,6 +53,7 @@ public class EmployeeItem {
     @Column(name = "REMARK")
     private String remark;
     @Column(name = "CREATE_DATE")
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private Date createdate;
 
     public EmployeeItem() {

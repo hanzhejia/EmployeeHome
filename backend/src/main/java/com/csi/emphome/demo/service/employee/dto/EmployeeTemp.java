@@ -1,5 +1,7 @@
 package com.csi.emphome.demo.service.employee.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.sql.Date;
 
@@ -18,12 +20,14 @@ public class EmployeeTemp implements Serializable {
     private String email;
     private int sex;
     private String party;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private java.util.Date birthday;
     private String race;
     private String education;
     private String speciality;
     private String hobby;
     private String remark;
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
     private java.util.Date createdate;
 
     public int getId() {

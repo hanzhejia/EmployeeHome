@@ -439,6 +439,7 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
+        console.log(response.data.items)
         this.list = response.data.items
         this.list.forEach((val) => {
           this.options.forEach((vul) => {
@@ -500,6 +501,21 @@ export default {
             tempData.sex = parseInt(tempData.sex)
             updateListItem(tempData).then(() => {
               const index = this.list.findIndex(v => v.card === this.temp.card)
+              this.options.forEach((vul) => {
+                if (this.temp.jobid === vul.id) {
+                  this.temp.jobid = vul.name
+                }
+              })
+              this.optionsdept.forEach((vul) => {
+                if (this.temp.deptid === vul.id) {
+                  this.temp.deptid = vul.name
+                }
+              })
+              if (this.temp.sex === 1) {
+                this.temp.sex = '男'
+              } else if (this.temp.sex === 2) {
+                this.temp.sex = '女'
+              }
               this.list.splice(index, 1, this.temp)
               this.dialogFormVisible = false
               this.$notify({
