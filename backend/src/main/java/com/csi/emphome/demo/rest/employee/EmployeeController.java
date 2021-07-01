@@ -28,6 +28,14 @@ public class EmployeeController {
 
 
     @CrossOrigin
+    @PostMapping(value = "/hadcard")
+    @ResponseBody
+    public HashMap<String, Object> hadcardListItem(@RequestBody EmployeeTemp data) {
+        return employeeService.hadcardListItemFunc(data);
+    }
+
+
+    @CrossOrigin
     @PostMapping(value = "/create")
     @ResponseBody
     public HashMap<String, Object> createListItem(@RequestBody EmployeeTemp data) {
